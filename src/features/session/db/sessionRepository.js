@@ -36,6 +36,45 @@ export const sessionRepository = {
     }
   },
 
+  async getLastActuals(exerciseName, setCount) {
+    // Find the most recent completed session that contains this exercise
+    const recentSets = await db.workoutSets
+      .filter(s =>
+        s.exerciseName === exerciseName &&
+        s.completedAt !== null &&
+        !s.skipped
+      )
+      .toArray()
+
+    if (!recentSets.length) return []
+
+    // Find the most recent session among those sets
+    const sessionIds = [...new Set(recentSets.map(s => s.sessionId))]
+    const sessions = await db.workoutSessions
+      .where('id').anyOf(sessionIds)
+      .filter(s => s.status === 'completed')
+      .toArray()
+
+    if (!sessions.length) return []
+
+    const lastSession = sessions.sort((a, b) => b.startedAt - a.startedAt)[0]
+    const lastSets = recentSets
+      .filter(s => s.sessionId === lastSession.id)
+      .sort((a, b) => a.setIndex - b.setIndex)
+
+    // Return actuals indexed by setIndex, filling up to setCount
+    return Array.from({ length: setCount }, (_, i) => {
+      const match = lastSets.find(s => s.setIndex === i) || lastSets[lastSets.length - 1]
+      if (!match) return null
+      return {
+        reps:     match.actualReps,
+        weight:   match.actualWeight,
+        duration: match.actualDuration,
+        level:    match.actualLevel,
+      }
+    })
+  },
+
   async deleteSession(id) {
     await db.transaction('rw', db.workoutSessions, db.workoutSets, async () => {
       await db.workoutSets.where('sessionId').equals(id).delete()
