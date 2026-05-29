@@ -31,9 +31,9 @@ export default defineConfig({
       },
 
       manifest: {
-        name: 'GymApp',
-        short_name: 'GymApp',
-        description: 'Offline gym workout tracker',
+        name: 'PRsonal',
+        short_name: 'PRsonal',
+        description: 'Your personal gym tracker',
         theme_color: '#0f0f0f',
         background_color: '#0f0f0f',
         display: 'standalone',

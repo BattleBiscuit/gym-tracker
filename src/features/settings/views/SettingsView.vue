@@ -76,8 +76,8 @@
         <div class="settings-card">
           <div class="settings-row settings-row--static">
             <div class="settings-row__body">
-              <span class="settings-row__label">GymApp</span>
-              <span class="settings-row__sub">Offline workout tracker · PWA · Built {{ buildDate }}</span>
+              <span class="settings-row__label">PRsonal</span>
+              <span class="settings-row__sub">Your personal gym tracker · PWA · Built {{ buildDate }}</span>
             </div>
           </div>
 
@@ -251,7 +251,7 @@ async function doExport() {
     const a    = document.createElement('a')
     const date = new Date().toISOString().slice(0, 10)
     a.href     = url
-    a.download = `gymapp-backup-${date}.json`
+    a.download = `prsonal-backup-${date}.json`
     a.click()
     URL.revokeObjectURL(url)
 
@@ -276,7 +276,7 @@ function onFileSelected(e) {
   reader.onload = evt => {
     try {
       const data = JSON.parse(evt.target.result)
-      if (!data.version || !data.exportedAt) throw new Error('Not a valid GymApp backup file')
+      if (!data.version || !data.exportedAt) throw new Error('Not a valid PRsonal backup file')
       pendingImportData = data
       importPreview.value = data
       importModal.value = true
