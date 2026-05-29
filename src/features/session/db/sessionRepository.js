@@ -62,9 +62,9 @@ export const sessionRepository = {
       .filter(s => s.sessionId === lastSession.id)
       .sort((a, b) => a.setIndex - b.setIndex)
 
-    // Return actuals indexed by setIndex, filling up to setCount
+    // Return actuals indexed by setIndex — exact match only, null if no match
     return Array.from({ length: setCount }, (_, i) => {
-      const match = lastSets.find(s => s.setIndex === i) || lastSets[lastSets.length - 1]
+      const match = lastSets.find(s => s.setIndex === i)
       if (!match) return null
       return {
         reps:     match.actualReps,
