@@ -39,6 +39,10 @@
           <span class="set-row__unit">{{ set.weightUnit }}</span>
         </template>
       </div>
+      <div class="set-row__active-last" v-if="isCardio ? set.lastDuration != null : set.lastReps != null">
+        <template v-if="isCardio">↑ {{ set.lastDuration }}min · lvl{{ set.lastLevel }}</template>
+        <template v-else>↑ {{ set.lastReps }}×{{ formatWeight(set.lastWeight, set.weightUnit) }}</template>
+      </div>
       <AppBadge v-if="set.completedAt" variant="success">✓</AppBadge>
       <AppBadge v-else-if="set.skipped" variant="default">—</AppBadge>
     </template>
@@ -63,10 +67,16 @@
 
     <!-- Upcoming -->
     <template v-else>
-      <span class="set-row__planned set-row__planned--future">
-        <template v-if="isCardio">{{ set.plannedDuration }}min · lvl{{ set.plannedLevel }}</template>
-        <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.weightUnit) }}</template>
-      </span>
+      <div class="set-row__info">
+        <span class="set-row__planned set-row__planned--future">
+          <template v-if="isCardio">{{ set.plannedDuration }}min · lvl{{ set.plannedLevel }}</template>
+          <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.weightUnit) }}</template>
+        </span>
+        <span v-if="isCardio ? set.lastDuration != null : set.lastReps != null" class="set-row__last">
+          <template v-if="isCardio">↑ {{ set.lastDuration }}min · lvl{{ set.lastLevel }}</template>
+          <template v-else>↑ {{ set.lastReps }}×{{ formatWeight(set.lastWeight, set.weightUnit) }}</template>
+        </span>
+      </div>
     </template>
   </div>
 </template>
@@ -144,4 +154,23 @@ watch(localSecondary, v => emit('update:secondary', v))
 
 .set-row__sep { font-size: var(--text-sm); color: var(--color-text-3); }
 .set-row__unit { font-size: var(--text-xs); color: var(--color-text-3); }
+
+.set-row__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.set-row__last {
+  font-size: 10px;
+  color: var(--color-text-3);
+}
+
+.set-row__active-last {
+  font-size: 10px;
+  color: var(--color-text-3);
+  white-space: nowrap;
+}
 </style>
