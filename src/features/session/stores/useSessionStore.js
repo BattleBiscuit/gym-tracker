@@ -261,6 +261,19 @@ export const useSessionStore = defineStore('session', () => {
     )
   }
 
+  async function skipAllRemaining() {
+    for (let exIdx = 0; exIdx < sets.value.length; exIdx++) {
+      for (let setIdx = 0; setIdx < sets.value[exIdx].length; setIdx++) {
+        const s = sets.value[exIdx][setIdx]
+        if (!s.completedAt && !s.skipped) {
+          const setData = { ...s, skipped: true, completedAt: null }
+          sets.value[exIdx].splice(setIdx, 1, setData)
+          await sessionRepository.saveSet(setData)
+        }
+      }
+    }
+  }
+
   function jumpToExercise(exIdx, setIdx) {
     currentExerciseIndex.value = exIdx
     currentSetIndex.value = setIdx
@@ -326,6 +339,7 @@ export const useSessionStore = defineStore('session', () => {
     tickRestTimer,
     tickElapsed,
     addExerciseToSession,
+    skipAllRemaining,
     jumpToExercise,
     finishSession,
     abandonSession,

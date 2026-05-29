@@ -6,6 +6,7 @@
       <SessionHeader
         :routineName="store.activeSession?.routineName || ''"
         :elapsedSeconds="store.elapsedSeconds"
+        @finish="onFinishEarly"
       />
     </div>
 
@@ -170,8 +171,10 @@ async function submitAddExercise() {
 }
 function selectSet(exIdx, setIdx) {
   store.cancelRestTimer()
-  localPrimary.value   = ''
-  localSecondary.value = ''
+  const set = store.sets[exIdx]?.[setIdx]
+  const cardio = set?.type === 'cardio'
+  localPrimary.value   = cardio ? (set?.lastDuration ?? set?.plannedDuration ?? '') : (set?.lastReps    ?? set?.plannedReps    ?? '')
+  localSecondary.value = cardio ? (set?.lastLevel    ?? set?.plannedLevel    ?? '') : (set?.lastWeight  ?? set?.plannedWeight  ?? '')
   store.jumpToExercise(exIdx, setIdx)
 }
 
@@ -225,6 +228,12 @@ async function onSkip() {
 
 function onSkipRest() {
   store.cancelRestTimer()
+}
+
+async function onFinishEarly() {
+  // Skip all sets that haven't been completed or skipped yet
+  await store.skipAllRemaining()
+  finishModal.value = true
 }
 
 async function doFinish() {

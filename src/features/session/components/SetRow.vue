@@ -11,13 +11,13 @@
         <template v-if="isCardio">
           <input class="set-row__input" type="number" inputmode="numeric"
             :value="localPrimary"
-            :placeholder="set.actualDuration ?? set.plannedDuration"
+            :placeholder="set.plannedDuration"
             :min="0"
             @input="localPrimary = $event.target.value" />
           <span class="set-row__sep">min</span>
           <input class="set-row__input" type="number" inputmode="numeric"
             :value="localSecondary"
-            :placeholder="set.actualLevel ?? set.plannedLevel"
+            :placeholder="set.plannedLevel"
             :min="0"
             @input="localSecondary = $event.target.value"
             @keydown.enter="$emit('confirm')" />
@@ -26,13 +26,13 @@
         <template v-else>
           <input class="set-row__input" type="number" inputmode="numeric"
             :value="localPrimary"
-            :placeholder="set.actualReps ?? set.plannedReps"
+            :placeholder="set.plannedReps"
             :min="0"
             @input="localPrimary = $event.target.value" />
           <span class="set-row__sep">×</span>
           <input class="set-row__input" type="number" inputmode="decimal"
             :value="localSecondary"
-            :placeholder="set.actualWeight ?? set.plannedWeight"
+            :placeholder="set.plannedWeight"
             :min="0" :step="0.5"
             @input="localSecondary = $event.target.value"
             @keydown.enter="$emit('confirm')" />
@@ -96,14 +96,23 @@ const emit = defineEmits(['update:primary', 'update:secondary', 'select', 'confi
 
 const isCardio = computed(() => props.set.type === 'cardio')
 
-// Empty by default — previous values shown as placeholder only
-const localPrimary   = ref('')
-const localSecondary = ref('')
+function primaryDefault(s) {
+  if (isCardio.value) return s.lastDuration ?? s.plannedDuration ?? ''
+  return s.lastReps ?? s.plannedReps ?? ''
+}
 
-// Reset inputs when the active set changes
-watch(() => [props.set, props.isActive], () => {
-  localPrimary.value   = ''
-  localSecondary.value = ''
+function secondaryDefault(s) {
+  if (isCardio.value) return s.lastLevel ?? s.plannedLevel ?? ''
+  return s.lastWeight ?? s.plannedWeight ?? ''
+}
+
+const localPrimary   = ref(primaryDefault(props.set))
+const localSecondary = ref(secondaryDefault(props.set))
+
+// Reset when the active set changes
+watch(() => [props.set, props.isActive], ([newSet]) => {
+  localPrimary.value   = primaryDefault(newSet)
+  localSecondary.value = secondaryDefault(newSet)
 })
 
 watch(localPrimary,   v => emit('update:primary', v))

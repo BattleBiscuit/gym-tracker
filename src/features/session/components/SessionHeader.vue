@@ -2,11 +2,16 @@
   <div class="session-header">
     <span class="session-header__routine">{{ routineName }}</span>
     <span class="session-header__elapsed">{{ formattedElapsed }}</span>
+    <button class="session-header__finish" @click="$emit('finish')" title="Finish workout">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
   </div>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+
+defineEmits(['finish'])
 
 const props = defineProps({
   routineName:   { type: String, default: '' },
@@ -48,4 +53,17 @@ const formattedElapsed = computed(() => {
   color: var(--color-text-3);
   font-variant-numeric: tabular-nums;
 }
+
+.session-header__finish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  color: var(--color-accent);
+  border: 1px solid rgba(232, 255, 71, 0.3);
+  transition: background var(--transition-fast);
+}
+.session-header__finish:active { background: rgba(232, 255, 71, 0.1); }
 </style>
