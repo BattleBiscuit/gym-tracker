@@ -1,0 +1,76 @@
+:root {
+  /* Surface hierarchy */
+  --color-bg:         #0f0f0f;
+  --color-surface-1:  #1a1a1a;
+  --color-surface-2:  #242424;
+  --color-surface-3:  #2e2e2e;
+
+  /* Brand accent */
+  --color-accent:     #e8ff47;
+  --color-accent-dim: #b8cc35;
+
+  /* Semantic colors */
+  --color-success:    #4caf50;
+  --color-danger:     #f44336;
+  --color-warning:    #ff9800;
+
+  /* Text */
+  --color-text-1:     #f5f5f5;
+  --color-text-2:     #9e9e9e;
+  --color-text-3:     #616161;
+
+  /* Borders */
+  --color-border:     #2e2e2e;
+  --color-border-focus: #e8ff47;
+
+  /* Spacing (4pt grid) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+
+  /* Touch targets — Z Flip inner display is 390px wide */
+  --touch-target-min: 48px;
+
+  /* Layout */
+  --nav-height:    56px;
+  --scroll-pb:     calc(56px + env(safe-area-inset-bottom, 0px) + 16px);
+  --header-height: 56px;
+
+  /* Safe area insets */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top:    env(safe-area-inset-top, 0px);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-lg:   18px;
+  --text-xl:   20px;
+  --text-2xl:  24px;
+  --text-3xl:  30px;
+
+  --font-normal:   400;
+  --font-medium:   500;
+  --font-semibold: 600;
+  --font-bold:     700;
+
+  /* Transitions */
+  --transition-fast:   120ms ease;
+  --transition-normal: 200ms ease;
+}

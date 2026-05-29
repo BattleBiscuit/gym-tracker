@@ -1,0 +1,36 @@
+/* Samsung Galaxy Z Flip — tabletop (half-folded) pose layout overrides.
+   The fold splits the inner display horizontally at ~50vh.
+   env(fold-top) = distance from viewport top to top of fold crease.
+   env(fold-bottom) = distance from bottom of fold crease to viewport bottom.
+   Fallback to 50vh/50vh when the browser doesn't report fold geometry. */
+
+@media (screen-fold-posture: tabletop) {
+  /* Hide bottom nav — it would be on the lower half facing down on a table */
+  .bottom-nav {
+    display: none !important;
+  }
+
+  /* Session active view: two-panel grid split at the fold */
+  .session-flex-layout {
+    display: grid !important;
+    grid-template-rows: env(fold-top, 50vh) env(fold-bottom, 50vh);
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .session-flex-layout .session-top-panel {
+    grid-row: 1;
+    overflow-y: auto;
+    padding-bottom: var(--space-2);
+  }
+
+  .session-flex-layout .session-bottom-panel {
+    grid-row: 2;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+    gap: var(--space-3);
+    background-color: var(--color-surface-1);
+  }
+}
