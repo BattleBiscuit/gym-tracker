@@ -189,8 +189,8 @@ async function onComplete() {
   const restSeconds = store.currentSet?.restSeconds || 0
   const isCardio = store.currentSet?.type === 'cardio'
   const s = store.currentSet
-  const primary   = localPrimary.value   !== '' ? Number(localPrimary.value)   : (isCardio ? (s?.lastDuration ?? s?.plannedDuration) : (s?.lastReps    ?? s?.plannedReps))    ?? 0
-  const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? (s?.lastLevel    ?? s?.plannedLevel)    : (s?.lastWeight  ?? s?.plannedWeight))  ?? 0
+  const primary   = localPrimary.value   !== '' ? Number(localPrimary.value)   : (isCardio ? s?.plannedDuration : s?.plannedReps)    ?? 0
+  const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? s?.plannedLevel    : s?.plannedWeight)  ?? 0
 
   await store.markSetComplete(primary, secondary)
 

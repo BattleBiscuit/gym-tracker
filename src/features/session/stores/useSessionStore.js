@@ -52,42 +52,28 @@ export const useSessionStore = defineStore('session', () => {
 
     const session = await sessionRepository.createSession(routineId, routine.name)
 
-    // Fetch last actuals for each exercise to use as placeholders
-    const lastActuals = await Promise.all(
-      sortedExercises.map(ex =>
-        sessionRepository.getLastActuals(ex.name, ex.sets?.length || 1)
-      )
-    )
-
     exercises.value = sortedExercises
-    sets.value = sortedExercises.map((ex, exIdx) =>
-      (ex.sets || []).map((s, setIdx) => {
-        const last = lastActuals[exIdx]?.[setIdx]
-        return {
-          id: null,
-          sessionId: session.id,
-          exercisePosition: ex.position,
-          exerciseName: ex.name,
-          setIndex: setIdx,
-          type: s.type || 'strength',
-          plannedReps:    s.reps     ?? null,
-          plannedWeight:  s.weight   ?? null,
-          actualReps:     null,
-          actualWeight:   null,
-          weightUnit:     s.weightUnit || 'kg',
-          lastReps:       last?.reps     ?? null,
-          lastWeight:     last?.weight   ?? null,
-          plannedDuration: s.duration ?? null,
-          plannedLevel:    s.level    ?? null,
-          actualDuration:  null,
-          actualLevel:     null,
-          lastDuration:    last?.duration ?? null,
-          lastLevel:       last?.level    ?? null,
-          restSeconds: s.restSeconds,
-          completedAt: null,
-          skipped: false,
-        }
-      })
+    sets.value = sortedExercises.map(ex =>
+      (ex.sets || []).map((s, setIdx) => ({
+        id: null,
+        sessionId: session.id,
+        exercisePosition: ex.position,
+        exerciseName: ex.name,
+        setIndex: setIdx,
+        type: s.type || 'strength',
+        plannedReps:     s.reps     ?? null,
+        plannedWeight:   s.weight   ?? null,
+        actualReps:      null,
+        actualWeight:    null,
+        weightUnit:      s.weightUnit || 'kg',
+        plannedDuration: s.duration ?? null,
+        plannedLevel:    s.level    ?? null,
+        actualDuration:  null,
+        actualLevel:     null,
+        restSeconds:     s.restSeconds,
+        completedAt:     null,
+        skipped:         false,
+      }))
     )
 
     activeSessionId.value = session.id
@@ -290,6 +276,31 @@ export const useSessionStore = defineStore('session', () => {
       completedAt: Date.now(),
       totalVolumeKg: volume,
     })
+
+    // Update routine exercises with this session's actuals as the new planned targets
+    for (let exIdx = 0; exIdx < exercises.value.length; exIdx++) {
+      const ex = exercises.value[exIdx]
+      if (!ex.id) continue  // session-added exercises have no routine ID
+      const exSets = sets.value[exIdx] || []
+      const updatedSets = (ex.sets || []).map((planned, setIdx) => {
+        const logged = exSets[setIdx]
+        if (!logged || logged.skipped || !logged.completedAt) return planned
+        if (planned.type === 'cardio') {
+          return {
+            ...planned,
+            duration: logged.actualDuration ?? planned.duration,
+            level:    logged.actualLevel    ?? planned.level,
+          }
+        }
+        return {
+          ...planned,
+          reps:   logged.actualReps   ?? planned.reps,
+          weight: logged.actualWeight ?? planned.weight,
+        }
+      })
+      await routinesRepository.updateExercise(ex.id, { sets: updatedSets })
+    }
+
     _clearSession()
   }
 
