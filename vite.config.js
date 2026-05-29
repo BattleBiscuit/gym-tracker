@@ -2,6 +2,9 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
+import { readFileSync } from 'fs'
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'))
 
 export default defineConfig({
   base: process.env.GITHUB_PAGES ? '/gym-tracker/' : '/',
@@ -50,6 +53,10 @@ export default defineConfig({
       },
     }),
   ],
+
+  define: {
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 16).replace('T', ' ')),
+  },
 
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },

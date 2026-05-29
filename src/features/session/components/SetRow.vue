@@ -11,13 +11,13 @@
         <template v-if="isCardio">
           <input class="set-row__input" type="number" inputmode="numeric"
             :value="localPrimary"
-            :placeholder="set.plannedDuration"
+            :placeholder="set.lastDuration ?? set.plannedDuration"
             :min="0"
             @input="localPrimary = $event.target.value" />
           <span class="set-row__sep">min</span>
           <input class="set-row__input" type="number" inputmode="numeric"
             :value="localSecondary"
-            :placeholder="set.plannedLevel"
+            :placeholder="set.lastLevel ?? set.plannedLevel"
             :min="0"
             @input="localSecondary = $event.target.value"
             @keydown.enter="$emit('confirm')" />
@@ -26,13 +26,13 @@
         <template v-else>
           <input class="set-row__input" type="number" inputmode="numeric"
             :value="localPrimary"
-            :placeholder="set.plannedReps"
+            :placeholder="set.lastReps ?? set.plannedReps"
             :min="0"
             @input="localPrimary = $event.target.value" />
           <span class="set-row__sep">×</span>
           <input class="set-row__input" type="number" inputmode="decimal"
             :value="localSecondary"
-            :placeholder="set.plannedWeight"
+            :placeholder="set.lastWeight ?? set.plannedWeight"
             :min="0" :step="0.5"
             @input="localSecondary = $event.target.value"
             @keydown.enter="$emit('confirm')" />
@@ -96,23 +96,13 @@ const emit = defineEmits(['update:primary', 'update:secondary', 'select', 'confi
 
 const isCardio = computed(() => props.set.type === 'cardio')
 
-function primaryDefault(s) {
-  if (isCardio.value) return s.lastDuration ?? s.plannedDuration ?? ''
-  return s.lastReps ?? s.plannedReps ?? ''
-}
+const localPrimary   = ref('')
+const localSecondary = ref('')
 
-function secondaryDefault(s) {
-  if (isCardio.value) return s.lastLevel ?? s.plannedLevel ?? ''
-  return s.lastWeight ?? s.plannedWeight ?? ''
-}
-
-const localPrimary   = ref(primaryDefault(props.set))
-const localSecondary = ref(secondaryDefault(props.set))
-
-// Reset when the active set changes
-watch(() => [props.set, props.isActive], ([newSet]) => {
-  localPrimary.value   = primaryDefault(newSet)
-  localSecondary.value = secondaryDefault(newSet)
+// Reset to empty when the active set changes so typing works immediately
+watch(() => [props.set, props.isActive], () => {
+  localPrimary.value   = ''
+  localSecondary.value = ''
 })
 
 watch(localPrimary,   v => emit('update:primary', v))

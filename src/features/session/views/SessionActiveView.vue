@@ -7,6 +7,7 @@
         :routineName="store.activeSession?.routineName || ''"
         :elapsedSeconds="store.elapsedSeconds"
         @finish="onFinishEarly"
+        @quit="abandonModal = true"
       />
     </div>
 
@@ -79,10 +80,6 @@
           <button class="action-icon" @click="onSkip" title="Skip set">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 12 5 19 12"/><polyline points="5 19 12 12 19 19"/></svg>
             <span>Skip</span>
-          </button>
-          <button class="action-icon action-icon--danger" @click="abandonModal = true" title="Abandon workout">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            <span>Quit</span>
           </button>
         </div>
       </div>
@@ -171,10 +168,8 @@ async function submitAddExercise() {
 }
 function selectSet(exIdx, setIdx) {
   store.cancelRestTimer()
-  const set = store.sets[exIdx]?.[setIdx]
-  const cardio = set?.type === 'cardio'
-  localPrimary.value   = cardio ? (set?.lastDuration ?? set?.plannedDuration ?? '') : (set?.lastReps    ?? set?.plannedReps    ?? '')
-  localSecondary.value = cardio ? (set?.lastLevel    ?? set?.plannedLevel    ?? '') : (set?.lastWeight  ?? set?.plannedWeight  ?? '')
+  localPrimary.value   = ''
+  localSecondary.value = ''
   store.jumpToExercise(exIdx, setIdx)
 }
 
@@ -194,8 +189,8 @@ async function onComplete() {
   const restSeconds = store.currentSet?.restSeconds || 0
   const isCardio = store.currentSet?.type === 'cardio'
   const s = store.currentSet
-  const primary   = localPrimary.value   !== '' ? Number(localPrimary.value)   : (isCardio ? (s?.actualDuration ?? s?.plannedDuration)  : (s?.actualReps    ?? s?.plannedReps))    ?? 0
-  const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? (s?.actualLevel   ?? s?.plannedLevel)      : (s?.actualWeight  ?? s?.plannedWeight))  ?? 0
+  const primary   = localPrimary.value   !== '' ? Number(localPrimary.value)   : (isCardio ? (s?.lastDuration ?? s?.plannedDuration) : (s?.lastReps    ?? s?.plannedReps))    ?? 0
+  const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? (s?.lastLevel    ?? s?.plannedLevel)    : (s?.lastWeight  ?? s?.plannedWeight))  ?? 0
 
   await store.markSetComplete(primary, secondary)
 

@@ -70,15 +70,25 @@
         </div>
       </section>
 
-      <!-- About section -->
+      <!-- App section -->
       <section class="settings-section">
-        <h2 class="section-title">About</h2>
+        <h2 class="section-title">App</h2>
         <div class="settings-card">
           <div class="settings-row settings-row--static">
             <div class="settings-row__body">
               <span class="settings-row__label">GymApp</span>
-              <span class="settings-row__sub">Offline workout tracker · PWA</span>
+              <span class="settings-row__sub">Offline workout tracker · PWA · Built {{ buildDate }}</span>
             </div>
+          </div>
+
+          <div class="settings-divider" />
+
+          <div class="settings-row" @click="checkForUpdate">
+            <div class="settings-row__body">
+              <span class="settings-row__label">{{ updateStatus }}</span>
+              <span class="settings-row__sub">Tap to check for a newer version</span>
+            </div>
+            <svg class="settings-row__icon" :class="{ 'icon-spin': isChecking }" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
           </div>
         </div>
       </section>
@@ -126,11 +136,14 @@ import AppBadge from '@/components/ui/AppBadge.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import { db } from '@/db/index.js'
 
-const fileInputRef = ref(null)
-const importModal  = ref(false)
-const isImporting  = ref(false)
+const fileInputRef  = ref(null)
+const importModal   = ref(false)
+const isImporting   = ref(false)
 const importPreview = ref(null)
 const isPersistent  = ref(false)
+const isChecking    = ref(false)
+const updateStatus  = ref('Check for update')
+const buildDate     = __BUILD_DATE__
 let pendingImportData = null
 
 const toast = ref({ show: false, message: '', type: 'success' })
@@ -144,6 +157,49 @@ onMounted(async () => {
 function showToast(message, type = 'success') {
   toast.value = { show: true, message, type }
   setTimeout(() => { toast.value.show = false }, 3000)
+}
+
+// ── Update ───────────────────────────────────────────────────────────────────
+
+async function checkForUpdate() {
+  if (isChecking.value) return
+  isChecking.value = true
+  updateStatus.value = 'Checking…'
+
+  try {
+    const reg = await navigator.serviceWorker?.getRegistration()
+    if (!reg) {
+      updateStatus.value = 'No service worker found'
+      return
+    }
+
+    await reg.update()
+
+    if (reg.waiting) {
+      // New SW already waiting — activate it and reload
+      updateStatus.value = 'Update found — reloading…'
+      reg.waiting.postMessage({ type: 'SKIP_WAITING' })
+      setTimeout(() => window.location.reload(), 500)
+    } else if (reg.installing) {
+      // SW is downloading — wait for it
+      updateStatus.value = 'Downloading update…'
+      reg.installing.addEventListener('statechange', e => {
+        if (e.target.state === 'installed') {
+          updateStatus.value = 'Update ready — reloading…'
+          e.target.postMessage({ type: 'SKIP_WAITING' })
+          setTimeout(() => window.location.reload(), 500)
+        }
+      })
+    } else {
+      updateStatus.value = 'Already up to date'
+      setTimeout(() => { updateStatus.value = 'Check for update' }, 3000)
+    }
+  } catch (e) {
+    updateStatus.value = 'Check failed: ' + e.message
+    setTimeout(() => { updateStatus.value = 'Check for update' }, 4000)
+  } finally {
+    isChecking.value = false
+  }
 }
 
 // ── Example data ────────────────────────────────────────────────────────────
@@ -310,6 +366,9 @@ async function doImport() {
 .settings-divider { height: 1px; background: var(--color-border); margin: 0; }
 
 .file-input-hidden { display: none; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.icon-spin { animation: spin 1s linear infinite; }
 
 /* Import preview */
 .import-preview { display: flex; flex-direction: column; gap: var(--space-4); }
