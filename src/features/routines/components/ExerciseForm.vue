@@ -34,7 +34,7 @@
               :class="{ 'set-input--error': errors[`set_${idx}_reps`] }"
               @input="set.reps = $event.target.value === '' ? null : Number($event.target.value)" />
             <input class="set-input" type="number" inputmode="decimal"
-              :value="set.weight" :min="0" :step="0.5"
+              :value="set.weight" :step="0.5"
               :class="{ 'set-input--error': errors[`set_${idx}_weight`] }"
               @input="set.weight = $event.target.value === '' ? null : Number($event.target.value)" />
             <div class="unit-toggle">

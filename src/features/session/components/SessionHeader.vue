@@ -18,6 +18,8 @@
 
 <script setup>
 import { computed } from 'vue'
+import { resolveWeight } from '@/utils/formatWeight.js'
+import { bodyweight } from '@/composables/useConfig.js'
 
 defineEmits(['finish', 'quit'])
 
@@ -35,21 +37,21 @@ const formattedElapsed = computed(() => {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 })
 
-function vol(reps, weight) {
+function vol(reps, weight, unit) {
   if (!reps) return 0
-  return weight ? reps * weight : reps
+  return reps * resolveWeight(weight, unit || 'kg', bodyweight.value || 0)
 }
 
 const growthDir = computed(() => {
   let planned = 0, actual = 0
   for (const s of props.sets) {
     if (s.type === 'cardio') continue
-    const p = vol(s.plannedReps, s.plannedWeight)
+    const p = vol(s.plannedReps, s.plannedWeight, s.weightUnit)
     planned += p
     if (s.skipped) {
       // skipped = 0 actual
     } else if (s.completedAt) {
-      actual += vol(s.actualReps, s.actualWeight)
+      actual += vol(s.actualReps, s.actualWeight, s.weightUnit)
     } else {
       actual += p  // untouched = neutral (same as planned)
     }
@@ -64,12 +66,12 @@ const growthLabel = computed(() => {
   let planned = 0, actual = 0
   for (const s of props.sets) {
     if (s.type === 'cardio') continue
-    const p = vol(s.plannedReps, s.plannedWeight)
+    const p = vol(s.plannedReps, s.plannedWeight, s.weightUnit)
     planned += p
     if (s.skipped) {
       // 0
     } else if (s.completedAt) {
-      actual += vol(s.actualReps, s.actualWeight)
+      actual += vol(s.actualReps, s.actualWeight, s.weightUnit)
     } else {
       actual += p
     }

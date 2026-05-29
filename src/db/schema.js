@@ -20,6 +20,11 @@ db.version(4).stores({
 db.version(5).stores({
   workoutSets: 'id, sessionId, [sessionId+exercisePosition+setIndex]',
 })
+
+// App config key-value store
+db.version(6).stores({
+  config: 'key',
+})
 // No structural index change — just adds duration/level fields to existing records (nullable, added on use)
 
 // Per-set targets: routineExercises now stores a `sets` JSON array

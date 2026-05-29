@@ -25,7 +25,7 @@
             @input="localPrimary = $event.target.value" />
           <span class="set-row__sep">×</span>
           <input class="set-row__input" type="number" inputmode="decimal"
-            :value="localSecondary" :placeholder="set.plannedWeight" :min="0" :step="0.5"
+            :value="localSecondary" :placeholder="set.plannedWeight" :step="0.5"
             @input="localSecondary = $event.target.value"
             @keydown.enter="$emit('confirm')" />
           <span class="set-row__unit">{{ set.weightUnit }}</span>
@@ -69,10 +69,12 @@ import { ref, computed, watch } from 'vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import { formatWeight } from '@/utils/formatWeight.js'
 
-function setVolume(reps, weight) {
+import { resolveWeight } from '@/utils/formatWeight.js'
+import { bodyweight } from '@/composables/useConfig.js'
+
+function setVolume(reps, weight, unit) {
   if (!reps) return 0
-  if (!weight) return reps   // bodyweight — use reps as volume
-  return reps * weight
+  return reps * resolveWeight(weight, unit || 'kg', bodyweight.value || 0)
 }
 
 const props = defineProps({
@@ -94,8 +96,8 @@ const deltaDir = computed(() => {
     actual  = (s.actualDuration  || 0) + (s.actualLevel  || 0)
     planned = (s.plannedDuration || 0) + (s.plannedLevel || 0)
   } else {
-    actual  = setVolume(s.actualReps,  s.actualWeight)
-    planned = setVolume(s.plannedReps, s.plannedWeight)
+    actual  = setVolume(s.actualReps,  s.actualWeight,  s.weightUnit)
+    planned = setVolume(s.plannedReps, s.plannedWeight, s.weightUnit)
   }
   if (!planned) return 'neutral'
   if (actual > planned) return 'up'
@@ -111,8 +113,8 @@ const deltaLabel = computed(() => {
     actual  = (s.actualDuration  || 0) + (s.actualLevel  || 0)
     planned = (s.plannedDuration || 0) + (s.plannedLevel || 0)
   } else {
-    actual  = setVolume(s.actualReps,  s.actualWeight)
-    planned = setVolume(s.plannedReps, s.plannedWeight)
+    actual  = setVolume(s.actualReps,  s.actualWeight,  s.weightUnit)
+    planned = setVolume(s.plannedReps, s.plannedWeight, s.weightUnit)
   }
   if (!planned) return '='
   const diff = actual - planned

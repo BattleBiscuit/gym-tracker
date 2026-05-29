@@ -6,6 +6,31 @@
 
     <div class="settings-content">
 
+      <!-- Profile section -->
+      <section class="settings-section">
+        <h2 class="section-title">Profile</h2>
+        <div class="settings-card">
+          <div class="settings-row settings-row--static">
+            <div class="settings-row__body">
+              <span class="settings-row__label">Bodyweight</span>
+              <span class="settings-row__sub">Used for BW exercises and analytics</span>
+            </div>
+            <div class="bw-input-wrap">
+              <input
+                class="bw-input"
+                type="number"
+                inputmode="decimal"
+                :value="bwValue"
+                min="1"
+                step="0.5"
+                @change="onBwChange"
+              />
+              <span class="bw-unit">kg</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Data section -->
       <section class="settings-section">
         <h2 class="section-title">Data</h2>
@@ -52,20 +77,6 @@
             <AppBadge :variant="isPersistent ? 'success' : 'warning'">
               {{ isPersistent ? 'Active' : 'Not granted' }}
             </AppBadge>
-          </div>
-        </div>
-      </section>
-
-      <!-- Example data section -->
-      <section class="settings-section">
-        <h2 class="section-title">Example data</h2>
-        <div class="settings-card">
-          <div class="settings-row" @click="loadExample">
-            <div class="settings-row__body">
-              <span class="settings-row__label">Load example backup</span>
-              <span class="settings-row__sub">3 routines · 15 exercises · 12 sessions of history</span>
-            </div>
-            <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </div>
         </div>
       </section>
@@ -135,6 +146,15 @@ import AppButton from '@/components/ui/AppButton.vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import { db } from '@/db/index.js'
+import { bodyweight, setBodyweight } from '@/composables/useConfig.js'
+
+const bwValue = bodyweight  // reactive ref from config
+
+async function onBwChange(e) {
+  const val = parseFloat(e.target.value)
+  if (!val || val <= 0) return
+  await setBodyweight(val)
+}
 
 const fileInputRef  = ref(null)
 const importModal   = ref(false)
@@ -202,20 +222,6 @@ async function checkForUpdate() {
   }
 }
 
-// ── Example data ────────────────────────────────────────────────────────────
-
-async function loadExample() {
-  try {
-    const res = await fetch('./example-backup.json')
-    if (!res.ok) throw new Error('Could not load example file')
-    const data = await res.json()
-    pendingImportData = data
-    importPreview.value = data
-    importModal.value = true
-  } catch (e) {
-    showToast('Failed to load example: ' + e.message, 'error')
-  }
-}
 
 // ── Export ──────────────────────────────────────────────────────────────────
 
@@ -366,6 +372,23 @@ async function doImport() {
 .settings-divider { height: 1px; background: var(--color-border); margin: 0; }
 
 .file-input-hidden { display: none; }
+
+.bw-input-wrap { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
+
+.bw-input {
+  width: 72px; height: 40px;
+  text-align: center;
+  font-size: var(--text-base); font-weight: var(--font-semibold);
+  color: var(--color-text-1);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-2);
+  user-select: text; -webkit-user-select: text;
+}
+.bw-input:focus { border-color: var(--color-border-focus); outline: none; }
+
+.bw-unit { font-size: var(--text-sm); color: var(--color-text-3); }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .icon-spin { animation: spin 1s linear infinite; }

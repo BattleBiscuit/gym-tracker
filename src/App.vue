@@ -23,6 +23,7 @@ import AppBottomNav from '@/components/ui/AppBottomNav.vue'
 import { isFlexMode } from '@/composables/useFlexMode.js'
 import { useSessionStore } from '@/features/session/stores/useSessionStore.js'
 import { useRoutinesStore } from '@/features/routines/stores/useRoutinesStore.js'
+import { loadConfig } from '@/composables/useConfig.js'
 
 const router = useRouter()
 const route  = useRoute()
@@ -34,6 +35,7 @@ const isSessionActive = computed(() => route.name === 'session-active')
 onMounted(async () => {
   // Request persistent storage so the OS never auto-evicts our IndexedDB
   if (navigator.storage?.persist) navigator.storage.persist()
+  await loadConfig()
 
   // Always pre-load routines into the store so they're available immediately
   await routinesStore.loadRoutines()
