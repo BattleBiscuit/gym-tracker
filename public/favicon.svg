@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" rx="8" fill="#0f0f0f"/>
-  <text x="16" y="22" text-anchor="middle" font-size="18" fill="#e8ff47" font-family="sans-serif" font-weight="bold">G</text>
+  <!-- Outer arc — opens at bottom-left -->
+  <path d="M 9.17 25.31 A 10 10 0 1 1 25.31 9.17" fill="none" stroke="#e8ff47" stroke-width="3" stroke-linecap="round"/>
+  <!-- Inner arc — opens at top-right (offset 180°) -->
+  <path d="M 22.83 6.69 A 6 6 0 1 1 6.69 22.83" fill="none" stroke="#e8ff47" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
 </svg>

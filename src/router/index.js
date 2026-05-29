@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
-  { path: '/', redirect: { name: 'routines' } },
+  { path: '/', redirect: { name: 'session-pick' } },
 
   {
     path: '/routines',
@@ -60,7 +60,7 @@ const routes = [
     component: () => import('@/features/settings/views/SettingsView.vue'),
   },
 
-  { path: '/:pathMatch(.*)*', redirect: { name: 'routines' } },
+  { path: '/:pathMatch(.*)*', redirect: { name: 'session-pick' } },
 ]
 
 export const router = createRouter({

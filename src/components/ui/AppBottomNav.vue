@@ -22,13 +22,6 @@ const route = useRoute()
 
 const tabs = [
   {
-    name: 'routines',
-    to: '/routines',
-    label: 'Routines',
-    relatedRoutes: ['routines', 'routine-create', 'routine-edit'],
-    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>`,
-  },
-  {
     name: 'session-pick',
     to: '/session',
     label: 'Workout',
@@ -41,6 +34,13 @@ const tabs = [
     label: 'History',
     relatedRoutes: ['history', 'history-detail'],
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><polyline points="12 7 12 12 16 14"/></svg>`,
+  },
+  {
+    name: 'routines',
+    to: '/routines',
+    label: 'Routines',
+    relatedRoutes: ['routines', 'routine-create', 'routine-edit'],
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>`,
   },
   {
     name: 'library',
