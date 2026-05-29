@@ -1,7 +1,7 @@
 <template>
   <AppPageShell>
     <template #header>
-      <span class="page-title">Exercise Library</span>
+      <span class="page-title">Exercises</span>
       <div style="flex:1" />
       <AppButton variant="accent" size="sm" @click="openCreate">+ New</AppButton>
     </template>
