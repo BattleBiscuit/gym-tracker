@@ -6,6 +6,7 @@
       <SessionHeader
         :routineName="store.activeSession?.routineName || ''"
         :elapsedSeconds="store.elapsedSeconds"
+        :sets="store.sets.flat()"
         @finish="onFinishEarly"
         @quit="abandonModal = true"
       />

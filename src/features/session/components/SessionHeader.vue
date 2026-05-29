@@ -2,6 +2,9 @@
   <div class="session-header">
     <span class="session-header__routine">{{ routineName }}</span>
     <span class="session-header__elapsed">{{ formattedElapsed }}</span>
+    <span v-if="growthLabel" :class="['session-header__growth', `session-header__growth--${growthDir}`]">
+      {{ growthLabel }}
+    </span>
     <div class="session-header__actions">
       <button class="session-header__btn session-header__btn--quit" @click="$emit('quit')" title="Abandon workout">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -20,13 +23,8 @@ defineEmits(['finish', 'quit'])
 
 const props = defineProps({
   routineName:   { type: String, default: '' },
-  exerciseName:  { type: String, default: '' },
-  exerciseNotes: { type: String, default: '' },
-  exerciseIndex: { type: Number, default: 0 },
-  exerciseTotal: { type: Number, default: 1 },
-  setIndex:      { type: Number, default: 0 },
-  setTotal:      { type: Number, default: 1 },
   elapsedSeconds:{ type: Number, default: 0 },
+  sets:          { type: Array, default: () => [] }, // flat array of all sets
 })
 
 const formattedElapsed = computed(() => {
@@ -35,6 +33,51 @@ const formattedElapsed = computed(() => {
   const s = props.elapsedSeconds % 60
   if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+})
+
+function vol(reps, weight) {
+  if (!reps) return 0
+  return weight ? reps * weight : reps
+}
+
+const growthDir = computed(() => {
+  let planned = 0, actual = 0
+  for (const s of props.sets) {
+    if (s.type === 'cardio') continue
+    const p = vol(s.plannedReps, s.plannedWeight)
+    planned += p
+    if (s.skipped) {
+      // skipped = 0 actual
+    } else if (s.completedAt) {
+      actual += vol(s.actualReps, s.actualWeight)
+    } else {
+      actual += p  // untouched = neutral (same as planned)
+    }
+  }
+  if (!planned) return 'neutral'
+  if (actual > planned) return 'up'
+  if (actual < planned) return 'down'
+  return 'equal'
+})
+
+const growthLabel = computed(() => {
+  let planned = 0, actual = 0
+  for (const s of props.sets) {
+    if (s.type === 'cardio') continue
+    const p = vol(s.plannedReps, s.plannedWeight)
+    planned += p
+    if (s.skipped) {
+      // 0
+    } else if (s.completedAt) {
+      actual += vol(s.actualReps, s.actualWeight)
+    } else {
+      actual += p
+    }
+  }
+  if (!planned) return ''
+  const pct = Math.round(((actual - planned) / planned) * 100)
+  if (pct === 0) return '='
+  return pct > 0 ? `+${pct}%` : `${pct}%`
 })
 </script>
 
@@ -58,6 +101,16 @@ const formattedElapsed = computed(() => {
   color: var(--color-text-3);
   font-variant-numeric: tabular-nums;
 }
+
+.session-header__growth {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  font-variant-numeric: tabular-nums;
+}
+.session-header__growth--up    { color: var(--color-success); }
+.session-header__growth--down  { color: var(--color-danger); }
+.session-header__growth--equal { color: var(--color-text-3); }
+.session-header__growth--neutral { display: none; }
 
 .session-header__actions {
   display: flex;

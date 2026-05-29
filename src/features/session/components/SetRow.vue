@@ -41,6 +41,7 @@
         <template v-if="isCardio">{{ set.actualDuration }}min · lvl{{ set.actualLevel }}</template>
         <template v-else>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.weightUnit) }}</template>
       </span>
+      <span :class="['set-row__delta', `set-row__delta--${deltaDir}`]">{{ deltaLabel }}</span>
       <AppBadge variant="success">✓</AppBadge>
     </template>
 
@@ -68,6 +69,12 @@ import { ref, computed, watch } from 'vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import { formatWeight } from '@/utils/formatWeight.js'
 
+function setVolume(reps, weight) {
+  if (!reps) return 0
+  if (!weight) return reps   // bodyweight — use reps as volume
+  return reps * weight
+}
+
 const props = defineProps({
   set:       { type: Object, required: true },
   setNumber: { type: Number, required: true },
@@ -77,6 +84,41 @@ const props = defineProps({
 const emit = defineEmits(['update:primary', 'update:secondary', 'select', 'confirm'])
 
 const isCardio = computed(() => props.set.type === 'cardio')
+
+// Compare actual vs planned (planned = last session's actuals after first workout)
+const deltaDir = computed(() => {
+  const s = props.set
+  if (!s.completedAt) return 'neutral'
+  let actual, planned
+  if (isCardio.value) {
+    actual  = (s.actualDuration  || 0) + (s.actualLevel  || 0)
+    planned = (s.plannedDuration || 0) + (s.plannedLevel || 0)
+  } else {
+    actual  = setVolume(s.actualReps,  s.actualWeight)
+    planned = setVolume(s.plannedReps, s.plannedWeight)
+  }
+  if (!planned) return 'neutral'
+  if (actual > planned) return 'up'
+  if (actual < planned) return 'down'
+  return 'equal'
+})
+
+const deltaLabel = computed(() => {
+  const s = props.set
+  if (!s.completedAt) return ''
+  let actual, planned
+  if (isCardio.value) {
+    actual  = (s.actualDuration  || 0) + (s.actualLevel  || 0)
+    planned = (s.plannedDuration || 0) + (s.plannedLevel || 0)
+  } else {
+    actual  = setVolume(s.actualReps,  s.actualWeight)
+    planned = setVolume(s.plannedReps, s.plannedWeight)
+  }
+  if (!planned) return '='
+  const diff = actual - planned
+  if (diff === 0) return '='
+  return diff > 0 ? '▲' : '▼'
+})
 
 const localPrimary   = ref('')
 const localSecondary = ref('')
@@ -133,4 +175,14 @@ watch(localSecondary, v => emit('update:secondary', v))
 
 .set-row__sep { font-size: var(--text-sm); color: var(--color-text-3); }
 .set-row__unit { font-size: var(--text-xs); color: var(--color-text-3); }
+
+.set-row__delta {
+  font-size: 10px;
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+.set-row__delta--up      { color: var(--color-success); }
+.set-row__delta--down    { color: var(--color-danger); }
+.set-row__delta--equal   { color: var(--color-text-3); }
+.set-row__delta--neutral { display: none; }
 </style>
