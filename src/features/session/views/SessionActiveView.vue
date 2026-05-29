@@ -151,8 +151,8 @@ const router = useRouter()
 useSessionRunner()
 useRestTimer()
 
-const localPrimary   = ref(null)
-const localSecondary = ref(null)
+const localPrimary   = ref('')
+const localSecondary = ref('')
 const finishModal  = ref(false)
 const abandonModal = ref(false)
 const notesModal   = ref('')
@@ -202,8 +202,8 @@ async function onComplete() {
 
   store.advanceToNextSet()
 
-  localPrimary.value   = null
-  localSecondary.value = null
+  localPrimary.value   = ''
+  localSecondary.value = ''
 
   if (restSeconds > 0) {
     store.startRestTimer(restSeconds)
@@ -218,8 +218,8 @@ async function onSkip() {
     return
   }
   store.advanceToNextSet()
-  localPrimary.value   = null
-  localSecondary.value = null
+  localPrimary.value   = ''
+  localSecondary.value = ''
 }
 
 function onSkipRest() {
