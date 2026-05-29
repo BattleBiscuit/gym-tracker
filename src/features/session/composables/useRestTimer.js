@@ -1,5 +1,6 @@
 import { watch, onUnmounted } from 'vue'
 import { useSessionStore } from '../stores/useSessionStore.js'
+import { triggerTimerAlert } from '@/composables/useTimerAlert.js'
 
 // rAF-based timer — pauses when tab is backgrounded, no drift
 export function useRestTimer() {
@@ -8,12 +9,20 @@ export function useRestTimer() {
   let lastTimestamp = null
 
   function tick(timestamp) {
-    if (lastTimestamp === null) {
-      lastTimestamp = timestamp
-    }
+    if (lastTimestamp === null) lastTimestamp = timestamp
     const delta = (timestamp - lastTimestamp) / 1000
     lastTimestamp = timestamp
+
+    const wasActive = store.restTimerActive
     store.tickRestTimer(delta)
+
+    if (wasActive && !store.restTimerActive) {
+      // Timer reached zero naturally — alert
+      triggerTimerAlert()
+      rafId = null
+      lastTimestamp = null
+      return
+    }
 
     if (store.restTimerActive) {
       rafId = requestAnimationFrame(tick)
@@ -28,6 +37,7 @@ export function useRestTimer() {
       lastTimestamp = null
       rafId = requestAnimationFrame(tick)
     } else if (!active && rafId !== null) {
+      // Manual skip — cancel without alerting
       cancelAnimationFrame(rafId)
       rafId = null
       lastTimestamp = null
