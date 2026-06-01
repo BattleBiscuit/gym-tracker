@@ -31,6 +31,23 @@
         </div>
       </section>
 
+      <!-- Behaviour section -->
+      <section class="settings-section">
+        <h2 class="section-title">Behaviour</h2>
+        <div class="settings-card">
+          <div class="settings-row settings-row--static">
+            <div class="settings-row__body">
+              <span class="settings-row__label">Violent mode 🔥</span>
+              <span class="settings-row__sub">Get insulted when you perform worse than last time</span>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" :checked="violentMode" @change="setViolentMode($event.target.checked)" />
+              <span class="toggle__track" />
+            </label>
+          </div>
+        </div>
+      </section>
+
       <!-- Data section -->
       <section class="settings-section">
         <h2 class="section-title">Data</h2>
@@ -166,7 +183,7 @@ import AppButton from '@/components/ui/AppButton.vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import { db } from '@/db/index.js'
-import { bodyweight, setBodyweight } from '@/composables/useConfig.js'
+import { bodyweight, setBodyweight, violentMode, setViolentMode } from '@/composables/useConfig.js'
 
 const bwValue = bodyweight  // reactive ref from config
 
@@ -402,6 +419,27 @@ async function doImport() {
 .settings-divider { height: 1px; background: var(--color-border); margin: 0; }
 
 .file-input-hidden { display: none; }
+
+.toggle { position: relative; display: inline-flex; align-items: center; cursor: pointer; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle__track {
+  width: 44px; height: 24px;
+  background: var(--color-surface-3);
+  border-radius: var(--radius-full);
+  transition: background var(--transition-normal);
+  position: relative;
+}
+.toggle__track::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  background: var(--color-text-2);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-normal), background var(--transition-normal);
+}
+.toggle input:checked + .toggle__track { background: var(--color-accent); }
+.toggle input:checked + .toggle__track::after { transform: translateX(20px); background: #0f0f0f; }
 
 .bw-input-wrap { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
 
