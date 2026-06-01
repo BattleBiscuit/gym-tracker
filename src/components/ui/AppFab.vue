@@ -12,7 +12,7 @@ defineEmits(['click'])
 <style scoped>
 .fab {
   position: fixed;
-  left: var(--space-4);
+  right: var(--space-4);
   bottom: calc(var(--nav-height) + var(--safe-bottom) + var(--space-4));
   z-index: 100;
   display: flex;
