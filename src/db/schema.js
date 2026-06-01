@@ -43,12 +43,29 @@ db.version(6).stores({
 })
 
 db.version(8).stores({
-  // Add exerciseName + isPR indexes to workoutSets for fast PR and history queries
-  // Add exerciseLibraryId index to routineExercises for propagation lookups
-  // Drop unused name index from routines
   routines:         'id, createdAt, updatedAt',
   routineExercises: 'id, routineId, exerciseLibraryId, [routineId+position]',
   workoutSets:      'id, sessionId, exerciseName, isPR, [sessionId+exercisePosition+setIndex]',
+})
+
+db.version(9).stores({
+  // Add startedAt for direct range scans without joining sessions
+  // Add compound indexes for analytics queries
+  // Add muscleGroups snapshot for muscle group analytics without joining library
+  workoutSets: 'id, sessionId, exerciseName, isPR, startedAt, [exerciseName+startedAt], [exerciseName+isPR], [sessionId+exercisePosition+setIndex]',
+}).upgrade(async tx => {
+  // Backfill startedAt from parent session for existing sets
+  const sessions = await tx.table('workoutSessions').toArray()
+  const sessionMap = Object.fromEntries(sessions.map(s => [s.id, s.startedAt]))
+
+  // Backfill muscleGroups from exerciseLibrary via exerciseName
+  const library = await tx.table('exerciseLibrary').toArray()
+  const musclesByName = Object.fromEntries(library.map(e => [e.name, e.primaryMuscles || []]))
+
+  await tx.table('workoutSets').toCollection().modify(set => {
+    set.startedAt    = sessionMap[set.sessionId] ?? null
+    set.muscleGroups = musclesByName[set.exerciseName] ?? []
+  })
 })
 
 // Remove lbs, add isBodyweight per set, add effectiveWeight to workoutSets

@@ -4,6 +4,7 @@ import { sessionRepository } from '../db/sessionRepository.js'
 import { routinesRepository } from '@/features/routines/db/routinesRepository.js'
 import { resolveWeight } from '@/utils/formatWeight.js'
 import { bodyweight } from '@/composables/useConfig.js'
+import { db } from '@/db/index.js'
 
 export const useSessionStore = defineStore('session', () => {
   const activeSessionId = ref(null)
@@ -54,6 +55,10 @@ export const useSessionStore = defineStore('session', () => {
 
     const session = await sessionRepository.createSession(routineId, routine.name)
 
+    // Build exerciseName → muscleGroups map from library for snapshot
+    const libraryEntries = await db.exerciseLibrary.toArray()
+    const musclesByName = Object.fromEntries(libraryEntries.map(e => [e.name, e.primaryMuscles || []]))
+
     exercises.value = sortedExercises
     sets.value = sortedExercises.map(ex =>
       (ex.sets || []).map((s, setIdx) => ({
@@ -74,8 +79,11 @@ export const useSessionStore = defineStore('session', () => {
         actualDuration:  null,
         actualLevel:     null,
         restSeconds:     s.restSeconds,
+        startedAt:       session.startedAt,
+        muscleGroups:    musclesByName[ex.name] ?? [],
         completedAt:     null,
         skipped:         false,
+        isPR:            false,
       }))
     )
 
@@ -119,9 +127,12 @@ export const useSessionStore = defineStore('session', () => {
           plannedLevel:    s.level       ?? null,
           actualDuration:  null,
           actualLevel:     null,
-          restSeconds: s.restSeconds,
-          completedAt: null,
-          skipped: false,
+          restSeconds:  s.restSeconds,
+          startedAt:    session.startedAt,
+          muscleGroups: [],
+          completedAt:  null,
+          skipped:      false,
+          isPR:         false,
         }
       })
     )
@@ -271,9 +282,12 @@ export const useSessionStore = defineStore('session', () => {
         plannedLevel:    s.level       ?? null,
         actualDuration:  null,
         actualLevel:     null,
-        restSeconds: s.restSeconds,
-        completedAt: null,
-        skipped: false,
+        restSeconds:  s.restSeconds,
+        startedAt:    activeSession.value.startedAt,
+        muscleGroups: [],
+        completedAt:  null,
+        skipped:      false,
+        isPR:         false,
       }))
     )
   }
