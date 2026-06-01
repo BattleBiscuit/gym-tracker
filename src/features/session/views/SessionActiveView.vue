@@ -90,6 +90,11 @@
       </div>
     </div>
 
+    <!-- Violent mode insult toast -->
+    <Transition name="insult">
+      <div v-if="insultToast" class="insult-toast">{{ insultToast }}</div>
+    </Transition>
+
     <!-- Finish confirmation (shown after last set) -->
     <AppModal v-model="finishModal" title="Finish workout?" :closeOnBackdrop="false">
       <p style="color: var(--color-text-2)">
@@ -142,8 +147,9 @@ import SessionFlexLayout from '../components/SessionFlexLayout.vue'
 import ExercisePanel from '../components/ExercisePanel.vue'
 import { useSessionStore } from '../stores/useSessionStore.js'
 import { useRestTimer } from '../composables/useRestTimer.js'
-import { formatWeight } from '@/utils/formatWeight.js'
+import { formatWeight, resolveWeight } from '@/utils/formatWeight.js'
 import { useSessionRunner } from '../composables/useSessionRunner.js'
+import { violentMode, bodyweight } from '@/composables/useConfig.js'
 import ExerciseForm from '@/features/routines/components/ExerciseForm.vue'
 import { useExerciseEditor } from '@/features/routines/composables/useExerciseEditor.js'
 
@@ -165,6 +171,28 @@ const timerDashOffset = computed(() => {
 const localPrimary   = ref('')
 const localSecondary = ref('')
 const localBW        = ref(false)
+
+const INSULTS = [
+  'Is that all you got? My grandma lifts more.',
+  'Pathetic. Absolutely pathetic.',
+  'Worse than last time. Shocking.',
+  'You call that a workout?',
+  'Last time was better. Way better.',
+  "I've seen better performance from a houseplant.",
+  'Your future self is disappointed in you.',
+  'Come on. This is below your average mediocrity.',
+  'Did you even try?',
+  'This is embarrassing. For both of us.',
+]
+const insultToast = ref('')
+let insultTimer = null
+
+function showInsult() {
+  const idx = Math.floor(Math.random() * INSULTS.length)
+  insultToast.value = INSULTS[idx]
+  if (insultTimer) clearTimeout(insultTimer)
+  insultTimer = setTimeout(() => { insultToast.value = '' }, 3500)
+}
 const finishModal  = ref(false)
 const abandonModal = ref(false)
 const notesModal   = ref('')
@@ -206,6 +234,18 @@ async function onComplete() {
   const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? s?.plannedLevel    : s?.plannedWeight)  ?? 0
 
   await store.markSetComplete(primary, secondary, localBW.value)
+
+  // Violent mode: insult if this set's actual volume < planned volume
+  if (violentMode.value) {
+    const s = store.sets[store.currentExerciseIndex]?.[store.currentSetIndex - 1]
+      ?? store.sets[store.currentExerciseIndex]?.[store.sets[store.currentExerciseIndex]?.length - 1]
+    if (s && s.completedAt && s.type !== 'cardio') {
+      const bw = bodyweight.value || 0
+      const actualVol  = (s.actualReps  || 0) * resolveWeight(s.actualWeight,  s.isBodyweight, bw)
+      const plannedVol = (s.plannedReps || 0) * resolveWeight(s.plannedWeight, s.isBodyweight, bw)
+      if (plannedVol > 0 && actualVol < plannedVol) showInsult()
+    }
+  }
 
   if (isLast) {
     finishModal.value = true
@@ -413,4 +453,25 @@ async function doAbandon() {
 }
 
 
+
+.insult-toast {
+  position: fixed;
+  bottom: calc(var(--nav-height) + var(--safe-bottom) + 80px);
+  left: var(--space-4);
+  right: var(--space-4);
+  background: rgba(244, 67, 54, 0.12);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  font-style: italic;
+  text-align: center;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  z-index: 500;
+  pointer-events: none;
+}
+
+.insult-enter-active, .insult-leave-active { transition: opacity 300ms, transform 300ms; }
+.insult-enter-from { opacity: 0; transform: translateY(8px); }
+.insult-leave-to   { opacity: 0; transform: translateY(-8px); }
 </style>

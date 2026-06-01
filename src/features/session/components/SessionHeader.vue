@@ -5,9 +5,6 @@
     <span v-if="growthLabel" :class="['session-header__growth', `session-header__growth--${growthDir}`]">
       {{ growthLabel }}
     </span>
-    <span v-if="violentMode && growthDir === 'down' && insult" class="session-header__insult">
-      {{ insult }}
-    </span>
     <div class="session-header__actions">
       <button class="session-header__btn session-header__btn--quit" @click="$emit('quit')" title="Abandon workout">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -80,11 +77,6 @@ const growthDir = computed(() => {
   return 'equal'
 })
 
-const insult = computed(() => {
-  if (!violentMode.value || growthDir.value !== 'down') return ''
-  const completed = props.sets.filter(s => s.completedAt).length
-  return INSULTS[completed % INSULTS.length]
-})
 
 const growthLabel = computed(() => {
   const { planned, actual, anyCompleted } = sessionVolumes()
@@ -126,19 +118,6 @@ const growthLabel = computed(() => {
 .session-header__growth--down  { color: var(--color-danger); }
 .session-header__growth--equal { color: var(--color-text-3); }
 .session-header__growth--neutral { display: none; }
-
-.session-header__insult {
-  position: absolute;
-  left: 0; right: 0;
-  top: 100%;
-  padding: var(--space-1) var(--space-4);
-  font-size: var(--text-xs);
-  color: var(--color-danger);
-  background: rgba(244, 67, 54, 0.06);
-  border-bottom: 1px solid rgba(244, 67, 54, 0.15);
-  text-align: center;
-  font-style: italic;
-}
 
 .session-header__actions {
   display: flex;
