@@ -1,6 +1,6 @@
 import { reactive, ref } from 'vue'
 
-export const DEFAULT_STRENGTH_SET = () => ({ type: 'strength', reps: 10, weight: 0, weightUnit: 'kg', restSeconds: 90 })
+export const DEFAULT_STRENGTH_SET = () => ({ type: 'strength', reps: 10, weight: 0, isBodyweight: false, restSeconds: 90 })
 export const DEFAULT_CARDIO_SET   = () => ({ type: 'cardio', duration: 20, level: 1, restSeconds: 0 })
 
 export function useExerciseEditor() {
@@ -80,7 +80,7 @@ export function useExerciseEditor() {
       sets:              form.sets.map(s =>
         s.type === 'cardio'
           ? { type: 'cardio', duration: Number(s.duration), level: Number(s.level), restSeconds: Number(s.restSeconds) }
-          : { type: 'strength', reps: Number(s.reps), weight: Number(s.weight), weightUnit: s.weightUnit, restSeconds: Number(s.restSeconds) }
+          : { type: 'strength', reps: Number(s.reps), weight: Number(s.weight), isBodyweight: !!s.isBodyweight, restSeconds: Number(s.restSeconds) }
       ),
     }
   }

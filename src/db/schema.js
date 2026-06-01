@@ -25,6 +25,44 @@ db.version(5).stores({
 db.version(6).stores({
   config: 'key',
 })
+
+// Remove lbs, add isBodyweight per set, add effectiveWeight to workoutSets
+db.version(7).stores({
+  routineExercises: 'id, routineId, [routineId+position]',
+  workoutSets:      'id, sessionId, [sessionId+exercisePosition+setIndex]',
+}).upgrade(async tx => {
+  // Migrate routineExercises: convert lbs→kg, 0-weight→isBodyweight, drop weightUnit
+  await tx.table('routineExercises').toCollection().modify(exercise => {
+    if (!exercise.sets) return
+    exercise.sets = exercise.sets.map(s => {
+      let weight = s.weight ?? 0
+      if (s.weightUnit === 'lbs') weight = Math.round(weight * 0.453592 * 4) / 4
+      const isBodyweight = weight === 0
+      const { weightUnit, ...rest } = s
+      return { ...rest, weight: isBodyweight ? 0 : weight, isBodyweight }
+    })
+  })
+
+  // Migrate workoutSets: convert lbs→kg, add isBodyweight, add effectiveWeight
+  await tx.table('workoutSets').toCollection().modify(set => {
+    if (set.type === 'cardio') {
+      set.effectiveWeight = null
+      return
+    }
+    let planned = set.plannedWeight ?? 0
+    let actual  = set.actualWeight  ?? null
+    if (set.weightUnit === 'lbs') {
+      planned = Math.round(planned * 0.453592 * 4) / 4
+      if (actual != null) actual = Math.round(actual * 0.453592 * 4) / 4
+    }
+    set.plannedWeight   = planned
+    set.actualWeight    = actual
+    set.isBodyweight    = planned === 0
+    // effectiveWeight: store as-is (no bodyweight snapshot available for old sets)
+    set.effectiveWeight = actual
+    delete set.weightUnit
+  })
+})
 // No structural index change — just adds duration/level fields to existing records (nullable, added on use)
 
 // Per-set targets: routineExercises now stores a `sets` JSON array

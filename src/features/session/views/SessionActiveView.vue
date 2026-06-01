@@ -39,6 +39,7 @@
           :currentSetIndex="exIdx === store.currentExerciseIndex ? store.currentSetIndex : -1"
           @update:primary="v => localPrimary = v"
           @update:secondary="v => localSecondary = v"
+          @update:bw="v => localBW = v"
           @select="({ exIdx, setIdx }) => selectSet(exIdx, setIdx)"
           @confirm="onComplete"
         />
@@ -69,7 +70,7 @@
               {{ store.currentSet.plannedDuration }}min · lvl{{ store.currentSet.plannedLevel }}
             </template>
             <template v-else>
-              {{ store.currentSet.plannedReps }} reps · {{ formatWeight(store.currentSet.plannedWeight, store.currentSet.weightUnit) }}
+              {{ store.currentSet.plannedReps }} reps · {{ formatWeight(store.currentSet.plannedWeight, store.currentSet.isBodyweight) }}
             </template>
           </span>
         </div>
@@ -153,6 +154,7 @@ useRestTimer()
 
 const localPrimary   = ref('')
 const localSecondary = ref('')
+const localBW        = ref(false)
 const finishModal  = ref(false)
 const abandonModal = ref(false)
 const notesModal   = ref('')
@@ -193,7 +195,7 @@ async function onComplete() {
   const primary   = localPrimary.value   !== '' ? Number(localPrimary.value)   : (isCardio ? s?.plannedDuration : s?.plannedReps)    ?? 0
   const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? s?.plannedLevel    : s?.plannedWeight)  ?? 0
 
-  await store.markSetComplete(primary, secondary)
+  await store.markSetComplete(primary, secondary, localBW.value)
 
   if (isLast) {
     finishModal.value = true
@@ -204,6 +206,7 @@ async function onComplete() {
 
   localPrimary.value   = ''
   localSecondary.value = ''
+  localBW.value        = store.currentSet?.isBodyweight ?? false
 
   if (restSeconds > 0) {
     store.startRestTimer(restSeconds)

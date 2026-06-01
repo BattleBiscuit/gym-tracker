@@ -22,8 +22,8 @@
           <div class="set-row-header">
             <span class="set-col-num">#</span>
             <span class="set-col">Reps</span>
-            <span class="set-col">Weight</span>
-            <span class="set-col">Unit</span>
+            <span class="set-col">BW</span>
+            <span class="set-col">+/- kg</span>
             <span class="set-col">Rest (s)</span>
             <span class="set-col-del" />
           </div>
@@ -33,14 +33,19 @@
               :value="set.reps" :min="1"
               :class="{ 'set-input--error': errors[`set_${idx}_reps`] }"
               @input="set.reps = $event.target.value === '' ? null : Number($event.target.value)" />
+            <!-- BW toggle -->
+            <button type="button"
+              :class="['bw-toggle', { 'bw-toggle--active': set.isBodyweight }]"
+              @click="set.isBodyweight = !set.isBodyweight; if (!set.isBodyweight) set.weight = 0">
+              BW
+            </button>
+            <!-- Weight field: kg if not BW, offset if BW -->
             <input class="set-input" type="number" inputmode="decimal"
-              :value="set.weight" :step="0.5"
+              :value="set.isBodyweight ? (set.weight || '') : (set.weight || '')"
+              :placeholder="set.isBodyweight ? '±kg' : '0'"
+              :step="0.5"
               :class="{ 'set-input--error': errors[`set_${idx}_weight`] }"
-              @input="set.weight = $event.target.value === '' ? null : Number($event.target.value)" />
-            <div class="unit-toggle">
-              <button type="button" :class="['unit-btn', { 'unit-btn--active': set.weightUnit === 'kg' }]" @click="set.weightUnit = 'kg'">kg</button>
-              <button type="button" :class="['unit-btn', { 'unit-btn--active': set.weightUnit === 'lbs' }]" @click="set.weightUnit = 'lbs'">lb</button>
-            </div>
+              @input="set.weight = $event.target.value === '' ? 0 : Number($event.target.value)" />
             <input class="set-input" type="number" inputmode="numeric"
               :value="set.restSeconds" :min="0" :step="5"
               :class="{ 'set-input--error': errors[`set_${idx}_rest`] }"
@@ -144,7 +149,7 @@ function submit() { emit('submit') }
 
 .set-row-header {
   display: grid;
-  grid-template-columns: 20px 1fr 1fr 52px 1fr 24px;
+  grid-template-columns: 20px 1fr 36px 1fr 1fr 24px;
   gap: var(--space-1);
   padding: 0 var(--space-1);
 }
@@ -163,7 +168,7 @@ function submit() { emit('submit') }
 
 .set-row {
   display: grid;
-  grid-template-columns: 20px 1fr 1fr 52px 1fr 24px;
+  grid-template-columns: 20px 1fr 36px 1fr 1fr 24px;
   gap: var(--space-1);
   align-items: center;
 }
@@ -199,24 +204,22 @@ function submit() { emit('submit') }
 .set-input:focus { border-color: var(--color-border-focus); outline: none; }
 .set-input--error { border-color: var(--color-danger); }
 
-.unit-toggle {
-  display: flex;
+.bw-toggle {
+  height: 36px;
+  padding: 0 var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  color: var(--color-text-3);
+  background: transparent;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  overflow: hidden;
-  height: 36px;
+  transition: all var(--transition-fast);
 }
-
-.unit-btn {
-  flex: 1;
-  font-size: 10px;
-  font-weight: var(--font-medium);
-  color: var(--color-text-2);
-  background: transparent;
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+.bw-toggle--active {
+  background-color: var(--color-accent);
+  color: #0f0f0f;
+  border-color: var(--color-accent);
 }
-
-.unit-btn--active { background-color: var(--color-accent); color: #0f0f0f; }
 
 .set-del {
   display: flex; align-items: center; justify-content: center;

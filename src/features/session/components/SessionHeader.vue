@@ -37,21 +37,21 @@ const formattedElapsed = computed(() => {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 })
 
-function vol(reps, weight, unit) {
+function vol(reps, weight, isBodyweight) {
   if (!reps) return 0
-  return reps * resolveWeight(weight, unit || 'kg', bodyweight.value || 0)
+  return reps * resolveWeight(weight, isBodyweight, bodyweight.value || 0)
 }
 
 const growthDir = computed(() => {
   let planned = 0, actual = 0
   for (const s of props.sets) {
     if (s.type === 'cardio') continue
-    const p = vol(s.plannedReps, s.plannedWeight, s.weightUnit)
+    const p = vol(s.plannedReps, s.plannedWeight, s.isBodyweight)
     planned += p
     if (s.skipped) {
       // skipped = 0 actual
     } else if (s.completedAt) {
-      actual += vol(s.actualReps, s.actualWeight, s.weightUnit)
+      actual += vol(s.actualReps, s.actualWeight, s.isBodyweight)
     } else {
       actual += p  // untouched = neutral (same as planned)
     }
@@ -66,12 +66,12 @@ const growthLabel = computed(() => {
   let planned = 0, actual = 0
   for (const s of props.sets) {
     if (s.type === 'cardio') continue
-    const p = vol(s.plannedReps, s.plannedWeight, s.weightUnit)
+    const p = vol(s.plannedReps, s.plannedWeight, s.isBodyweight)
     planned += p
     if (s.skipped) {
       // 0
     } else if (s.completedAt) {
-      actual += vol(s.actualReps, s.actualWeight, s.weightUnit)
+      actual += vol(s.actualReps, s.actualWeight, s.isBodyweight)
     } else {
       actual += p
     }

@@ -1,15 +1,10 @@
 import { db } from '@/db/index.js'
-import { resolveWeight } from '@/utils/formatWeight.js'
-import { bodyweight } from '@/composables/useConfig.js'
 
-// Epley 1RM formula: weight * (1 + reps / 30)
-function epley1RM(weight, reps) {
-  if (weight == null) return 0
-  const bw = bodyweight.value || 0
-  const effective = resolveWeight(weight, 'kg', bw)
-  if (!effective) return 0
-  if (reps === 1) return effective
-  return Math.round(effective * (1 + reps / 30))
+// Epley 1RM formula using pre-resolved effectiveWeight
+function epley1RM(effectiveWeight, reps) {
+  if (!effectiveWeight || effectiveWeight <= 0) return 0
+  if (reps === 1) return effectiveWeight
+  return Math.round(effectiveWeight * (1 + reps / 30))
 }
 
 function startOfDay(ts) {
@@ -77,9 +72,9 @@ export const analyticsRepository = {
     for (const { date, sets } of Object.values(bySession).sort((a, b) => a.date - b.date)) {
       const label = new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 
-      const maxOneRM = Math.max(...sets.map(s => epley1RM(s.actualWeight || 0, s.actualReps || 0)))
-      const bw = bodyweight.value || 0
-      const totalVol = sets.reduce((sum, s) => sum + (s.actualReps || 0) * resolveWeight(s.actualWeight, s.weightUnit, bw), 0)
+      const eff = s => s.effectiveWeight ?? s.actualWeight ?? 0
+      const maxOneRM = Math.max(...sets.map(s => epley1RM(eff(s), s.actualReps || 0)))
+      const totalVol = sets.reduce((sum, s) => sum + (s.actualReps || 0) * eff(s), 0)
 
       if (maxOneRM > 0) oneRM.push({ label, value: maxOneRM, date })
       volume.push({ label, value: Math.round(totalVol), date })
@@ -107,13 +102,12 @@ export const analyticsRepository = {
       .toArray()
 
     const byWeek = {}
-    const bw = bodyweight.value || 0
     for (const set of allSets) {
       const session = sessionMap[set.sessionId]
       if (!session) continue
       const week = isoWeekKey(session.startedAt)
       if (!byWeek[week]) byWeek[week] = { weekTs: session.startedAt, volume: 0 }
-      byWeek[week].volume += (set.actualReps || 0) * resolveWeight(set.actualWeight, set.weightUnit, bw)
+      byWeek[week].volume += (set.actualReps || 0) * (set.effectiveWeight ?? set.actualWeight ?? 0)
     }
 
     return Object.entries(byWeek)
@@ -167,8 +161,7 @@ export const analyticsRepository = {
     for (const set of allSets) {
       const muscles = musclesByName[set.exerciseName] || []
       if (!muscles.length) continue
-      const bwVal = bodyweight.value || 0
-      const vol = (set.actualReps || 0) * resolveWeight(set.actualWeight, set.weightUnit, bwVal)
+      const vol = (set.actualReps || 0) * (set.effectiveWeight ?? set.actualWeight ?? 0)
       const sessionId = set.sessionId
 
       for (const muscle of muscles) {

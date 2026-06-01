@@ -14,7 +14,7 @@
       <span class="exercise-item__name">{{ exercise.name }}</span>
       <span class="exercise-item__meta">
         {{ exercise.sets?.length || 0 }} sets ·
-        {{ exercise.sets?.map(s => s.type === 'cardio' ? `${s.duration}min lvl${s.level}` : `${s.reps}×${s.weight === 0 ? 'BW' : s.weight + s.weightUnit}`).join(', ') }}
+        {{ exercise.sets?.map(s => s.type === 'cardio' ? `${s.duration}min lvl${s.level}` : `${s.reps}×${formatWeight(s.weight, s.isBodyweight)}`).join(', ') }}
       </span>
       <span v-if="exercise.notes" class="exercise-item__notes">{{ exercise.notes }}</span>
     </div>
@@ -28,6 +28,7 @@
 
 <script setup>
 import ExerciseOrderHandle from './ExerciseOrderHandle.vue'
+import { formatWeight } from '@/utils/formatWeight.js'
 
 defineProps({
   exercise:      { type: Object, required: true },

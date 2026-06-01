@@ -15,7 +15,7 @@
           <td>{{ idx + 1 }}</td>
           <td>
             <template v-if="set.type === 'cardio'">{{ set.plannedDuration }}min · lvl{{ set.plannedLevel }}</template>
-            <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.weightUnit) }}</template>
+            <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.isBodyweight) }}</template>
           </td>
           <td>
             <template v-if="set.skipped">—</template>
@@ -23,7 +23,7 @@
               {{ set.actualDuration }}min · lvl{{ set.actualLevel }}
             </template>
             <template v-else-if="set.actualReps != null">
-              {{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.weightUnit) }}
+              {{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}
             </template>
             <template v-else>—</template>
           </td>

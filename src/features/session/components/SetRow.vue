@@ -24,11 +24,18 @@
             :value="localPrimary" :placeholder="set.plannedReps" :min="0"
             @input="localPrimary = $event.target.value" />
           <span class="set-row__sep">×</span>
-          <input class="set-row__input" type="number" inputmode="decimal"
+          <button
+            :class="['set-row__bw-btn', { 'set-row__bw-btn--active': localBW }]"
+            @click="localBW = !localBW"
+            type="button">BW</button>
+          <input v-if="!localBW" class="set-row__input" type="number" inputmode="decimal"
             :value="localSecondary" :placeholder="set.plannedWeight" :step="0.5"
             @input="localSecondary = $event.target.value"
             @keydown.enter="$emit('confirm')" />
-          <span class="set-row__unit">{{ set.weightUnit }}</span>
+          <input v-else class="set-row__input set-row__input--offset" type="number" inputmode="decimal"
+            :value="localSecondary" placeholder="±kg" :step="0.5"
+            @input="localSecondary = $event.target.value"
+            @keydown.enter="$emit('confirm')" />
         </template>
       </div>
       <AppBadge v-if="set.completedAt" variant="success">✓</AppBadge>
@@ -39,7 +46,7 @@
     <template v-else-if="set.completedAt">
       <span class="set-row__actual">
         <template v-if="isCardio">{{ set.actualDuration }}min · lvl{{ set.actualLevel }}</template>
-        <template v-else>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.weightUnit) }}</template>
+        <template v-else>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}</template>
       </span>
       <span :class="['set-row__delta', `set-row__delta--${deltaDir}`]">{{ deltaLabel }}</span>
       <AppBadge variant="success">✓</AppBadge>
@@ -49,7 +56,7 @@
     <template v-else-if="set.skipped">
       <span class="set-row__planned">
         <template v-if="isCardio">{{ set.plannedDuration }}min · lvl{{ set.plannedLevel }}</template>
-        <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.weightUnit) }}</template>
+        <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.isBodyweight) }}</template>
       </span>
       <AppBadge variant="default">—</AppBadge>
     </template>
@@ -58,7 +65,7 @@
     <template v-else>
       <span class="set-row__planned set-row__planned--future">
         <template v-if="isCardio">{{ set.plannedDuration }}min · lvl{{ set.plannedLevel }}</template>
-        <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.weightUnit) }}</template>
+        <template v-else>{{ set.plannedReps }}×{{ formatWeight(set.plannedWeight, set.isBodyweight) }}</template>
       </span>
     </template>
   </div>
@@ -72,9 +79,9 @@ import { formatWeight } from '@/utils/formatWeight.js'
 import { resolveWeight } from '@/utils/formatWeight.js'
 import { bodyweight } from '@/composables/useConfig.js'
 
-function setVolume(reps, weight, unit) {
+function setVolume(reps, weight, isBodyweight) {
   if (!reps) return 0
-  return reps * resolveWeight(weight, unit || 'kg', bodyweight.value || 0)
+  return reps * resolveWeight(weight, isBodyweight, bodyweight.value || 0)
 }
 
 const props = defineProps({
@@ -83,7 +90,7 @@ const props = defineProps({
   isActive:  { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['update:primary', 'update:secondary', 'select', 'confirm'])
+const emit = defineEmits(['update:primary', 'update:secondary', 'update:bw', 'select', 'confirm'])
 
 const isCardio = computed(() => props.set.type === 'cardio')
 
@@ -96,8 +103,8 @@ const deltaDir = computed(() => {
     actual  = (s.actualDuration  || 0) + (s.actualLevel  || 0)
     planned = (s.plannedDuration || 0) + (s.plannedLevel || 0)
   } else {
-    actual  = setVolume(s.actualReps,  s.actualWeight,  s.weightUnit)
-    planned = setVolume(s.plannedReps, s.plannedWeight, s.weightUnit)
+    actual  = setVolume(s.actualReps,  s.actualWeight,  s.isBodyweight)
+    planned = setVolume(s.plannedReps, s.plannedWeight, s.isBodyweight)
   }
   if (!planned) return 'neutral'
   if (actual > planned) return 'up'
@@ -113,8 +120,8 @@ const deltaLabel = computed(() => {
     actual  = (s.actualDuration  || 0) + (s.actualLevel  || 0)
     planned = (s.plannedDuration || 0) + (s.plannedLevel || 0)
   } else {
-    actual  = setVolume(s.actualReps,  s.actualWeight,  s.weightUnit)
-    planned = setVolume(s.plannedReps, s.plannedWeight, s.weightUnit)
+    actual  = setVolume(s.actualReps,  s.actualWeight,  s.isBodyweight)
+    planned = setVolume(s.plannedReps, s.plannedWeight, s.isBodyweight)
   }
   if (!planned) return '='
   const diff = actual - planned
@@ -124,14 +131,17 @@ const deltaLabel = computed(() => {
 
 const localPrimary   = ref('')
 const localSecondary = ref('')
+const localBW        = ref(props.set.isBodyweight ?? false)
 
-watch(() => [props.set, props.isActive], () => {
+watch(() => [props.set, props.isActive], ([newSet]) => {
   localPrimary.value   = ''
   localSecondary.value = ''
+  localBW.value        = newSet.isBodyweight ?? false
 })
 
 watch(localPrimary,   v => emit('update:primary', v))
 watch(localSecondary, v => emit('update:secondary', v))
+watch(localBW,        v => emit('update:bw', v))
 </script>
 
 <style scoped>
@@ -176,7 +186,22 @@ watch(localSecondary, v => emit('update:secondary', v))
 .set-row__input:focus { border-color: var(--color-accent); outline: none; }
 
 .set-row__sep { font-size: var(--text-sm); color: var(--color-text-3); }
-.set-row__unit { font-size: var(--text-xs); color: var(--color-text-3); }
+
+.set-row__bw-btn {
+  height: 28px;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: var(--font-bold);
+  color: var(--color-text-3);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+.set-row__bw-btn--active { background: var(--color-accent); color: #0f0f0f; border-color: var(--color-accent); }
+
+.set-row__input--offset { color: var(--color-accent); }
 
 .set-row__delta {
   font-size: 10px;

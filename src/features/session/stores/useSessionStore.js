@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { sessionRepository } from '../db/sessionRepository.js'
 import { routinesRepository } from '@/features/routines/db/routinesRepository.js'
+import { resolveWeight } from '@/utils/formatWeight.js'
+import { bodyweight } from '@/composables/useConfig.js'
 
 export const useSessionStore = defineStore('session', () => {
   const activeSessionId = ref(null)
@@ -61,13 +63,14 @@ export const useSessionStore = defineStore('session', () => {
         exerciseName: ex.name,
         setIndex: setIdx,
         type: s.type || 'strength',
-        plannedReps:     s.reps     ?? null,
-        plannedWeight:   s.weight   ?? null,
+        plannedReps:     s.reps        ?? null,
+        plannedWeight:   s.weight      ?? null,
+        isBodyweight:    !!s.isBodyweight,
         actualReps:      null,
         actualWeight:    null,
-        weightUnit:      s.weightUnit || 'kg',
-        plannedDuration: s.duration ?? null,
-        plannedLevel:    s.level    ?? null,
+        effectiveWeight: null,
+        plannedDuration: s.duration    ?? null,
+        plannedLevel:    s.level       ?? null,
         actualDuration:  null,
         actualLevel:     null,
         restSeconds:     s.restSeconds,
@@ -106,13 +109,14 @@ export const useSessionStore = defineStore('session', () => {
           exerciseName: ex.name,
           setIndex: setIdx,
           type: s.type || 'strength',
-          plannedReps:     s.reps     ?? null,
-          plannedWeight:   s.weight   ?? null,
+          plannedReps:     s.reps        ?? null,
+          plannedWeight:   s.weight      ?? null,
+          isBodyweight:    !!s.isBodyweight,
           actualReps:      null,
           actualWeight:    null,
-          weightUnit:      s.weightUnit || 'kg',
-          plannedDuration: s.duration ?? null,
-          plannedLevel:    s.level    ?? null,
+          effectiveWeight: null,
+          plannedDuration: s.duration    ?? null,
+          plannedLevel:    s.level       ?? null,
           actualDuration:  null,
           actualLevel:     null,
           restSeconds: s.restSeconds,
@@ -147,16 +151,21 @@ export const useSessionStore = defineStore('session', () => {
     return true
   }
 
-  async function markSetComplete(actualPrimary, actualSecondary) {
+  async function markSetComplete(actualPrimary, actualSecondary, isBW = null) {
     const exIdx = currentExerciseIndex.value
     const setIdx = currentSetIndex.value
     const current = sets.value[exIdx][setIdx]
     const isCardio = current.type === 'cardio'
+    const isBodyweight = isBW !== null ? isBW : current.isBodyweight
+    const actualWeight = isCardio ? null : Number(actualSecondary)
+    const effectiveWeight = isCardio
+      ? null
+      : resolveWeight(actualWeight, isBodyweight, bodyweight.value || 0)
     const setData = {
       ...current,
       ...(isCardio
         ? { actualDuration: Number(actualPrimary), actualLevel: Number(actualSecondary) }
-        : { actualReps: Number(actualPrimary), actualWeight: Number(actualSecondary) }
+        : { actualReps: Number(actualPrimary), actualWeight, isBodyweight, effectiveWeight }
       ),
       completedAt: Date.now(),
       skipped: false,
@@ -231,13 +240,14 @@ export const useSessionStore = defineStore('session', () => {
         exerciseName: data.name,
         setIndex: setIdx,
         type: s.type || 'strength',
-        plannedReps:     s.reps     ?? null,
-        plannedWeight:   s.weight   ?? null,
+        plannedReps:     s.reps        ?? null,
+        plannedWeight:   s.weight      ?? null,
+        isBodyweight:    !!s.isBodyweight,
         actualReps:      null,
         actualWeight:    null,
-        weightUnit:      s.weightUnit || 'kg',
-        plannedDuration: s.duration ?? null,
-        plannedLevel:    s.level    ?? null,
+        effectiveWeight: null,
+        plannedDuration: s.duration    ?? null,
+        plannedLevel:    s.level       ?? null,
         actualDuration:  null,
         actualLevel:     null,
         restSeconds: s.restSeconds,
