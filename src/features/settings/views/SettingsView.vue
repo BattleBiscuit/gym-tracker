@@ -36,10 +36,10 @@
         <h2 class="section-title">Data</h2>
 
         <div class="settings-card">
-          <div class="settings-row" @click="doExport">
+          <div class="settings-row" @click="openExportModal">
             <div class="settings-row__body">
               <span class="settings-row__label">Export backup</span>
-              <span class="settings-row__sub">Download all data as JSON</span>
+              <span class="settings-row__sub">Choose what to include and download as JSON</span>
             </div>
             <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -110,6 +110,26 @@
       <div v-if="toast.show" :class="['toast', `toast--${toast.type}`]">{{ toast.message }}</div>
     </Transition>
 
+    <!-- Export options modal -->
+    <AppModal v-model="exportModal" title="Export backup">
+      <div class="export-options">
+        <p style="color:var(--color-text-2);margin-bottom:var(--space-4)">Select what to include in the backup:</p>
+        <label v-for="opt in exportOptions" :key="opt.key" class="export-option">
+          <input type="checkbox" v-model="opt.selected" class="export-checkbox" />
+          <div class="export-option__body">
+            <span class="export-option__label">{{ opt.label }}</span>
+            <span class="export-option__count">{{ opt.count }} {{ opt.count === 1 ? 'record' : 'records' }}</span>
+          </div>
+        </label>
+      </div>
+      <template #actions>
+        <AppButton variant="accent" full :disabled="!exportOptions.some(o => o.selected)" @click="doExport">
+          Download
+        </AppButton>
+        <AppButton variant="ghost" full @click="exportModal = false">Cancel</AppButton>
+      </template>
+    </AppModal>
+
     <!-- Import confirm modal -->
     <AppModal v-model="importModal" title="Import backup?" :closeOnBackdrop="false">
       <div class="import-preview">
@@ -157,6 +177,8 @@ async function onBwChange(e) {
 }
 
 const fileInputRef  = ref(null)
+const exportModal   = ref(false)
+const exportOptions = ref([])
 const importModal   = ref(false)
 const isImporting   = ref(false)
 const importPreview = ref(null)
@@ -165,6 +187,20 @@ const isChecking    = ref(false)
 const updateStatus  = ref('Check for update')
 const buildDate     = __BUILD_DATE__
 let pendingImportData = null
+
+async function openExportModal() {
+  const [exerciseCount, routineCount, sessionCount] = await Promise.all([
+    db.exerciseLibrary.count(),
+    db.routines.count(),
+    db.workoutSessions.where('status').equals('completed').count(),
+  ])
+  exportOptions.value = [
+    { key: 'exercises', label: 'Exercise library', count: exerciseCount, selected: true },
+    { key: 'routines',  label: 'Routines',         count: routineCount,  selected: true },
+    { key: 'history',   label: 'Workout history',  count: sessionCount,  selected: true },
+  ]
+  exportModal.value = true
+}
 
 const toast = ref({ show: false, message: '', type: 'success' })
 
@@ -226,38 +262,32 @@ async function checkForUpdate() {
 // ── Export ──────────────────────────────────────────────────────────────────
 
 async function doExport() {
-  try {
-    const [
-      exerciseLibrary,
-      routines,
-      routineExercises,
-      workoutSessions,
-      workoutSets,
-    ] = await Promise.all([
-      db.exerciseLibrary.toArray(),
-      db.routines.toArray(),
-      db.routineExercises.toArray(),
-      db.workoutSessions.toArray(),
-      db.workoutSets.toArray(),
-    ])
+  const selected = Object.fromEntries(exportOptions.value.map(o => [o.key, o.selected]))
+  exportModal.value = false
 
-    const backup = {
-      version: 1,
-      exportedAt: new Date().toISOString(),
-      exerciseLibrary,
-      routines,
-      routineExercises,
-      workoutSessions,
-      workoutSets,
+  try {
+    const backup = { version: 1, exportedAt: new Date().toISOString() }
+
+    if (selected.exercises) {
+      backup.exerciseLibrary = await db.exerciseLibrary.toArray()
+    }
+    if (selected.routines) {
+      backup.routines         = await db.routines.toArray()
+      backup.routineExercises = await db.routineExercises.toArray()
+    }
+    if (selected.history) {
+      backup.workoutSessions = await db.workoutSessions.toArray()
+      backup.workoutSets     = await db.workoutSets.toArray()
     }
 
-    const json = JSON.stringify(backup, null, 2)
-    const blob = new Blob([json], { type: 'application/json' })
-    const url  = URL.createObjectURL(blob)
-    const a    = document.createElement('a')
-    const date = new Date().toISOString().slice(0, 10)
-    a.href     = url
-    a.download = `prsonal-backup-${date}.json`
+    const parts = exportOptions.value.filter(o => o.selected).map(o => o.key).join('-')
+    const date  = new Date().toISOString().slice(0, 10)
+    const json  = JSON.stringify(backup, null, 2)
+    const blob  = new Blob([json], { type: 'application/json' })
+    const url   = URL.createObjectURL(blob)
+    const a     = document.createElement('a')
+    a.href      = url
+    a.download  = `prsonal-${parts}-${date}.json`
     a.click()
     URL.revokeObjectURL(url)
 
@@ -392,6 +422,33 @@ async function doImport() {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .icon-spin { animation: spin 1s linear infinite; }
+
+/* Export options */
+.export-options { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.export-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+.export-option:has(input:checked) { border-color: var(--color-accent); background: rgba(232,255,71,0.04); }
+
+.export-checkbox {
+  width: 18px; height: 18px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.export-option__body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+.export-option__label { font-size: var(--text-base); font-weight: var(--font-medium); color: var(--color-text-1); }
+.export-option__count { font-size: var(--text-sm); color: var(--color-text-3); }
 
 /* Import preview */
 .import-preview { display: flex; flex-direction: column; gap: var(--space-4); }
