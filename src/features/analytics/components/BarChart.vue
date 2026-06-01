@@ -74,9 +74,21 @@ function buildChart() {
   })
 }
 
-onMounted(buildChart)
+let ro = null
+
+onMounted(() => {
+  buildChart()
+  ro = new ResizeObserver(() => {
+    if (canvasRef.value && canvasRef.value.offsetWidth > 0) {
+      if (!chart) buildChart()
+      else chart.resize()
+    }
+  })
+  if (canvasRef.value) ro.observe(canvasRef.value)
+})
+
 watch(() => props.data, buildChart, { deep: true })
-onUnmounted(() => { if (chart) chart.destroy() })
+onUnmounted(() => { if (chart) chart.destroy(); if (ro) ro.disconnect() })
 </script>
 
 <style scoped>
