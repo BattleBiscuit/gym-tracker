@@ -12,11 +12,13 @@ import AppBottomNav from '@/components/ui/AppBottomNav.vue'
 import { isFlexMode } from '@/composables/useFlexMode.js'
 import { useSessionStore } from '@/features/session/stores/useSessionStore.js'
 import { useRoutinesStore } from '@/features/routines/stores/useRoutinesStore.js'
+import { usePlansStore } from '@/features/plans/stores/usePlansStore.js'
 import { loadConfig } from '@/composables/useConfig.js'
 
 const router = useRouter()
-const sessionStore = useSessionStore()
+const sessionStore  = useSessionStore()
 const routinesStore = useRoutinesStore()
+const plansStore    = usePlansStore()
 
 onMounted(async () => {
   // Request persistent storage so the OS never auto-evicts our IndexedDB
@@ -24,7 +26,7 @@ onMounted(async () => {
   await loadConfig()
 
   // Always pre-load routines into the store so they're available immediately
-  await routinesStore.loadRoutines()
+  await Promise.all([routinesStore.loadRoutines(), plansStore.loadAll()])
 
   // Crash recovery — only redirect if there's no active session already in the store
   // (avoids double-redirect on HMR reloads)

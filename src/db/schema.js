@@ -42,6 +42,12 @@ db.version(6).stores({
   config: 'key',
 })
 
+db.version(10).stores({
+  plans:            'id, status, order',
+  planEntries:      'id, planId, routineId, dayOfWeek, [planId+order]',
+  workoutSessions:  'id, routineId, startedAt, status, planId, planEntryId',
+})
+
 db.version(8).stores({
   routines:         'id, createdAt, updatedAt',
   routineExercises: 'id, routineId, exerciseLibraryId, [routineId+position]',

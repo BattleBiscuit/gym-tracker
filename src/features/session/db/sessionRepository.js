@@ -1,7 +1,7 @@
 import { db } from '@/db/index.js'
 
 export const sessionRepository = {
-  async createSession(routineId, routineName) {
+  async createSession(routineId, routineName, planId = null, planEntryId = null) {
     const session = {
       id: crypto.randomUUID(),
       routineId,
@@ -10,6 +10,8 @@ export const sessionRepository = {
       completedAt: null,
       status: 'active',
       totalVolumeKg: 0,
+      planId,
+      planEntryId,
     }
     await db.workoutSessions.add(session)
     return session

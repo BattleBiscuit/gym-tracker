@@ -49,6 +49,18 @@ const routes = [
     component: () => import('@/features/library/views/LibraryView.vue'),
   },
   {
+    path: '/plans/new',
+    name: 'plan-create',
+    component: () => import('@/features/plans/views/PlanEditView.vue'),
+  },
+  {
+    path: '/plans/:id/edit',
+    name: 'plan-edit',
+    component: () => import('@/features/plans/views/PlanEditView.vue'),
+    props: true,
+  },
+
+  {
     path: '/settings',
     name: 'settings',
     component: () => import('@/features/settings/views/SettingsView.vue'),

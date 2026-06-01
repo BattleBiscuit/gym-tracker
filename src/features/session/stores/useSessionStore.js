@@ -48,12 +48,12 @@ export const useSessionStore = defineStore('session', () => {
 
   // --- Actions ---
 
-  async function startSession(routineId) {
+  async function startSession(routineId, planId = null, planEntryId = null) {
     const routine = await routinesRepository.getById(routineId)
     const exerciseList = await routinesRepository.getExercisesForRoutine(routineId)
     const sortedExercises = exerciseList.sort((a, b) => a.position - b.position)
 
-    const session = await sessionRepository.createSession(routineId, routine.name)
+    const session = await sessionRepository.createSession(routineId, routine.name, planId, planEntryId)
 
     // Build exerciseName → muscleGroups map from library for snapshot
     const libraryEntries = await db.exerciseLibrary.toArray()
