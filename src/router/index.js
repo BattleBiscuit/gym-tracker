@@ -32,6 +32,11 @@ const routes = [
   },
 
   {
+    path: '/progress',
+    name: 'progress',
+    component: () => import('@/features/progress/ProgressView.vue'),
+  },
+  {
     path: '/history',
     name: 'history',
     component: () => import('@/features/history/views/HistoryView.vue'),
@@ -60,6 +65,7 @@ const routes = [
     component: () => import('@/features/settings/views/SettingsView.vue'),
   },
 
+  { path: '/analytics', redirect: { name: 'progress' } },
   { path: '/:pathMatch(.*)*', redirect: { name: 'session-pick' } },
 ]
 

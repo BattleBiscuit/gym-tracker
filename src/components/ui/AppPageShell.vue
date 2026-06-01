@@ -3,13 +3,14 @@
     <header v-if="$slots.header" class="page-shell__header">
       <slot name="header" />
     </header>
-    <main class="page-shell__content scroll">
+    <main class="page-shell__content scroll" @scroll="onScroll">
       <slot />
     </main>
   </div>
 </template>
 
 <script setup>
+import { onScroll } from '@/composables/useScrollDirection.js'
 defineProps({
   scrollable: { type: Boolean, default: true },
 })

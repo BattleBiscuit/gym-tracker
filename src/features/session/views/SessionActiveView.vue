@@ -52,18 +52,8 @@
 
     <!-- Fixed bottom panel: always visible -->
     <div class="session-bottom-fixed">
-      <!-- Rest timer when active -->
-      <div v-if="store.restTimerActive" class="bottom-panel-content">
-        <RestTimerDisplay
-          :remaining="store.restTimerRemaining"
-          :total="store.restTimerTotal"
-          @skip="onSkipRest"
-        />
-      </div>
-
-      <!-- Set complete controls -->
-      <div v-else class="bottom-panel-content">
-        <div class="current-set-summary" v-if="store.currentSet">
+      <div class="bottom-panel-content">
+        <div class="current-set-summary" v-if="store.currentSet && !store.restTimerActive">
           <span class="current-set-planned">
             Target:
             <template v-if="store.currentSet.type === 'cardio'">
@@ -75,11 +65,30 @@
           </span>
         </div>
         <div class="action-row">
-          <button class="action-done" @click="onComplete">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            {{ store.isLastSet ? 'Finish' : 'Done' }}
+          <!-- Done button — doubles as rest timer ring when resting -->
+          <button
+            :class="['action-done', { 'action-done--resting': store.restTimerActive }]"
+            @click="store.restTimerActive ? onSkipRest() : onComplete()"
+          >
+            <!-- SVG ring for rest timer progress -->
+            <svg v-if="store.restTimerActive" class="action-done__ring" viewBox="0 0 100 100">
+              <circle class="action-done__ring-track" cx="50" cy="50" r="46"/>
+              <circle
+                class="action-done__ring-fill"
+                cx="50" cy="50" r="46"
+                :stroke-dasharray="ringCircumference"
+                :stroke-dashoffset="ringOffset"
+              />
+            </svg>
+            <span class="action-done__label">
+              <template v-if="store.restTimerActive">{{ Math.ceil(store.restTimerRemaining) }}s</template>
+              <template v-else>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {{ store.isLastSet ? 'Finish' : 'Done' }}
+              </template>
+            </span>
           </button>
-          <button class="action-icon" @click="onSkip" title="Skip set">
+          <button class="action-icon" @click="onSkip" :disabled="store.restTimerActive" title="Skip set">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 12 5 19 12"/><polyline points="5 19 12 12 19 19"/></svg>
             <span>Skip</span>
           </button>
@@ -129,7 +138,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { useRouter, onBeforeRouteLeave } from 'vue-router'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppButton from '@/components/ui/AppButton.vue'
@@ -137,7 +146,6 @@ import SessionProgressBar from '../components/SessionProgressBar.vue'
 import SessionHeader from '../components/SessionHeader.vue'
 import SessionFlexLayout from '../components/SessionFlexLayout.vue'
 import ExercisePanel from '../components/ExercisePanel.vue'
-import RestTimerDisplay from '../components/RestTimerDisplay.vue'
 import { useSessionStore } from '../stores/useSessionStore.js'
 import { useRestTimer } from '../composables/useRestTimer.js'
 import { formatWeight } from '@/utils/formatWeight.js'
@@ -151,6 +159,12 @@ const router = useRouter()
 // Start elapsed ticker and rest timer watcher
 useSessionRunner()
 useRestTimer()
+
+const ringCircumference = 2 * Math.PI * 46
+const ringOffset = computed(() => {
+  if (!store.restTimerTotal) return 0
+  return ringCircumference * (store.restTimerRemaining / store.restTimerTotal)
+})
 
 const localPrimary   = ref('')
 const localSecondary = ref('')
@@ -320,10 +334,10 @@ async function doAbandon() {
 
 .action-done {
   flex: 1;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);
   min-height: 52px;
   background-color: var(--color-accent);
   color: #0f0f0f;
@@ -331,8 +345,47 @@ async function doAbandon() {
   font-weight: var(--font-bold);
   border-radius: var(--radius-lg);
   transition: background-color var(--transition-fast);
+  overflow: hidden;
 }
 .action-done:active { background-color: var(--color-accent-dim); }
+
+.action-done--resting {
+  background-color: var(--color-surface-2);
+  color: var(--color-text-1);
+  border: 1px solid var(--color-border);
+}
+.action-done--resting:active { background-color: var(--color-surface-3); }
+
+.action-done__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.action-done__ring-track {
+  fill: none;
+  stroke: var(--color-surface-3);
+  stroke-width: 4;
+}
+
+.action-done__ring-fill {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s linear;
+}
+
+.action-done__label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 1;
+  font-variant-numeric: tabular-nums;
+}
 
 .action-icon {
   display: flex;

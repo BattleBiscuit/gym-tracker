@@ -34,16 +34,6 @@
       </div>
     </div>
 
-    <!-- Confirm start modal -->
-    <AppModal v-model="confirmModal" :title="`Start ${pendingRoutine?.name}?`">
-      <p style="color: var(--color-text-2)">
-        This will begin a new workout session for <strong>{{ pendingRoutine?.name }}</strong>.
-      </p>
-      <template #actions>
-        <AppButton variant="accent" full @click="doStart">Start workout</AppButton>
-        <AppButton variant="ghost" full @click="confirmModal = false">Cancel</AppButton>
-      </template>
-    </AppModal>
   </AppPageShell>
 </template>
 
@@ -51,8 +41,6 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
-import AppButton from '@/components/ui/AppButton.vue'
-import AppModal from '@/components/ui/AppModal.vue'
 import { useRoutinesStore } from '@/features/routines/stores/useRoutinesStore.js'
 import { useSessionStore } from '../stores/useSessionStore.js'
 import { db } from '@/db/index.js'
@@ -61,8 +49,6 @@ const router = useRouter()
 const routinesStore = useRoutinesStore()
 const sessionStore = useSessionStore()
 
-const confirmModal = ref(false)
-const pendingRoutine = ref(null)
 const exerciseCounts = ref({})
 
 onMounted(async () => {
@@ -74,19 +60,12 @@ onMounted(async () => {
   exerciseCounts.value = counts
 })
 
-function startRoutine(routine) {
+async function startRoutine(routine) {
   if (sessionStore.activeSessionId) {
     router.push({ name: 'session-active' })
     return
   }
-  pendingRoutine.value = routine
-  confirmModal.value = true
-}
-
-async function doStart() {
-  if (!pendingRoutine.value) return
-  confirmModal.value = false
-  await sessionStore.startSession(pendingRoutine.value.id)
+  await sessionStore.startSession(routine.id)
   router.push({ name: 'session-active' })
 }
 </script>
