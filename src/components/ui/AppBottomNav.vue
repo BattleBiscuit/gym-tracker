@@ -25,15 +25,8 @@ const tabs = [
     name: 'session-pick',
     to: '/session',
     label: 'Workout',
-    relatedRoutes: ['session-pick', 'session-active'],
+    relatedRoutes: ['session-pick', 'session-active', 'routines', 'routine-create', 'routine-edit'],
     icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>`,
-  },
-  {
-    name: 'routines',
-    to: '/routines',
-    label: 'Routines',
-    relatedRoutes: ['routines', 'routine-create', 'routine-edit'],
-    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>`,
   },
   {
     name: 'library',
