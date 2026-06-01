@@ -1,0 +1,134 @@
+{
+  "nodes": [
+    {
+      "id": "exerciseLibrary",
+      "type": "text",
+      "x": -600,
+      "y": -400,
+      "width": 320,
+      "height": 360,
+      "color": "4",
+      "text": "## exerciseLibrary\n---\n**PK** id: string (UUID)\n**IDX** name: string\n**IDX** type: 'strength' | 'cardio'\nprimaryMuscles: string[]\nsecondaryMuscles: string[]\nnotes: string\ncreatedAt: number"
+    },
+    {
+      "id": "routines",
+      "type": "text",
+      "x": -200,
+      "y": -400,
+      "width": 280,
+      "height": 280,
+      "color": "6",
+      "text": "## routines\n---\n**PK** id: string (UUID)\nname: string\nnotes: string\ncreatedAt: number\n**IDX** updatedAt: number"
+    },
+    {
+      "id": "routineExercises",
+      "type": "text",
+      "x": -200,
+      "y": 0,
+      "width": 360,
+      "height": 380,
+      "color": "6",
+      "text": "## routineExercises\n---\n**PK** id: string (UUID)\n**IDX** routineId: string → routines.id\n**IDX** exerciseLibraryId: string → exerciseLibrary.id\n**IDX** [routineId + position]\nposition: number\nname: string (snapshot)\nnotes: string\nsets: SetTarget[]\n\n**SetTarget (JSON)**\ntype: 'strength' | 'cardio'\nreps / weight / isBodyweight\nduration / level\nrestSeconds"
+    },
+    {
+      "id": "workoutSessions",
+      "type": "text",
+      "x": 300,
+      "y": -400,
+      "width": 320,
+      "height": 340,
+      "color": "1",
+      "text": "## workoutSessions\n---\n**PK** id: string (UUID)\n**IDX** routineId: string → routines.id\n**IDX** startedAt: number\n**IDX** status: 'active' | 'completed'\nroutineName: string (snapshot)\ncompletedAt: number | null\ntotalVolumeKg: number"
+    },
+    {
+      "id": "workoutSets",
+      "type": "text",
+      "x": 300,
+      "y": 100,
+      "width": 400,
+      "height": 600,
+      "color": "1",
+      "text": "## workoutSets\n---\n**PK** id: string (UUID)\n**IDX** sessionId: string → workoutSessions.id\n**IDX** exerciseName: string\n**IDX** isPR: boolean\n**IDX** [sessionId + exercisePosition + setIndex]\nexercisePosition: number\nexerciseName: string (snapshot)\nsetIndex: number\ntype: 'strength' | 'cardio'\n\n**Strength fields**\nplannedReps: number\nplannedWeight: number\nisBodyweight: boolean\nactualReps: number | null\nactualWeight: number | null\neffectiveWeight: number | null\n\n**Cardio fields**\nplannedDuration: number\nplannedLevel: number\nactualDuration: number | null\nactualLevel: number | null\n\nrestSeconds: number\ncompletedAt: number | null\nskipped: boolean\nisPR: boolean"
+    },
+    {
+      "id": "config",
+      "type": "text",
+      "x": -600,
+      "y": 100,
+      "width": 240,
+      "height": 160,
+      "color": "5",
+      "text": "## config\n---\n**PK** key: string\nvalue: any\n\n*bodyweight: number*\n*violentMode: boolean*"
+    },
+    {
+      "id": "note-denorm",
+      "type": "text",
+      "x": -200,
+      "y": 450,
+      "width": 360,
+      "height": 140,
+      "color": "3",
+      "text": "### Denormalization strategy\nBoth `routineName` (sessions) and `exerciseName` (sets) are snapshot copies. History stays accurate even if the routine or exercise is later renamed or deleted."
+    },
+    {
+      "id": "note-bw",
+      "type": "text",
+      "x": 300,
+      "y": 750,
+      "width": 400,
+      "height": 140,
+      "color": "3",
+      "text": "### effectiveWeight\nFrozen at completion time: `bodyweight + weight` for BW sets, else `weight`. Analytics use this — changing bodyweight in settings never retroactively changes history."
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "routineExercises",
+      "fromSide": "top",
+      "toNode": "routines",
+      "toSide": "bottom",
+      "label": "routineId"
+    },
+    {
+      "id": "e2",
+      "fromNode": "routineExercises",
+      "fromSide": "left",
+      "toNode": "exerciseLibrary",
+      "toSide": "right",
+      "label": "exerciseLibraryId (nullable)"
+    },
+    {
+      "id": "e3",
+      "fromNode": "workoutSessions",
+      "fromSide": "left",
+      "toNode": "routines",
+      "toSide": "right",
+      "label": "routineId"
+    },
+    {
+      "id": "e4",
+      "fromNode": "workoutSets",
+      "fromSide": "top",
+      "toNode": "workoutSessions",
+      "toSide": "bottom",
+      "label": "sessionId"
+    },
+    {
+      "id": "e5",
+      "fromNode": "note-denorm",
+      "fromSide": "top",
+      "toNode": "routineExercises",
+      "toSide": "bottom",
+      "label": ""
+    },
+    {
+      "id": "e6",
+      "fromNode": "note-bw",
+      "fromSide": "top",
+      "toNode": "workoutSets",
+      "toSide": "bottom",
+      "label": ""
+    }
+  ]
+}

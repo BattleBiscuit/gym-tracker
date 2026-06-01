@@ -9,11 +9,14 @@ export const historyRepository = {
 
   async getPage(page, pageSize) {
     const offset = (page - 1) * pageSize
+    // orderBy startedAt descending, filter completed, skip offset, take pageSize
     return db.workoutSessions
-      .where('status').equals('completed')
+      .orderBy('startedAt')
       .reverse()
-      .sortBy('startedAt')
-      .then(all => all.reverse().slice(offset, offset + pageSize))
+      .filter(s => s.status === 'completed')
+      .offset(offset)
+      .limit(pageSize)
+      .toArray()
   },
 
   async getById(id) {

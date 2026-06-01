@@ -37,32 +37,29 @@ export const sessionRepository = {
   },
 
   async getLastActuals(exerciseName, setCount) {
-    // Find the most recent completed session that contains this exercise
-    const recentSets = await db.workoutSets
-      .filter(s =>
-        s.exerciseName === exerciseName &&
-        s.completedAt !== null &&
-        !s.skipped
-      )
+    // Find the most recent completed session containing this exercise
+    // Use exerciseName index for fast lookup
+    const setsWithName = await db.workoutSets
+      .where('exerciseName').equals(exerciseName)
+      .filter(s => s.completedAt !== null && !s.skipped)
       .toArray()
 
-    if (!recentSets.length) return []
+    if (!setsWithName.length) return []
 
-    // Find the most recent session among those sets
-    const sessionIds = [...new Set(recentSets.map(s => s.sessionId))]
-    const sessions = await db.workoutSessions
+    // Find the most recent completed session among those
+    const sessionIds = [...new Set(setsWithName.map(s => s.sessionId))]
+    const lastSession = await db.workoutSessions
       .where('id').anyOf(sessionIds)
       .filter(s => s.status === 'completed')
       .toArray()
+      .then(sessions => sessions.sort((a, b) => b.startedAt - a.startedAt)[0])
 
-    if (!sessions.length) return []
+    if (!lastSession) return []
 
-    const lastSession = sessions.sort((a, b) => b.startedAt - a.startedAt)[0]
-    const lastSets = recentSets
+    const lastSets = setsWithName
       .filter(s => s.sessionId === lastSession.id)
       .sort((a, b) => a.setIndex - b.setIndex)
 
-    // Return actuals indexed by setIndex — exact match only, null if no match
     return Array.from({ length: setCount }, (_, i) => {
       const match = lastSets.find(s => s.setIndex === i)
       if (!match) return null
@@ -77,8 +74,8 @@ export const sessionRepository = {
 
   async getBest1RM(exerciseName, excludeSessionId) {
     const sets = await db.workoutSets
+      .where('exerciseName').equals(exerciseName)
       .filter(s =>
-        s.exerciseName === exerciseName &&
         s.completedAt !== null &&
         !s.skipped &&
         s.type !== 'cardio' &&
@@ -109,8 +106,8 @@ export const sessionRepository = {
     const sets = await db.workoutSets
       .where('sessionId')
       .equals(sessionId)
-      .filter(s => s.completedAt !== null && !s.skipped)
+      .filter(s => s.completedAt !== null && !s.skipped && s.type !== 'cardio')
       .toArray()
-    return sets.reduce((sum, s) => sum + (s.actualReps || 0) * (s.actualWeight || 0), 0)
+    return sets.reduce((sum, s) => sum + (s.actualReps || 0) * (s.effectiveWeight ?? s.actualWeight ?? 0), 0)
   },
 }

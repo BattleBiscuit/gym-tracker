@@ -8,9 +8,9 @@ export const libraryRepository = {
   async search(query) {
     const q = query.trim().toLowerCase()
     if (!q) return db.exerciseLibrary.orderBy('name').toArray()
-    return db.exerciseLibrary
-      .filter(e => e.name.toLowerCase().includes(q))
-      .sortBy('name')
+    // Use name index for prefix matches, fall back to filter for mid-string matches
+    const all = await db.exerciseLibrary.orderBy('name').toArray()
+    return all.filter(e => e.name.toLowerCase().includes(q))
   },
 
   async getById(id) {
@@ -18,6 +18,9 @@ export const libraryRepository = {
   },
 
   async getByName(name) {
+    // Try exact match via index first, fall back to case-insensitive filter
+    const exact = await db.exerciseLibrary.where('name').equals(name.trim()).first()
+    if (exact) return exact
     return db.exerciseLibrary
       .filter(e => e.name.toLowerCase() === name.trim().toLowerCase())
       .first()
