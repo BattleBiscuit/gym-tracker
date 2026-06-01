@@ -158,12 +158,12 @@ function doDiscard() {
 }
 
 function handleBack() {
-  router.push({ name: 'routines' })
+  router.push({ name: 'session-pick' })
 }
 
 async function handleSave() {
   const id = await editor.save()
-  if (id) router.push({ name: 'routines' })
+  if (id) router.push({ name: 'session-pick' })
 }
 
 function openAddExercise() {
