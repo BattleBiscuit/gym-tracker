@@ -69,11 +69,14 @@
             class="action-done"
             @click="store.restTimerActive ? onSkipRest() : onComplete()"
           >
-            <!-- Border ring: only renders during rest -->
-            <svg v-if="store.restTimerActive" class="action-done__border-ring" viewBox="0 0 100 16">
-              <!-- drawn as a rounded rect outline that drains -->
+            <!-- Animated border rect during rest — viewBox matches button dimensions -->
+            <svg v-if="store.restTimerActive" class="action-done__timer-svg" viewBox="0 0 300 52" preserveAspectRatio="none">
+              <rect class="action-done__timer-track" x="2" y="2" width="296" height="48" rx="7" ry="7"/>
+              <rect class="action-done__timer-fill" x="2" y="2" width="296" height="48" rx="7" ry="7"
+                :style="{ strokeDashoffset: timerDashOffset }"
+              />
             </svg>
-            <span :class="['action-done__label', { 'action-done__label--resting': store.restTimerActive }]">
+            <span class="action-done__text">
               <template v-if="store.restTimerActive">
                 Rest {{ Math.ceil(store.restTimerRemaining) }}s
               </template>
@@ -82,8 +85,6 @@
                 {{ store.isLastSet ? 'Finish' : 'Done' }}
               </template>
             </span>
-            <!-- CSS animated border ring via conic-gradient -->
-            <div v-if="store.restTimerActive" class="action-done__timer-border" :style="timerBorderStyle" />
           </button>
         </div>
       </div>
@@ -153,14 +154,12 @@ const router = useRouter()
 useSessionRunner()
 useRestTimer()
 
-const timerBorderStyle = computed(() => {
-  const pct = store.restTimerTotal
-    ? Math.round((store.restTimerRemaining / store.restTimerTotal) * 100)
-    : 0
-  // conic-gradient sweeps accent colour clockwise as timer counts down
-  return {
-    background: `conic-gradient(var(--color-accent) ${pct}%, transparent ${pct}%)`,
-  }
+// Perimeter of the 296×48 rect: 2*(296+48) = 688
+const TIMER_PERIMETER = 688
+const timerDashOffset = computed(() => {
+  if (!store.restTimerTotal) return TIMER_PERIMETER
+  const ratio = store.restTimerRemaining / store.restTimerTotal
+  return TIMER_PERIMETER * (1 - ratio)
 })
 
 const localPrimary   = ref('')
@@ -331,39 +330,47 @@ async function doAbandon() {
   font-weight: var(--font-bold);
   border-radius: var(--radius-lg);
   transition: background-color var(--transition-fast);
-  overflow: hidden;
-  padding: 3px;
 }
 .action-done:active { background-color: var(--color-accent-dim); }
 
-/* Timer border: conic-gradient layer behind button content */
-.action-done__timer-border {
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-lg);
-  transition: background 0.4s linear;
-  z-index: 0;
+/* During rest: dark background, timer SVG as border */
+.action-done:has(.action-done__timer-svg) {
+  background-color: var(--color-surface-1);
+  color: var(--color-text-1);
 }
 
-/* Normal label (not resting) */
-.action-done__label {
+.action-done__timer-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: var(--radius-lg);
+  overflow: visible;
+}
+
+.action-done__timer-track {
+  fill: none;
+  stroke: var(--color-surface-3);
+  stroke-width: 3;
+}
+
+.action-done__timer-fill {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 688;
+  transition: stroke-dashoffset 0.4s linear;
+}
+
+.action-done__text {
   position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  z-index: 2;
+  z-index: 1;
   font-variant-numeric: tabular-nums;
-}
-
-/* Resting: label becomes the inner fill layer */
-.action-done__label--resting {
-  background-color: var(--color-surface-1);
-  width: 100%;
-  height: 100%;
-  border-radius: calc(var(--radius-lg) - 3px);
-  justify-content: center;
-  color: var(--color-text-1);
-  padding: 0 var(--space-4);
 }
 
 
