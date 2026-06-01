@@ -19,6 +19,9 @@
       <div v-for="plan in plansStore.plans.filter(p => p.status === 'active')" :key="plan.id" class="plan-block">
         <div class="plan-header">
           <span class="plan-name">{{ plan.name }}</span>
+          <span v-if="plansStore.streaks[plan.id]" class="plan-streak">
+            🔥 {{ plansStore.streaks[plan.id] }}
+          </span>
           <button class="plan-edit-btn" @click="router.push({ name: 'plan-edit', params: { id: plan.id } })">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </button>
@@ -187,6 +190,14 @@ async function startUnplanned(routine) {
 
 .plan-name { font-size: var(--text-sm); font-weight: var(--font-bold); color: var(--color-text-1); text-transform: uppercase; letter-spacing: 0.06em; }
 .plan-name--dim { color: var(--color-text-3); }
+
+.plan-streak {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  color: var(--color-warning);
+  margin-left: auto;
+  margin-right: var(--space-2);
+}
 
 .plan-edit-btn { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; color: var(--color-text-3); border-radius: var(--radius-md); }
 .plan-edit-btn:active { color: var(--color-text-1); }

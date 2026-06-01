@@ -3,9 +3,10 @@ import { ref } from 'vue'
 import { plansRepository } from '../db/plansRepository.js'
 
 export const usePlansStore = defineStore('plans', () => {
-  const plans       = ref([])   // all plans
-  const entries     = ref({})   // planId → entry[]
-  const doneThisWeek = ref(new Set())  // Set of planEntryIds completed this week
+  const plans       = ref([])
+  const entries     = ref({})
+  const streaks     = ref({})   // planId → streak count
+  const doneThisWeek = ref(new Set())
   const plannedRoutineIds = ref(new Set())
   const isLoading   = ref(false)
 
@@ -23,6 +24,14 @@ export const usePlansStore = defineStore('plans', () => {
 
       doneThisWeek.value    = await plansRepository.getCompletedEntryIdsThisWeek()
       plannedRoutineIds.value = await plansRepository.getPlannedRoutineIds()
+
+      // Compute streaks for all plans in parallel
+      const streakResults = await Promise.all(
+        plans.value.map(p => plansRepository.getStreak(p.id, map[p.id] || []))
+      )
+      const streakMap = {}
+      plans.value.forEach((p, i) => { streakMap[p.id] = streakResults[i] })
+      streaks.value = streakMap
     } finally {
       isLoading.value = false
     }
@@ -83,6 +92,7 @@ export const usePlansStore = defineStore('plans', () => {
   return {
     plans,
     entries,
+    streaks,
     doneThisWeek,
     plannedRoutineIds,
     isLoading,

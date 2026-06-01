@@ -91,6 +91,60 @@ export const plansRepository = {
     return new Set(sessions.map(s => s.planEntryId))
   },
 
+  async getStreak(planId, entries) {
+    // Only count entries that have a specific day assigned
+    const required = entries.filter(e => e.dayOfWeek !== null)
+    if (!required.length) return 0
+
+    const requiredIds = new Set(required.map(e => e.id))
+    let streak = 0
+    const now = new Date()
+
+    // Walk back week by week
+    for (let weeksAgo = 0; weeksAgo < 52; weeksAgo++) {
+      // Compute Mon 00:00 and Sun 23:59:59 of this week
+      const ref = new Date(now)
+      ref.setDate(now.getDate() - weeksAgo * 7)
+      const day = ref.getDay() || 7
+      const monday = new Date(ref)
+      monday.setDate(ref.getDate() - day + 1)
+      monday.setHours(0, 0, 0, 0)
+      const sunday = new Date(monday)
+      sunday.setDate(monday.getDate() + 6)
+      sunday.setHours(23, 59, 59, 999)
+
+      // Skip current incomplete week only if no sessions yet this week
+      // (don't penalise for days not yet reached)
+      const isCurrentWeek = weeksAgo === 0
+
+      const sessions = await db.workoutSessions
+        .where('startedAt').between(monday.getTime(), sunday.getTime())
+        .filter(s => s.status === 'completed' && s.planEntryId && requiredIds.has(s.planEntryId))
+        .toArray()
+
+      const doneIds = new Set(sessions.map(s => s.planEntryId))
+
+      // For current week: only check days that have already passed
+      const todayDow = (new Date().getDay() || 7) - 1  // 0=Mon 6=Sun
+      const toCheck = isCurrentWeek
+        ? required.filter(e => e.dayOfWeek <= todayDow)
+        : required
+
+      if (toCheck.length === 0) {
+        // Current week — no required days have passed yet, skip
+        continue
+      }
+
+      const allDone = toCheck.every(e => doneIds.has(e.id))
+      if (allDone) {
+        streak++
+      } else {
+        break
+      }
+    }
+    return streak
+  },
+
   // Get routineIds that are already in at least one active plan
   async getPlannedRoutineIds() {
     const activePlans = await db.plans.where('status').equals('active').toArray()
