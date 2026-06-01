@@ -148,27 +148,31 @@
     </AppModal>
 
     <!-- Import confirm modal -->
-    <AppModal v-model="importModal" title="Import backup?" :closeOnBackdrop="false">
+    <AppModal v-model="importModal" title="Restore from backup" :closeOnBackdrop="false">
       <div class="import-preview">
-        <p style="color:var(--color-text-2)">This will <strong>merge</strong> the backup into your current data. Existing records with the same ID will be overwritten.</p>
-        <div v-if="importPreview" class="import-stats">
-          <div class="import-stat">
-            <span class="import-stat__val">{{ importPreview.exerciseLibrary?.length || 0 }}</span>
-            <span class="import-stat__label">Exercises</span>
-          </div>
-          <div class="import-stat">
-            <span class="import-stat__val">{{ importPreview.routines?.length || 0 }}</span>
-            <span class="import-stat__label">Routines</span>
-          </div>
-          <div class="import-stat">
-            <span class="import-stat__val">{{ importPreview.workoutSessions?.length || 0 }}</span>
-            <span class="import-stat__label">Sessions</span>
-          </div>
+        <p style="color:var(--color-danger);margin-bottom:var(--space-4)">
+          ⚠ Selected data will be <strong>deleted and replaced</strong>. This cannot be undone.
+        </p>
+        <div class="export-options">
+          <label
+            v-for="opt in importOptions"
+            :key="opt.key"
+            class="export-option"
+            :class="{ 'export-option--disabled': !opt.available }"
+          >
+            <input type="checkbox" v-model="opt.selected" :disabled="!opt.available" class="export-checkbox" />
+            <div class="export-option__body">
+              <span class="export-option__label">{{ opt.label }}</span>
+              <span class="export-option__count">
+                {{ opt.available ? `${opt.count} records in backup` : 'Not in this backup' }}
+              </span>
+            </div>
+          </label>
         </div>
       </div>
       <template #actions>
-        <AppButton variant="accent" full :disabled="isImporting" @click="doImport">
-          {{ isImporting ? 'Importing…' : 'Import' }}
+        <AppButton variant="danger" full :disabled="isImporting || !importOptions.some(o => o.selected)" @click="doImport">
+          {{ isImporting ? 'Restoring…' : 'Restore selected' }}
         </AppButton>
         <AppButton variant="ghost" full @click="importModal = false">Cancel</AppButton>
       </template>
@@ -197,6 +201,7 @@ const fileInputRef  = ref(null)
 const exportModal   = ref(false)
 const exportOptions = ref([])
 const importModal   = ref(false)
+const importOptions = ref([])
 const isImporting   = ref(false)
 const importPreview = ref(null)
 const isPersistent  = ref(false)
@@ -323,7 +328,7 @@ function triggerImport() {
 function onFileSelected(e) {
   const file = e.target.files?.[0]
   if (!file) return
-  e.target.value = '' // reset so same file can be picked again
+  e.target.value = ''
 
   const reader = new FileReader()
   reader.onload = evt => {
@@ -332,6 +337,30 @@ function onFileSelected(e) {
       if (!data.version || !data.exportedAt) throw new Error('Not a valid PRsonal backup file')
       pendingImportData = data
       importPreview.value = data
+      // Build import options from what's actually in the file
+      importOptions.value = [
+        {
+          key: 'exercises',
+          label: 'Exercise library',
+          count: data.exerciseLibrary?.length || 0,
+          available: !!data.exerciseLibrary?.length,
+          selected: !!data.exerciseLibrary?.length,
+        },
+        {
+          key: 'routines',
+          label: 'Routines',
+          count: data.routines?.length || 0,
+          available: !!data.routines?.length,
+          selected: !!data.routines?.length,
+        },
+        {
+          key: 'history',
+          label: 'Workout history',
+          count: data.workoutSessions?.length || 0,
+          available: !!data.workoutSessions?.length,
+          selected: !!data.workoutSessions?.length,
+        },
+      ]
       importModal.value = true
     } catch (err) {
       showToast('Invalid file: ' + err.message, 'error')
@@ -343,28 +372,37 @@ function onFileSelected(e) {
 async function doImport() {
   if (!pendingImportData) return
   isImporting.value = true
+  const selected = Object.fromEntries(importOptions.value.map(o => [o.key, o.selected]))
+  const d = pendingImportData
   try {
-    const d = pendingImportData
     await db.transaction('rw',
-      db.exerciseLibrary,
-      db.routines,
-      db.routineExercises,
-      db.workoutSessions,
-      db.workoutSets,
+      db.exerciseLibrary, db.routines, db.routineExercises,
+      db.workoutSessions, db.workoutSets,
       async () => {
-        if (d.exerciseLibrary?.length) await db.exerciseLibrary.bulkPut(d.exerciseLibrary)
-        if (d.routines?.length)         await db.routines.bulkPut(d.routines)
-        if (d.routineExercises?.length) await db.routineExercises.bulkPut(d.routineExercises)
-        if (d.workoutSessions?.length)  await db.workoutSessions.bulkPut(d.workoutSessions)
-        if (d.workoutSets?.length)      await db.workoutSets.bulkPut(d.workoutSets)
+        if (selected.exercises) {
+          await db.exerciseLibrary.clear()
+          if (d.exerciseLibrary?.length) await db.exerciseLibrary.bulkAdd(d.exerciseLibrary)
+        }
+        if (selected.routines) {
+          await db.routineExercises.clear()
+          await db.routines.clear()
+          if (d.routines?.length)         await db.routines.bulkAdd(d.routines)
+          if (d.routineExercises?.length) await db.routineExercises.bulkAdd(d.routineExercises)
+        }
+        if (selected.history) {
+          await db.workoutSets.clear()
+          await db.workoutSessions.clear()
+          if (d.workoutSessions?.length) await db.workoutSessions.bulkAdd(d.workoutSessions)
+          if (d.workoutSets?.length)     await db.workoutSets.bulkAdd(d.workoutSets)
+        }
       }
     )
     importModal.value = false
     pendingImportData = null
     importPreview.value = null
-    showToast('Import successful — reload to see changes')
+    showToast('Restore successful — reload to see changes')
   } catch (e) {
-    showToast('Import failed: ' + e.message, 'error')
+    showToast('Restore failed: ' + e.message, 'error')
   } finally {
     isImporting.value = false
   }
@@ -487,6 +525,7 @@ async function doImport() {
 .export-option__body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .export-option__label { font-size: var(--text-base); font-weight: var(--font-medium); color: var(--color-text-1); }
 .export-option__count { font-size: var(--text-sm); color: var(--color-text-3); }
+.export-option--disabled { opacity: 0.4; cursor: default; }
 
 /* Import preview */
 .import-preview { display: flex; flex-direction: column; gap: var(--space-4); }

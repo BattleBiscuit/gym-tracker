@@ -80,8 +80,8 @@ function open(exercise = null) {
   editingId.value = exercise?.id || null
   form.name             = exercise?.name             || ''
   form.type             = exercise?.type             || 'strength'
-  form.primaryMuscles   = [...(exercise?.primaryMuscles   || [])]
-  form.secondaryMuscles = [...(exercise?.secondaryMuscles || [])]
+  form.primaryMuscles   = (exercise?.primaryMuscles   || []).filter(m => MUSCLES.includes(m))
+  form.secondaryMuscles = (exercise?.secondaryMuscles || []).filter(m => MUSCLES.includes(m))
   form.notes            = exercise?.notes            || ''
   Object.keys(errors).forEach(k => delete errors[k])
 }
