@@ -48,6 +48,20 @@
         </div>
       </section>
 
+      <!-- Test data section -->
+      <section class="settings-section">
+        <h2 class="section-title">Test data</h2>
+        <div class="settings-card">
+          <div class="settings-row" @click="loadTestData">
+            <div class="settings-row__body">
+              <span class="settings-row__label">Load test data</span>
+              <span class="settings-row__sub">3 routines · 15 exercises · 18 sessions · PRs · BW · Cardio</span>
+            </div>
+            <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+        </div>
+      </section>
+
       <!-- Data section -->
       <section class="settings-section">
         <h2 class="section-title">Data</h2>
@@ -209,6 +223,23 @@ const isChecking    = ref(false)
 const updateStatus  = ref('Check for update')
 const buildDate     = __BUILD_DATE__
 let pendingImportData = null
+
+async function loadTestData() {
+  try {
+    const res = await fetch('./test-data.json')
+    if (!res.ok) throw new Error('Could not load test data')
+    const data = await res.json()
+    pendingImportData = data
+    importOptions.value = [
+      { key: 'exercises', label: 'Exercise library', count: data.exerciseLibrary?.length || 0, available: true, selected: true },
+      { key: 'routines',  label: 'Routines',         count: data.routines?.length || 0,         available: true, selected: true },
+      { key: 'history',   label: 'Workout history',  count: data.workoutSessions?.length || 0,  available: true, selected: true },
+    ]
+    importModal.value = true
+  } catch (e) {
+    showToast('Failed: ' + e.message, 'error')
+  }
+}
 
 async function openExportModal() {
   const [exerciseCount, routineCount, sessionCount] = await Promise.all([

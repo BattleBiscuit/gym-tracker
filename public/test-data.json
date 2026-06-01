@@ -1,0 +1,6503 @@
+{
+  "version": 1,
+  "exportedAt": "2026-06-01T09:00:39.508Z",
+  "exerciseLibrary": [
+    {
+      "id": "lib-001",
+      "name": "Bench Press",
+      "type": "strength",
+      "primaryMuscles": [
+        "Chest"
+      ],
+      "secondaryMuscles": [
+        "Shoulders",
+        "Arms"
+      ],
+      "notes": "Grip slightly wider than shoulder width",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-002",
+      "name": "Squat",
+      "type": "strength",
+      "primaryMuscles": [
+        "Legs"
+      ],
+      "secondaryMuscles": [
+        "Glutes",
+        "Back"
+      ],
+      "notes": "Bar on traps, knees track over toes",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-003",
+      "name": "Deadlift",
+      "type": "strength",
+      "primaryMuscles": [
+        "Back"
+      ],
+      "secondaryMuscles": [
+        "Legs",
+        "Glutes"
+      ],
+      "notes": "Hip hinge, neutral spine",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-004",
+      "name": "Overhead Press",
+      "type": "strength",
+      "primaryMuscles": [
+        "Shoulders"
+      ],
+      "secondaryMuscles": [
+        "Arms"
+      ],
+      "notes": "Core tight, press in a straight line",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-005",
+      "name": "Pull-Up",
+      "type": "strength",
+      "primaryMuscles": [
+        "Back"
+      ],
+      "secondaryMuscles": [
+        "Arms"
+      ],
+      "notes": "Full hang at bottom, chest to bar",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-006",
+      "name": "Barbell Row",
+      "type": "strength",
+      "primaryMuscles": [
+        "Back"
+      ],
+      "secondaryMuscles": [
+        "Arms",
+        "Shoulders"
+      ],
+      "notes": "Overhand grip, pull to lower chest",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-007",
+      "name": "Tricep Pushdown",
+      "type": "strength",
+      "primaryMuscles": [
+        "Arms"
+      ],
+      "secondaryMuscles": [],
+      "notes": "Rope attachment, elbows fixed",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-008",
+      "name": "Bicep Curl",
+      "type": "strength",
+      "primaryMuscles": [
+        "Arms"
+      ],
+      "secondaryMuscles": [],
+      "notes": "Supinate at top",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-009",
+      "name": "Lateral Raise",
+      "type": "strength",
+      "primaryMuscles": [
+        "Shoulders"
+      ],
+      "secondaryMuscles": [],
+      "notes": "Lead with elbows",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-010",
+      "name": "Leg Press",
+      "type": "strength",
+      "primaryMuscles": [
+        "Legs"
+      ],
+      "secondaryMuscles": [
+        "Glutes"
+      ],
+      "notes": "Seat notch 3, feet shoulder width",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-011",
+      "name": "Assisted Pull-Up",
+      "type": "strength",
+      "primaryMuscles": [
+        "Back"
+      ],
+      "secondaryMuscles": [
+        "Arms"
+      ],
+      "notes": "Machine assisted — negative weight",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-012",
+      "name": "Dip",
+      "type": "strength",
+      "primaryMuscles": [
+        "Chest",
+        "Arms"
+      ],
+      "secondaryMuscles": [
+        "Shoulders"
+      ],
+      "notes": "BW or weighted",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-013",
+      "name": "Treadmill",
+      "type": "cardio",
+      "primaryMuscles": [
+        "Legs"
+      ],
+      "secondaryMuscles": [],
+      "notes": "Warmup pace",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-014",
+      "name": "Romanian Deadlift",
+      "type": "strength",
+      "primaryMuscles": [
+        "Legs"
+      ],
+      "secondaryMuscles": [
+        "Back",
+        "Glutes"
+      ],
+      "notes": "Hinge until stretch in hamstrings",
+      "createdAt": 1772528439508
+    },
+    {
+      "id": "lib-015",
+      "name": "Face Pull",
+      "type": "strength",
+      "primaryMuscles": [
+        "Shoulders"
+      ],
+      "secondaryMuscles": [
+        "Back"
+      ],
+      "notes": "Rope to forehead, elbows high",
+      "createdAt": 1772528439508
+    }
+  ],
+  "routines": [
+    {
+      "id": "rtn-001",
+      "name": "Push Day",
+      "notes": "Mon / Thu",
+      "createdAt": 1772528439508,
+      "updatedAt": 1779872439508
+    },
+    {
+      "id": "rtn-002",
+      "name": "Pull Day",
+      "notes": "Tue / Fri",
+      "createdAt": 1772528439508,
+      "updatedAt": 1779786039508
+    },
+    {
+      "id": "rtn-003",
+      "name": "Leg Day",
+      "notes": "Wed / Sat",
+      "createdAt": 1772528439508,
+      "updatedAt": 1779699639508
+    }
+  ],
+  "routineExercises": [
+    {
+      "id": "re-001",
+      "routineId": "rtn-001",
+      "position": 0,
+      "name": "Bench Press",
+      "exerciseLibraryId": "lib-001",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 82,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 82,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 82,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 82,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 82,
+          "isBodyweight": false,
+          "restSeconds": 180
+        }
+      ],
+      "notes": "Pause at chest on last set"
+    },
+    {
+      "id": "re-002",
+      "routineId": "rtn-001",
+      "position": 1,
+      "name": "Overhead Press",
+      "exerciseLibraryId": "lib-004",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 57,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 57,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 57,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 57,
+          "isBodyweight": false,
+          "restSeconds": 120
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-003",
+      "routineId": "rtn-001",
+      "position": 2,
+      "name": "Dip",
+      "exerciseLibraryId": "lib-012",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 10,
+          "isBodyweight": true,
+          "restSeconds": 90
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 10,
+          "isBodyweight": true,
+          "restSeconds": 90
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 10,
+          "isBodyweight": true,
+          "restSeconds": 90
+        }
+      ],
+      "notes": "BW +10kg belt"
+    },
+    {
+      "id": "re-004",
+      "routineId": "rtn-001",
+      "position": 3,
+      "name": "Tricep Pushdown",
+      "exerciseLibraryId": "lib-007",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 22,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 22,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 22,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 22,
+          "isBodyweight": false,
+          "restSeconds": 60
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-005",
+      "routineId": "rtn-001",
+      "position": 4,
+      "name": "Lateral Raise",
+      "exerciseLibraryId": "lib-009",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 15,
+          "weight": 10,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 15,
+          "weight": 10,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 15,
+          "weight": 10,
+          "isBodyweight": false,
+          "restSeconds": 60
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-006",
+      "routineId": "rtn-001",
+      "position": 5,
+      "name": "Treadmill",
+      "exerciseLibraryId": "lib-013",
+      "sets": [
+        {
+          "type": "cardio",
+          "duration": 10,
+          "level": 6,
+          "restSeconds": 0
+        }
+      ],
+      "notes": "Cooldown"
+    },
+    {
+      "id": "re-007",
+      "routineId": "rtn-002",
+      "position": 0,
+      "name": "Deadlift",
+      "exerciseLibraryId": "lib-003",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 122,
+          "isBodyweight": false,
+          "restSeconds": 240
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 122,
+          "isBodyweight": false,
+          "restSeconds": 240
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 122,
+          "isBodyweight": false,
+          "restSeconds": 240
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 122,
+          "isBodyweight": false,
+          "restSeconds": 240
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-008",
+      "routineId": "rtn-002",
+      "position": 1,
+      "name": "Pull-Up",
+      "exerciseLibraryId": "lib-005",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 0,
+          "isBodyweight": true,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 0,
+          "isBodyweight": true,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 0,
+          "isBodyweight": true,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 0,
+          "isBodyweight": true,
+          "restSeconds": 120
+        }
+      ],
+      "notes": "BW only"
+    },
+    {
+      "id": "re-009",
+      "routineId": "rtn-002",
+      "position": 2,
+      "name": "Assisted Pull-Up",
+      "exerciseLibraryId": "lib-011",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": -15,
+          "isBodyweight": false,
+          "restSeconds": 90
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": -15,
+          "isBodyweight": false,
+          "restSeconds": 90
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": -15,
+          "isBodyweight": false,
+          "restSeconds": 90
+        }
+      ],
+      "notes": "-15kg assistance"
+    },
+    {
+      "id": "re-010",
+      "routineId": "rtn-002",
+      "position": 3,
+      "name": "Barbell Row",
+      "exerciseLibraryId": "lib-006",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 72,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 72,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 72,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 8,
+          "weight": 72,
+          "isBodyweight": false,
+          "restSeconds": 120
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-011",
+      "routineId": "rtn-002",
+      "position": 4,
+      "name": "Bicep Curl",
+      "exerciseLibraryId": "lib-008",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 14,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 14,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 14,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 12,
+          "weight": 14,
+          "isBodyweight": false,
+          "restSeconds": 60
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-012",
+      "routineId": "rtn-002",
+      "position": 5,
+      "name": "Face Pull",
+      "exerciseLibraryId": "lib-015",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 15,
+          "weight": 12,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 15,
+          "weight": 12,
+          "isBodyweight": false,
+          "restSeconds": 60
+        },
+        {
+          "type": "strength",
+          "reps": 15,
+          "weight": 12,
+          "isBodyweight": false,
+          "restSeconds": 60
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-013",
+      "routineId": "rtn-003",
+      "position": 0,
+      "name": "Squat",
+      "exerciseLibraryId": "lib-002",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 102,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 102,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 102,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 102,
+          "isBodyweight": false,
+          "restSeconds": 180
+        },
+        {
+          "type": "strength",
+          "reps": 5,
+          "weight": 102,
+          "isBodyweight": false,
+          "restSeconds": 180
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-014",
+      "routineId": "rtn-003",
+      "position": 1,
+      "name": "Leg Press",
+      "exerciseLibraryId": "lib-010",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 155,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 155,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 155,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 155,
+          "isBodyweight": false,
+          "restSeconds": 120
+        }
+      ],
+      "notes": "Seat notch 3"
+    },
+    {
+      "id": "re-015",
+      "routineId": "rtn-003",
+      "position": 2,
+      "name": "Romanian Deadlift",
+      "exerciseLibraryId": "lib-014",
+      "sets": [
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 72,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 72,
+          "isBodyweight": false,
+          "restSeconds": 120
+        },
+        {
+          "type": "strength",
+          "reps": 10,
+          "weight": 72,
+          "isBodyweight": false,
+          "restSeconds": 120
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "re-016",
+      "routineId": "rtn-003",
+      "position": 3,
+      "name": "Treadmill",
+      "exerciseLibraryId": "lib-013",
+      "sets": [
+        {
+          "type": "cardio",
+          "duration": 20,
+          "level": 7,
+          "restSeconds": 0
+        }
+      ],
+      "notes": "Warmup"
+    }
+  ],
+  "workoutSessions": [
+    {
+      "id": "ses-p0",
+      "routineId": "rtn-001",
+      "routineName": "Push Day",
+      "startedAt": 1776675639508,
+      "completedAt": 1776679239508,
+      "status": "completed",
+      "totalVolumeKg": 7000
+    },
+    {
+      "id": "ses-l0",
+      "routineId": "rtn-002",
+      "routineName": "Pull Day",
+      "startedAt": 1776762039508,
+      "completedAt": 1776765639508,
+      "status": "completed",
+      "totalVolumeKg": 8000
+    },
+    {
+      "id": "ses-k0",
+      "routineId": "rtn-003",
+      "routineName": "Leg Day",
+      "startedAt": 1776848439508,
+      "completedAt": 1776852639508,
+      "status": "completed",
+      "totalVolumeKg": 11000
+    },
+    {
+      "id": "ses-p1",
+      "routineId": "rtn-001",
+      "routineName": "Push Day",
+      "startedAt": 1777280439508,
+      "completedAt": 1777284039508,
+      "status": "completed",
+      "totalVolumeKg": 7200
+    },
+    {
+      "id": "ses-l1",
+      "routineId": "rtn-002",
+      "routineName": "Pull Day",
+      "startedAt": 1777366839508,
+      "completedAt": 1777370439508,
+      "status": "completed",
+      "totalVolumeKg": 8250
+    },
+    {
+      "id": "ses-k1",
+      "routineId": "rtn-003",
+      "routineName": "Leg Day",
+      "startedAt": 1777453239508,
+      "completedAt": 1777457439508,
+      "status": "completed",
+      "totalVolumeKg": 11400
+    },
+    {
+      "id": "ses-p2",
+      "routineId": "rtn-001",
+      "routineName": "Push Day",
+      "startedAt": 1777885239508,
+      "completedAt": 1777888839508,
+      "status": "completed",
+      "totalVolumeKg": 7400
+    },
+    {
+      "id": "ses-l2",
+      "routineId": "rtn-002",
+      "routineName": "Pull Day",
+      "startedAt": 1777971639508,
+      "completedAt": 1777975239508,
+      "status": "completed",
+      "totalVolumeKg": 8500
+    },
+    {
+      "id": "ses-k2",
+      "routineId": "rtn-003",
+      "routineName": "Leg Day",
+      "startedAt": 1778058039508,
+      "completedAt": 1778062239508,
+      "status": "completed",
+      "totalVolumeKg": 11800
+    },
+    {
+      "id": "ses-p3",
+      "routineId": "rtn-001",
+      "routineName": "Push Day",
+      "startedAt": 1778490039508,
+      "completedAt": 1778493639508,
+      "status": "completed",
+      "totalVolumeKg": 7600
+    },
+    {
+      "id": "ses-l3",
+      "routineId": "rtn-002",
+      "routineName": "Pull Day",
+      "startedAt": 1778576439508,
+      "completedAt": 1778580039508,
+      "status": "completed",
+      "totalVolumeKg": 8750
+    },
+    {
+      "id": "ses-k3",
+      "routineId": "rtn-003",
+      "routineName": "Leg Day",
+      "startedAt": 1778662839508,
+      "completedAt": 1778667039508,
+      "status": "completed",
+      "totalVolumeKg": 12200
+    },
+    {
+      "id": "ses-p4",
+      "routineId": "rtn-001",
+      "routineName": "Push Day",
+      "startedAt": 1779094839508,
+      "completedAt": 1779098439508,
+      "status": "completed",
+      "totalVolumeKg": 7800
+    },
+    {
+      "id": "ses-l4",
+      "routineId": "rtn-002",
+      "routineName": "Pull Day",
+      "startedAt": 1779181239508,
+      "completedAt": 1779184839508,
+      "status": "completed",
+      "totalVolumeKg": 9000
+    },
+    {
+      "id": "ses-k4",
+      "routineId": "rtn-003",
+      "routineName": "Leg Day",
+      "startedAt": 1779267639508,
+      "completedAt": 1779271839508,
+      "status": "completed",
+      "totalVolumeKg": 12600
+    },
+    {
+      "id": "ses-p5",
+      "routineId": "rtn-001",
+      "routineName": "Push Day",
+      "startedAt": 1779699639508,
+      "completedAt": 1779703239508,
+      "status": "completed",
+      "totalVolumeKg": 8000
+    },
+    {
+      "id": "ses-l5",
+      "routineId": "rtn-002",
+      "routineName": "Pull Day",
+      "startedAt": 1779786039508,
+      "completedAt": 1779789639508,
+      "status": "completed",
+      "totalVolumeKg": 9250
+    },
+    {
+      "id": "ses-k5",
+      "routineId": "rtn-003",
+      "routineName": "Leg Day",
+      "startedAt": 1779872439508,
+      "completedAt": 1779876639508,
+      "status": "completed",
+      "totalVolumeKg": 13000
+    }
+  ],
+  "workoutSets": [
+    {
+      "id": "ws-0001",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0002",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0003",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0004",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0005",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0006",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0007",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0008",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0009",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0010",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Dip",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0011",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Dip",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0012",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Dip",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0013",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0014",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0015",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0016",
+      "sessionId": 1776675639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p0"
+    },
+    {
+      "id": "ws-0017",
+      "sessionId": "ses-p0",
+      "exercisePosition": 5,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 10,
+      "plannedLevel": 6,
+      "actualDuration": 10,
+      "actualLevel": 6,
+      "effectiveWeight": null,
+      "completedAt": 1776683439508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0018",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0019",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0020",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0021",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0022",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0023",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0024",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0025",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0026",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0027",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0028",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0029",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0030",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0031",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0032",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0033",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0034",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0035",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0036",
+      "sessionId": 1776762039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l0"
+    },
+    {
+      "id": "ws-0037",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0038",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0039",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0040",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0041",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0042",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 155
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 155,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0043",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 155
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 155,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0044",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 155
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 155,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0045",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 10,
+        "w": 155
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 155,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0046",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0047",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0048",
+      "sessionId": 1776848439508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k0"
+    },
+    {
+      "id": "ws-0049",
+      "sessionId": "ses-k0",
+      "exercisePosition": 3,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 20,
+      "plannedLevel": 7,
+      "actualDuration": 20,
+      "actualLevel": 7,
+      "effectiveWeight": null,
+      "completedAt": 1776855939508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0050",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0051",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0052",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0053",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0054",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 80
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 80,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0055",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0056",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0057",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0058",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 55
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 55,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0059",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Dip",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0060",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Dip",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0061",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Dip",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0062",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0063",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0064",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0065",
+      "sessionId": 1777280439508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p1"
+    },
+    {
+      "id": "ws-0066",
+      "sessionId": "ses-p1",
+      "exercisePosition": 5,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 10,
+      "plannedLevel": 6,
+      "actualDuration": 10,
+      "actualLevel": 6,
+      "effectiveWeight": null,
+      "completedAt": 1777288239508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0067",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0068",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0069",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0070",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 120
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 120,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0071",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0072",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0073",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0074",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0075",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0076",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0077",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0078",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 73
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 73,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0079",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 73
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 73,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0080",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 73
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 73,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0081",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 73
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 73,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0082",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0083",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0084",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0085",
+      "sessionId": 1777366839508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l1"
+    },
+    {
+      "id": "ws-0086",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Squat",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0087",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Squat",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0088",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Squat",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0089",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Squat",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0090",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Squat",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 100
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 100,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0091",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 160
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 160,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0092",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 160
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 160,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0093",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 160
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 160,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0094",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 10,
+        "w": 160
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 160,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0095",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0096",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0097",
+      "sessionId": 1777453239508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k1"
+    },
+    {
+      "id": "ws-0098",
+      "sessionId": "ses-k1",
+      "exercisePosition": 3,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 20,
+      "plannedLevel": 7,
+      "actualDuration": 20,
+      "actualLevel": 7,
+      "effectiveWeight": null,
+      "completedAt": 1777460739508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0099",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0100",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0101",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0102",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0103",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0104",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0105",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0106",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0107",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0108",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Dip",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0109",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Dip",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0110",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Dip",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0111",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0112",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0113",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0114",
+      "sessionId": 1777885239508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p2"
+    },
+    {
+      "id": "ws-0115",
+      "sessionId": "ses-p2",
+      "exercisePosition": 5,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 10,
+      "plannedLevel": 6,
+      "actualDuration": 10,
+      "actualLevel": 6,
+      "effectiveWeight": null,
+      "completedAt": 1777893039508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0116",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 122
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 122,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0117",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 122
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 122,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0118",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 122
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 122,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0119",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 122
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 122,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0120",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0121",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0122",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0123",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0124",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0125",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0126",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0127",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 74
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 74,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0128",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 74
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 74,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0129",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 74
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 74,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0130",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 74
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 74,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0131",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0132",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0133",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0134",
+      "sessionId": 1777971639508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l2"
+    },
+    {
+      "id": "ws-0135",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Squat",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 102
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 102,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0136",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Squat",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 102
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 102,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0137",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Squat",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 102
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 102,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0138",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Squat",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 102
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 102,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0139",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Squat",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 102
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 102,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0140",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 165
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 165,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0141",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 165
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 165,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0142",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 165
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 165,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0143",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 10,
+        "w": 165
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 165,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0144",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0145",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0146",
+      "sessionId": 1778058039508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k2"
+    },
+    {
+      "id": "ws-0147",
+      "sessionId": "ses-k2",
+      "exercisePosition": 3,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 20,
+      "plannedLevel": 7,
+      "actualDuration": 20,
+      "actualLevel": 7,
+      "effectiveWeight": null,
+      "completedAt": 1778065539508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0148",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0149",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0150",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0151",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0152",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 82
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 82,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0153",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0154",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0155",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0156",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 57
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 57,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0157",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Dip",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0158",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Dip",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0159",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Dip",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0160",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0161",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0162",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0163",
+      "sessionId": 1778490039508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p3"
+    },
+    {
+      "id": "ws-0164",
+      "sessionId": "ses-p3",
+      "exercisePosition": 5,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 10,
+      "plannedLevel": 6,
+      "actualDuration": 10,
+      "actualLevel": 6,
+      "effectiveWeight": null,
+      "completedAt": 1778497839508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0165",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 125
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 125,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0166",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 125
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 125,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0167",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 125
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 125,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0168",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 125
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 125,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0169",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0170",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0171",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0172",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0173",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0174",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0175",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0176",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 75
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 75,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0177",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 75
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 75,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0178",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 75
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 75,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0179",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 75
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 75,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0180",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0181",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0182",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0183",
+      "sessionId": 1778576439508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l3"
+    },
+    {
+      "id": "ws-0184",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Squat",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 105
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 105,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0185",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Squat",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 105
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 105,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0186",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Squat",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 105
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 105,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0187",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Squat",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 105
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 105,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0188",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Squat",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 105
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 105,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0189",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 170
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 170,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0190",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 170
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 170,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0191",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 170
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 170,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0192",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 10,
+        "w": 170
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 170,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0193",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0194",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0195",
+      "sessionId": 1778662839508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k3"
+    },
+    {
+      "id": "ws-0196",
+      "sessionId": "ses-k3",
+      "exercisePosition": 3,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 20,
+      "plannedLevel": 7,
+      "actualDuration": 20,
+      "actualLevel": 7,
+      "effectiveWeight": null,
+      "completedAt": 1778670339508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0197",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0198",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0199",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0200",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0201",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 4,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0202",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0203",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0204",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0205",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0206",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Dip",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0207",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Dip",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0208",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Dip",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0209",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0210",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0211",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0212",
+      "sessionId": 1779094839508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p4"
+    },
+    {
+      "id": "ws-0213",
+      "sessionId": "ses-p4",
+      "exercisePosition": 5,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 10,
+      "plannedLevel": 6,
+      "actualDuration": 10,
+      "actualLevel": 6,
+      "effectiveWeight": null,
+      "completedAt": 1779102639508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0214",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 127
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 127,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0215",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 127
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 127,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0216",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 127
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 127,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0217",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 127
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 127,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0218",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0219",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0220",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0221",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0222",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0223",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0224",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0225",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 76
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 76,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0226",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 76
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 76,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0227",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 76
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 76,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0228",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 76
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 76,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0229",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0230",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0231",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0232",
+      "sessionId": 1779181239508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l4"
+    },
+    {
+      "id": "ws-0233",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Squat",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 107
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 107,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0234",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Squat",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 107
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 107,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0235",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Squat",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 107
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 107,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0236",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Squat",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 107
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 107,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0237",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Squat",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 107
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 107,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0238",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 175
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 175,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0239",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 175
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 175,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0240",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 175
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 175,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0241",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 10,
+        "w": 175
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 175,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0242",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0243",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0244",
+      "sessionId": 1779267639508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k4"
+    },
+    {
+      "id": "ws-0245",
+      "sessionId": "ses-k4",
+      "exercisePosition": 3,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 20,
+      "plannedLevel": 7,
+      "actualDuration": 20,
+      "actualLevel": 7,
+      "effectiveWeight": null,
+      "completedAt": 1779275139508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0246",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0247",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0248",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0249",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0250",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Bench Press",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 85
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 85,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0251",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0252",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0253",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0254",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Overhead Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 60
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 60,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0255",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Dip",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0256",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Dip",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0257",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Dip",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 10
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 10,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0258",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0259",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0260",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0261",
+      "sessionId": 1779699639508,
+      "exercisePosition": "Tricep Pushdown",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 22
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 22,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-p5"
+    },
+    {
+      "id": "ws-0262",
+      "sessionId": "ses-p5",
+      "exercisePosition": 5,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 10,
+      "plannedLevel": 6,
+      "actualDuration": 10,
+      "actualLevel": 6,
+      "effectiveWeight": null,
+      "completedAt": 1779707439508,
+      "skipped": false,
+      "isPR": false
+    },
+    {
+      "id": "ws-0263",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 130
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 130,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0264",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 130
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 130,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0265",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 130
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 130,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0266",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Deadlift",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 130
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 130,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0267",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0268",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0269",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0270",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Pull-Up",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 0
+      },
+      "type": "strength",
+      "plannedReps": 9,
+      "plannedWeight": 0,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0271",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0272",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0273",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Assisted Pull-Up",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": -15
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": -15,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0274",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 8,
+        "w": 77
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 77,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0275",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 8,
+        "w": 77
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 77,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0276",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 8,
+        "w": 77
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 77,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0277",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Barbell Row",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 8,
+        "w": 77
+      },
+      "type": "strength",
+      "plannedReps": 8,
+      "plannedWeight": 77,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0278",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0279",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0280",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0281",
+      "sessionId": 1779786039508,
+      "exercisePosition": "Bicep Curl",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 12,
+        "w": 14
+      },
+      "type": "strength",
+      "plannedReps": 12,
+      "plannedWeight": 14,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-l5"
+    },
+    {
+      "id": "ws-0282",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 5,
+        "w": 110
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 110,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0283",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 5,
+        "w": 110
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 110,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0284",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 5,
+        "w": 110
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 110,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0285",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 5,
+        "w": 110
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 110,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0286",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Squat",
+      "exerciseName": 4,
+      "setIndex": {
+        "r": 5,
+        "w": 110
+      },
+      "type": "strength",
+      "plannedReps": 5,
+      "plannedWeight": 110,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0287",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 180
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 180,
+      "isBodyweight": true,
+      "effectiveWeight": null,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0288",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 180
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 180,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0289",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 180
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 180,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0290",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Leg Press",
+      "exerciseName": 3,
+      "setIndex": {
+        "r": 10,
+        "w": 180
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 180,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0291",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 0,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0292",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 1,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0293",
+      "sessionId": 1779872439508,
+      "exercisePosition": "Romanian Deadlift",
+      "exerciseName": 2,
+      "setIndex": {
+        "r": 10,
+        "w": 72
+      },
+      "type": "strength",
+      "plannedReps": 10,
+      "plannedWeight": 72,
+      "isBodyweight": false,
+      "weightUnit": "kg",
+      "restSeconds": 120,
+      "completedAt": null,
+      "skipped": false,
+      "isPR": "ses-k5"
+    },
+    {
+      "id": "ws-0294",
+      "sessionId": "ses-k5",
+      "exercisePosition": 3,
+      "exerciseName": "Treadmill",
+      "setIndex": 0,
+      "type": "cardio",
+      "plannedDuration": 20,
+      "plannedLevel": 7,
+      "actualDuration": 20,
+      "actualLevel": 7,
+      "effectiveWeight": null,
+      "completedAt": 1779879939508,
+      "skipped": false,
+      "isPR": false
+    }
+  ]
+}
