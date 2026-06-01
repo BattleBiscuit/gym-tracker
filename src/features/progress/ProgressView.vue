@@ -11,17 +11,25 @@
       >Analytics</button>
     </div>
 
-    <HistoryView v-if="activeTab === 'history'" />
-    <AnalyticsView v-else />
+    <HistoryView v-show="activeTab === 'history'" />
+    <AnalyticsView v-show="activeTab === 'analytics'" />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import HistoryView from '@/features/history/views/HistoryView.vue'
 import AnalyticsView from '@/features/analytics/views/AnalyticsView.vue'
 
 const activeTab = ref('history')
+
+// When switching to analytics, give Chart.js a tick to measure canvas dimensions
+watch(activeTab, async val => {
+  if (val === 'analytics') {
+    await nextTick()
+    window.dispatchEvent(new Event('resize'))
+  }
+})
 </script>
 
 <style scoped>
@@ -30,6 +38,15 @@ const activeTab = ref('history')
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+/* Both views stay mounted but only the active one participates in layout */
+.progress-root > :deep(.page-shell) {
+  flex: 1;
+  min-height: 0;
+}
+.progress-root > [style*="display: none"] {
+  flex: 0;
 }
 
 .progress-tabs {
