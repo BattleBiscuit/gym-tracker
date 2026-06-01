@@ -65,32 +65,25 @@
           </span>
         </div>
         <div class="action-row">
-          <!-- Done button — doubles as rest timer ring when resting -->
           <button
-            :class="['action-done', { 'action-done--resting': store.restTimerActive }]"
+            class="action-done"
             @click="store.restTimerActive ? onSkipRest() : onComplete()"
           >
-            <!-- SVG ring for rest timer progress -->
-            <svg v-if="store.restTimerActive" class="action-done__ring" viewBox="0 0 100 100">
-              <circle class="action-done__ring-track" cx="50" cy="50" r="46"/>
-              <circle
-                class="action-done__ring-fill"
-                cx="50" cy="50" r="46"
-                :stroke-dasharray="ringCircumference"
-                :stroke-dashoffset="ringOffset"
-              />
+            <!-- Border ring: only renders during rest -->
+            <svg v-if="store.restTimerActive" class="action-done__border-ring" viewBox="0 0 100 16">
+              <!-- drawn as a rounded rect outline that drains -->
             </svg>
-            <span class="action-done__label">
-              <template v-if="store.restTimerActive">{{ Math.ceil(store.restTimerRemaining) }}s</template>
+            <span :class="['action-done__label', { 'action-done__label--resting': store.restTimerActive }]">
+              <template v-if="store.restTimerActive">
+                Rest {{ Math.ceil(store.restTimerRemaining) }}s
+              </template>
               <template v-else>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 {{ store.isLastSet ? 'Finish' : 'Done' }}
               </template>
             </span>
-          </button>
-          <button class="action-icon" @click="onSkip" :disabled="store.restTimerActive" title="Skip set">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 12 5 19 12"/><polyline points="5 19 12 12 19 19"/></svg>
-            <span>Skip</span>
+            <!-- CSS animated border ring via conic-gradient -->
+            <div v-if="store.restTimerActive" class="action-done__timer-border" :style="timerBorderStyle" />
           </button>
         </div>
       </div>
@@ -160,10 +153,14 @@ const router = useRouter()
 useSessionRunner()
 useRestTimer()
 
-const ringCircumference = 2 * Math.PI * 46
-const ringOffset = computed(() => {
-  if (!store.restTimerTotal) return 0
-  return ringCircumference * (store.restTimerRemaining / store.restTimerTotal)
+const timerBorderStyle = computed(() => {
+  const pct = store.restTimerTotal
+    ? Math.round((store.restTimerRemaining / store.restTimerTotal) * 100)
+    : 0
+  // conic-gradient sweeps accent colour clockwise as timer counts down
+  return {
+    background: `conic-gradient(var(--color-accent) ${pct}%, transparent ${pct}%)`,
+  }
 })
 
 const localPrimary   = ref('')
@@ -227,17 +224,6 @@ async function onComplete() {
   }
 }
 
-async function onSkip() {
-  const isLast = store.isLastSet
-  await store.skipSet()
-  if (isLast) {
-    finishModal.value = true
-    return
-  }
-  store.advanceToNextSet()
-  localPrimary.value   = ''
-  localSecondary.value = ''
-}
 
 function onSkipRest() {
   store.cancelRestTimer()
@@ -346,67 +332,40 @@ async function doAbandon() {
   border-radius: var(--radius-lg);
   transition: background-color var(--transition-fast);
   overflow: hidden;
+  padding: 3px;
 }
 .action-done:active { background-color: var(--color-accent-dim); }
 
-.action-done--resting {
-  background-color: var(--color-surface-2);
-  color: var(--color-text-1);
-  border: 1px solid var(--color-border);
-}
-.action-done--resting:active { background-color: var(--color-surface-3); }
-
-.action-done__ring {
+/* Timer border: conic-gradient layer behind button content */
+.action-done__timer-border {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
+  border-radius: var(--radius-lg);
+  transition: background 0.4s linear;
+  z-index: 0;
 }
 
-.action-done__ring-track {
-  fill: none;
-  stroke: var(--color-surface-3);
-  stroke-width: 4;
-}
-
-.action-done__ring-fill {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 4;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.4s linear;
-}
-
+/* Normal label (not resting) */
 .action-done__label {
   position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  z-index: 1;
+  z-index: 2;
   font-variant-numeric: tabular-nums;
 }
 
-.action-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Resting: label becomes the inner fill layer */
+.action-done__label--resting {
+  background-color: var(--color-surface-1);
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--radius-lg) - 3px);
   justify-content: center;
-  gap: 3px;
-  width: 64px;
-  min-height: 52px;
-  background-color: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  color: var(--color-text-2);
-  font-size: 10px;
-  font-weight: var(--font-medium);
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+  color: var(--color-text-1);
+  padding: 0 var(--space-4);
 }
-.action-icon:active { background-color: var(--color-surface-3); color: var(--color-text-1); }
 
-.action-icon--danger { color: var(--color-danger); opacity: 0.7; }
-.action-icon--danger:active { opacity: 1; }
 
 .exercise-block__name-row {
   display: flex;
