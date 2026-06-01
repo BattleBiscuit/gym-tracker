@@ -58,21 +58,23 @@ function vol(reps, weight, isBodyweight) {
   return reps * resolveWeight(weight, isBodyweight, bodyweight.value || 0)
 }
 
-const growthDir = computed(() => {
-  let planned = 0, actual = 0
+function sessionVolumes() {
+  let planned = 0, actual = 0, anyCompleted = false
   for (const s of props.sets) {
     if (s.type === 'cardio') continue
-    const p = vol(s.plannedReps, s.plannedWeight, s.isBodyweight)
-    planned += p
-    if (s.skipped) {
-      // skipped = 0 actual
-    } else if (s.completedAt) {
+    planned += vol(s.plannedReps, s.plannedWeight, s.isBodyweight)
+    if (s.completedAt && !s.skipped) {
       actual += vol(s.actualReps, s.actualWeight, s.isBodyweight)
-    } else {
-      actual += p  // untouched = neutral (same as planned)
+      anyCompleted = true
     }
+    // skipped and untouched both contribute 0 to actual
   }
-  if (!planned) return 'neutral'
+  return { planned, actual, anyCompleted }
+}
+
+const growthDir = computed(() => {
+  const { planned, actual, anyCompleted } = sessionVolumes()
+  if (!planned || !anyCompleted) return 'neutral'
   if (actual > planned) return 'up'
   if (actual < planned) return 'down'
   return 'equal'
@@ -85,20 +87,8 @@ const insult = computed(() => {
 })
 
 const growthLabel = computed(() => {
-  let planned = 0, actual = 0
-  for (const s of props.sets) {
-    if (s.type === 'cardio') continue
-    const p = vol(s.plannedReps, s.plannedWeight, s.isBodyweight)
-    planned += p
-    if (s.skipped) {
-      // 0
-    } else if (s.completedAt) {
-      actual += vol(s.actualReps, s.actualWeight, s.isBodyweight)
-    } else {
-      actual += p
-    }
-  }
-  if (!planned) return ''
+  const { planned, actual, anyCompleted } = sessionVolumes()
+  if (!planned || !anyCompleted) return ''
   const pct = Math.round(((actual - planned) / planned) * 100)
   if (pct === 0) return '='
   return pct > 0 ? `+${pct}%` : `${pct}%`
