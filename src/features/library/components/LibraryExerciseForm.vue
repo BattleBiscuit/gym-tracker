@@ -53,11 +53,7 @@ import AppInput from '@/components/ui/AppInput.vue'
 import AppTextarea from '@/components/ui/AppTextarea.vue'
 
 const MUSCLES = [
-  'Chest', 'Front Delts', 'Side Delts', 'Rear Delts',
-  'Triceps', 'Biceps', 'Forearms',
-  'Traps', 'Lats', 'Rhomboids', 'Lower Back',
-  'Abs', 'Obliques',
-  'Glutes', 'Quads', 'Hamstrings', 'Calves', 'Hip Flexors',
+  'Chest', 'Shoulders', 'Arms', 'Back', 'Core', 'Legs', 'Glutes',
 ]
 
 const types = [
