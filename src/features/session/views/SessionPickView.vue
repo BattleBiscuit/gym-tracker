@@ -2,7 +2,6 @@
   <AppPageShell>
     <template #header>
       <span class="page-title">Workout</span>
-      <AppButton variant="accent" size="sm" @click="router.push({ name: 'routine-create' })">+ New</AppButton>
     </template>
 
     <!-- Resume banner -->
@@ -42,6 +41,10 @@
         </button>
       </div>
     </div>
+    <AppFab @click="router.push({ name: 'routine-create' })">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New routine
+    </AppFab>
   </AppPageShell>
 </template>
 
@@ -49,7 +52,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
-import AppButton from '@/components/ui/AppButton.vue'
+import AppFab from '@/components/ui/AppFab.vue'
 import { useRoutinesStore } from '@/features/routines/stores/useRoutinesStore.js'
 import { useSessionStore } from '../stores/useSessionStore.js'
 import { db } from '@/db/index.js'

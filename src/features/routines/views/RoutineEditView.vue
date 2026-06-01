@@ -7,10 +7,6 @@
         </svg>
       </button>
       <span class="page-title">{{ isNew ? 'New Routine' : 'Edit Routine' }}</span>
-      <div style="flex:1" />
-      <AppButton variant="accent" size="sm" :disabled="editor.isSaving.value" @click="handleSave">
-        {{ editor.isSaving.value ? 'Saving…' : 'Save' }}
-      </AppButton>
     </template>
 
     <div class="edit-content">
@@ -70,6 +66,11 @@
       </section>
     </div>
 
+    <AppFab @click="handleSave" :disabled="editor.isSaving.value">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      {{ editor.isSaving.value ? 'Saving…' : 'Save' }}
+    </AppFab>
+
     <!-- Exercise form modal -->
     <ExerciseForm
       v-model="showExerciseForm"
@@ -98,6 +99,7 @@ import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter, onBeforeRouteLeave } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import AppButton from '@/components/ui/AppButton.vue'
+import AppFab from '@/components/ui/AppFab.vue'
 import AppInput from '@/components/ui/AppInput.vue'
 import AppTextarea from '@/components/ui/AppTextarea.vue'
 import AppModal from '@/components/ui/AppModal.vue'

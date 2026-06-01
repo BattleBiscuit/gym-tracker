@@ -2,8 +2,6 @@
   <AppPageShell>
     <template #header>
       <span class="page-title">Exercises</span>
-      <div style="flex:1" />
-      <AppButton variant="accent" size="sm" @click="openCreate">+ New</AppButton>
     </template>
 
     <!-- Search -->
@@ -52,6 +50,11 @@
       </div>
     </div>
 
+    <AppFab @click="openCreate">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New exercise
+    </AppFab>
+
     <LibraryExerciseForm
       ref="formRef"
       v-model="showForm"
@@ -72,7 +75,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { db } from '@/db/index.js'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
-import AppButton from '@/components/ui/AppButton.vue'
+import AppFab from '@/components/ui/AppFab.vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import LibraryExerciseForm from '../components/LibraryExerciseForm.vue'
