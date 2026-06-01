@@ -233,12 +233,15 @@ async function onComplete() {
   const primary   = localPrimary.value   !== '' ? Number(localPrimary.value)   : (isCardio ? s?.plannedDuration : s?.plannedReps)    ?? 0
   const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? s?.plannedLevel    : s?.plannedWeight)  ?? 0
 
+  // Capture indices before advancing — we need the set we just completed
+  const completedExIdx  = store.currentExerciseIndex
+  const completedSetIdx = store.currentSetIndex
+
   await store.markSetComplete(primary, secondary, localBW.value)
 
-  // Violent mode: insult if this set's actual volume < planned volume
+  // Violent mode: check the set we just completed
   if (violentMode.value) {
-    const s = store.sets[store.currentExerciseIndex]?.[store.currentSetIndex - 1]
-      ?? store.sets[store.currentExerciseIndex]?.[store.sets[store.currentExerciseIndex]?.length - 1]
+    const s = store.sets[completedExIdx]?.[completedSetIdx]
     if (s && s.completedAt && s.type !== 'cardio') {
       const bw = bodyweight.value || 0
       const actualVol  = (s.actualReps  || 0) * resolveWeight(s.actualWeight,  s.isBodyweight, bw)
