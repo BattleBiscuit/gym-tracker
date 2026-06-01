@@ -75,6 +75,25 @@ export const sessionRepository = {
     })
   },
 
+  async getBest1RM(exerciseName, excludeSessionId) {
+    const sets = await db.workoutSets
+      .filter(s =>
+        s.exerciseName === exerciseName &&
+        s.completedAt !== null &&
+        !s.skipped &&
+        s.type !== 'cardio' &&
+        s.sessionId !== excludeSessionId &&
+        s.effectiveWeight > 0
+      )
+      .toArray()
+    if (!sets.length) return 0
+    return Math.max(...sets.map(s => {
+      const w = s.effectiveWeight || 0
+      const r = s.actualReps || 1
+      return r === 1 ? w : Math.round(w * (1 + r / 30))
+    }))
+  },
+
   async deleteSession(id) {
     await db.transaction('rw', db.workoutSessions, db.workoutSets, async () => {
       await db.workoutSets.where('sessionId').equals(id).delete()

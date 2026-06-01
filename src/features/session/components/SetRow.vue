@@ -48,6 +48,7 @@
         <template v-if="isCardio">{{ set.actualDuration }}min · lvl{{ set.actualLevel }}</template>
         <template v-else>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}</template>
       </span>
+      <span v-if="set.isPR" class="set-row__pr" title="Personal Record">🏆</span>
       <span :class="['set-row__delta', `set-row__delta--${deltaDir}`]">{{ deltaLabel }}</span>
       <AppBadge variant="success">✓</AppBadge>
     </template>
@@ -202,6 +203,8 @@ watch(localBW,        v => emit('update:bw', v))
 .set-row__bw-btn--active { background: var(--color-accent); color: #0f0f0f; border-color: var(--color-accent); }
 
 .set-row__input--offset { color: var(--color-accent); }
+
+.set-row__pr { font-size: 12px; line-height: 1; }
 
 .set-row__delta {
   font-size: 10px;

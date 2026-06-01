@@ -29,7 +29,10 @@
           </td>
           <td>
             <AppBadge v-if="set.skipped" variant="default">Skip</AppBadge>
-            <AppBadge v-else variant="success">✓</AppBadge>
+            <template v-else>
+              <span v-if="set.isPR">🏆</span>
+              <AppBadge variant="success">✓</AppBadge>
+            </template>
           </td>
         </tr>
       </tbody>

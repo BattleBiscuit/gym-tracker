@@ -41,6 +41,9 @@
             <span v-if="exercise.primaryMuscles?.length" class="lib-card__muscles">
               {{ exercise.primaryMuscles.join(', ') }}
             </span>
+            <span v-if="exercisePRs[exercise.name]" class="lib-card__pr">
+              🏆 {{ exercisePRs[exercise.name] }}kg
+            </span>
           </div>
         </div>
         <button class="lib-card__del" @click.stop="confirmDelete(exercise)">
@@ -67,6 +70,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { db } from '@/db/index.js'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
@@ -87,7 +91,21 @@ const filtered = computed(() => {
   return store.exercises.filter(e => e.name.toLowerCase().includes(q))
 })
 
-onMounted(() => store.loadAll())
+const exercisePRs = ref({})  // exerciseName → best 1RM kg
+
+onMounted(async () => {
+  await store.loadAll()
+  // Load best 1RM per exercise name
+  const sets = await db.workoutSets
+    .filter(s => s.isPR && !s.skipped && s.completedAt && s.type !== 'cardio' && s.effectiveWeight > 0)
+    .toArray()
+  const bests = {}
+  for (const s of sets) {
+    const rm = s.actualReps === 1 ? s.effectiveWeight : Math.round(s.effectiveWeight * (1 + s.actualReps / 30))
+    if (!bests[s.exerciseName] || rm > bests[s.exerciseName]) bests[s.exerciseName] = rm
+  }
+  exercisePRs.value = bests
+})
 
 function openCreate() {
   formRef.value?.open(null)
@@ -172,6 +190,7 @@ async function doDelete() {
 .lib-card__meta { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
 
 .lib-card__muscles { font-size: var(--text-xs); color: var(--color-text-3); }
+.lib-card__pr { font-size: var(--text-xs); color: var(--color-accent); font-weight: var(--font-semibold); }
 
 .lib-card__del {
   display: flex; align-items: center; justify-content: center;

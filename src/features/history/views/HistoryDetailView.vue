@@ -16,6 +16,14 @@
     <template v-else-if="store.selectedSession">
       <WorkoutSummaryHeader :session="store.selectedSession" />
 
+      <!-- PR summary -->
+      <div v-if="sessionPRs.length" class="pr-banner">
+        <span class="pr-banner__title">🏆 PRs this session</span>
+        <div class="pr-banner__list">
+          <span v-for="pr in sessionPRs" :key="pr" class="pr-banner__item">{{ pr }}</span>
+        </div>
+      </div>
+
       <div class="detail-sets">
         <HistorySetTable
           v-for="(sets, position) in store.selectedSets"
@@ -29,7 +37,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import WorkoutSummaryHeader from '../components/WorkoutSummaryHeader.vue'
@@ -41,6 +49,17 @@ const router = useRouter()
 const store = useHistoryStore()
 
 onMounted(() => store.loadSessionDetail(props.id))
+
+// Collect unique exercise names where isPR was set
+const sessionPRs = computed(() => {
+  const names = new Set()
+  for (const sets of Object.values(store.selectedSets)) {
+    for (const set of sets) {
+      if (set.isPR) names.add(set.exerciseName)
+    }
+  }
+  return [...names]
+})
 </script>
 
 <style scoped>
@@ -66,6 +85,37 @@ onMounted(() => store.loadSessionDetail(props.id))
   padding: var(--space-8);
   text-align: center;
   color: var(--color-text-3);
+}
+
+.pr-banner {
+  margin: var(--space-4) var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(232, 255, 71, 0.06);
+  border: 1px solid rgba(232, 255, 71, 0.2);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pr-banner__title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-accent);
+}
+
+.pr-banner__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.pr-banner__item {
+  font-size: var(--text-sm);
+  color: var(--color-text-1);
+  background: rgba(232, 255, 71, 0.08);
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-full);
 }
 
 .detail-sets {

@@ -158,15 +158,26 @@ export const useSessionStore = defineStore('session', () => {
     const isCardio = current.type === 'cardio'
     const isBodyweight = isBW !== null ? isBW : current.isBodyweight
     const actualWeight = isCardio ? null : Number(actualSecondary)
+    const actualReps   = isCardio ? null : Number(actualPrimary)
     const effectiveWeight = isCardio
       ? null
       : resolveWeight(actualWeight, isBodyweight, bodyweight.value || 0)
+
+    // Check for 1RM PR (strength sets only)
+    let isPR = false
+    if (!isCardio && effectiveWeight > 0 && actualReps > 0) {
+      const new1RM = actualReps === 1 ? effectiveWeight : Math.round(effectiveWeight * (1 + actualReps / 30))
+      const prev1RM = await sessionRepository.getBest1RM(current.exerciseName, activeSessionId.value)
+      isPR = new1RM > prev1RM
+    }
+
     const setData = {
       ...current,
       ...(isCardio
         ? { actualDuration: Number(actualPrimary), actualLevel: Number(actualSecondary) }
-        : { actualReps: Number(actualPrimary), actualWeight, isBodyweight, effectiveWeight }
+        : { actualReps, actualWeight, isBodyweight, effectiveWeight }
       ),
+      isPR,
       completedAt: Date.now(),
       skipped: false,
     }
