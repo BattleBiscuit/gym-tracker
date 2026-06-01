@@ -1,7 +1,7 @@
 <template>
   <div id="app-root" :class="{ 'flex-mode': isFlexMode }">
     <div v-if="!isSessionActive" class="app-brand-clip">
-    <div class="app-brand" :class="{ 'app-brand--hidden': scrolledDown }">
+    <div class="app-brand">
       <svg width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M 9.17 25.31 A 10 10 0 1 1 25.31 9.17" stroke="#e8ff47" stroke-width="3.5" stroke-linecap="round"/>
         <path d="M 18.83 13.17 A 4 4 0 1 1 13.17 18.83" stroke="#e8ff47" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
@@ -26,7 +26,6 @@ import { isFlexMode } from '@/composables/useFlexMode.js'
 import { useSessionStore } from '@/features/session/stores/useSessionStore.js'
 import { useRoutinesStore } from '@/features/routines/stores/useRoutinesStore.js'
 import { loadConfig } from '@/composables/useConfig.js'
-import { scrolledDown } from '@/composables/useScrollDirection.js'
 
 const router = useRouter()
 const route  = useRoute()
@@ -65,9 +64,6 @@ onMounted(async () => {
 
 .app-brand-clip {
   flex-shrink: 0;
-  overflow: hidden;
-  /* Height matches the brand bar — safe-top + 10px top + content + 6px bottom ≈ 46px + safe-top */
-  height: calc(46px + var(--safe-top));
 }
 
 .app-brand {
@@ -78,13 +74,6 @@ onMounted(async () => {
   padding-top: calc(10px + var(--safe-top));
   background-color: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
-  transform: translateY(0);
-  transition: transform 220ms ease;
-  will-change: transform;
-}
-
-.app-brand--hidden {
-  transform: translateY(-100%);
 }
 
 .app-brand__name {
