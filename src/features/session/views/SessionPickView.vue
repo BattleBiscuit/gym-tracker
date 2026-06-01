@@ -31,7 +31,7 @@
             class="entry-row"
           >
             <span class="entry-day">{{ entry.dayOfWeek !== null ? DAYS[entry.dayOfWeek] : '·' }}</span>
-            <span class="entry-routine">{{ entry.routineName }}</span>
+            <span class="entry-routine" @click="router.push({ name: 'routine-edit', params: { id: entry.routineId } })">{{ entry.routineName }}</span>
             <span :class="['entry-done', plansStore.isDoneThisWeek(entry.id) ? 'entry-done--yes' : 'entry-done--no']">
               {{ plansStore.isDoneThisWeek(entry.id) ? '✓' : '·' }}
             </span>
@@ -55,7 +55,9 @@
         <div class="plan-entries">
           <div v-for="routine in unplannedRoutines" :key="routine.id" class="entry-row">
             <span class="entry-day">·</span>
-            <span class="entry-routine" @click="router.push({ name: 'routine-edit', params: { id: routine.id } })">{{ routine.name }}</span>
+            <span class="entry-routine" @click="router.push({ name: 'routine-edit', params: { id: routine.id } })">
+              {{ routine.name }}
+            </span>
             <span class="entry-done entry-done--no">·</span>
             <button
               class="entry-start"
@@ -199,7 +201,8 @@ async function startUnplanned(routine) {
 .entry-row:last-child { border-bottom: none; }
 
 .entry-day { width: 28px; font-size: var(--text-xs); font-weight: var(--font-bold); color: var(--color-text-3); flex-shrink: 0; }
-.entry-routine { flex: 1; font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-1); }
+.entry-routine { flex: 1; font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-1); cursor: pointer; }
+.entry-routine:active { opacity: 0.6; }
 
 .entry-done { width: 20px; text-align: center; font-size: var(--text-sm); font-weight: var(--font-bold); flex-shrink: 0; }
 .entry-done--yes { color: var(--color-success); }

@@ -71,7 +71,12 @@
                 @click="addEntry(r)"
               >
                 <span class="sheet-option__name">{{ r.name }}</span>
-                <span class="sheet-option__meta">{{ routineExerciseCounts[r.id] || 0 }} exercises</span>
+                <span class="sheet-option__meta">
+                  {{ routineExerciseCounts[r.id] || 0 }} exercises
+                  <template v-if="localEntries.filter(e => e.routineId === r.id).length">
+                    · already in plan {{ localEntries.filter(e => e.routineId === r.id).length }}×
+                  </template>
+                </span>
               </button>
               <div v-if="!filteredRoutines.length" class="sheet-empty">No routines found</div>
             </div>
@@ -154,6 +159,12 @@ onMounted(async () => {
 })
 
 function addEntry(routine) {
+  // Warn if this routine is already in the plan (but still allow it)
+  const existing = localEntries.value.filter(e => e.routineId === routine.id)
+  if (existing.length > 0) {
+    // Still add — multiple days per week is valid (e.g. Push Mon + Thu)
+    // Just pre-assign a different day if possible
+  }
   localEntries.value.push({
     id:          crypto.randomUUID(),
     planId:      props.id || null,
