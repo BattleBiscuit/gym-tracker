@@ -58,7 +58,8 @@ export const routinesRepository = {
   },
 
   async updateExercise(id, data) {
-    await db.routineExercises.update(id, data)
+    // Deep clone to strip Vue reactive proxies before writing to IndexedDB
+    await db.routineExercises.update(id, JSON.parse(JSON.stringify(data)))
   },
 
   async deleteExercise(id) {

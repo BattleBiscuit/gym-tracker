@@ -7,6 +7,12 @@ import { readFileSync } from 'fs'
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'))
 
 export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+    setupFiles: ['./src/test/setup.js'],
+    include: ['src/**/*.test.js'],
+  },
   base: process.env.GITHUB_PAGES ? '/gym-tracker/' : '/',
   preview: {
     allowedHosts: true,

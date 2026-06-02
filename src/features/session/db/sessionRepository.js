@@ -26,14 +26,16 @@ export const sessionRepository = {
   },
 
   async saveSet(setData) {
+    // Deep clone to plain JS to avoid issues with Vue reactive proxies
+    const plain = JSON.parse(JSON.stringify(setData))
     const existing = await db.workoutSets
       .where('[sessionId+exercisePosition+setIndex]')
-      .equals([setData.sessionId, setData.exercisePosition, setData.setIndex])
+      .equals([plain.sessionId, plain.exercisePosition, plain.setIndex])
       .first()
     if (existing) {
-      await db.workoutSets.update(existing.id, setData)
+      await db.workoutSets.update(existing.id, plain)
     } else {
-      const { id: _ignored, ...rest } = setData
+      const { id: _ignored, ...rest } = plain
       await db.workoutSets.add({ id: crypto.randomUUID(), ...rest })
     }
   },
