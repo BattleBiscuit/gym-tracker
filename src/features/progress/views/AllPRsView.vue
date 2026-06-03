@@ -23,7 +23,7 @@
             <span class="pr-date">{{ formatDate(pr.date) }}</span>
           </div>
           <div class="pr-right">
-            <span class="pr-value" v-if="pr.actualWeight != null">{{ formatWeight(pr.actualWeight, pr.isBodyweight) }}</span>
+            <span class="pr-value" v-if="pr.effectiveWeight != null">{{ pr.effectiveWeight }}kg</span>
             <span class="pr-sublabel">est. 1RM: {{ pr.rm }}kg</span>
           </div>
         </div>
@@ -37,7 +37,6 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import { progressRepository } from '../db/progressRepository.js'
-import { formatWeight } from '@/utils/formatWeight.js'
 
 const router   = useRouter()
 const prs      = ref([])

@@ -96,12 +96,13 @@ export const progressRepository = {
         : Math.round(weight * (1 + (s.actualReps || 1) / 30))
       if (!best[s.exerciseName] || rm > best[s.exerciseName].rm) {
         best[s.exerciseName] = {
-          exerciseName: s.exerciseName,
+          exerciseName:   s.exerciseName,
           rm,
-          actualReps:   s.actualReps,
-          actualWeight: s.actualWeight,
-          isBodyweight: s.isBodyweight,
-          date:         s.startedAt,
+          actualReps:     s.actualReps,
+          actualWeight:   s.actualWeight,
+          effectiveWeight: weight,
+          isBodyweight:   s.isBodyweight,
+          date:           s.startedAt,
         }
       }
     }
