@@ -6,9 +6,9 @@
 
     <div class="settings-content">
 
-      <!-- Behaviour section -->
+      <!-- General -->
       <section class="settings-section">
-        <h2 class="section-title">Behaviour</h2>
+        <h2 class="section-title">General</h2>
         <div class="settings-card">
           <div class="settings-row settings-row--static">
             <div class="settings-row__body">
@@ -23,38 +23,9 @@
         </div>
       </section>
 
-      <!-- Test data section -->
-      <section class="settings-section">
-        <h2 class="section-title">Test data</h2>
-        <div class="settings-card">
-          <div class="settings-row" @click="loadTestData">
-            <div class="settings-row__body">
-              <span class="settings-row__label">Load test data</span>
-              <span class="settings-row__sub">3 routines · 15 exercises · 18 sessions · PRs · BW · Cardio</span>
-            </div>
-            <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-        </div>
-      </section>
-
-      <!-- Recovery -->
-      <section class="settings-section">
-        <h2 class="section-title">Recovery</h2>
-        <div class="settings-card">
-          <div class="settings-row" @click="router.push({ name: 'recovery' })">
-            <div class="settings-row__body">
-              <span class="settings-row__label" style="color:var(--color-warning)">Database recovery</span>
-              <span class="settings-row__sub">Scan and export data if something went wrong</span>
-            </div>
-            <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          </div>
-        </div>
-      </section>
-
-      <!-- Data section -->
+      <!-- Data -->
       <section class="settings-section">
         <h2 class="section-title">Data</h2>
-
         <div class="settings-card">
           <div class="settings-row" @click="openExportModal">
             <div class="settings-row__body">
@@ -67,9 +38,7 @@
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
           </div>
-
           <div class="settings-divider" />
-
           <div class="settings-row" @click="triggerImport">
             <div class="settings-row__body">
               <span class="settings-row__label">Import backup</span>
@@ -81,14 +50,7 @@
               <line x1="12" y1="3" x2="12" y2="15"/>
             </svg>
           </div>
-          <input ref="fileInputRef" type="file" accept=".json" class="file-input-hidden" @change="onFileSelected" />
-        </div>
-      </section>
-
-      <!-- Storage section -->
-      <section class="settings-section">
-        <h2 class="section-title">Storage</h2>
-        <div class="settings-card">
+          <div class="settings-divider" />
           <div class="settings-row settings-row--static">
             <div class="settings-row__body">
               <span class="settings-row__label">Persistent storage</span>
@@ -98,10 +60,11 @@
               {{ isPersistent ? 'Active' : 'Not granted' }}
             </AppBadge>
           </div>
+          <input ref="fileInputRef" type="file" accept=".json" class="file-input-hidden" @change="onFileSelected" />
         </div>
       </section>
 
-      <!-- App section -->
+      <!-- App -->
       <section class="settings-section">
         <h2 class="section-title">App</h2>
         <div class="settings-card">
@@ -111,9 +74,7 @@
               <span class="settings-row__sub">Your personal gym tracker · PWA · Built {{ buildDate }}</span>
             </div>
           </div>
-
           <div class="settings-divider" />
-
           <div class="settings-row" @click="checkForUpdate">
             <div class="settings-row__body">
               <span class="settings-row__label">{{ updateStatus }}</span>
@@ -123,6 +84,29 @@
           </div>
         </div>
       </section>
+
+      <!-- Developer -->
+      <section class="settings-section settings-section--dev">
+        <h2 class="section-title">Developer</h2>
+        <div class="settings-card">
+          <div class="settings-row" @click="loadTestData">
+            <div class="settings-row__body">
+              <span class="settings-row__label">Load test data</span>
+              <span class="settings-row__sub">3 routines · 15 exercises · 18 sessions · PRs · BW · Cardio</span>
+            </div>
+            <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <div class="settings-divider" />
+          <div class="settings-row" @click="router.push({ name: 'recovery' })">
+            <div class="settings-row__body">
+              <span class="settings-row__label settings-row__label--warning">Database recovery</span>
+              <span class="settings-row__sub">Scan and export data if something went wrong</span>
+            </div>
+            <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <!-- Export status toast -->
@@ -484,6 +468,10 @@ async function doImport() {
 .settings-row__icon  { color: var(--color-text-3); flex-shrink: 0; }
 
 .settings-divider { height: 1px; background: var(--color-border); margin: 0; }
+
+.settings-section--dev { opacity: 0.75; }
+.settings-section--dev .section-title { color: var(--color-text-3); }
+.settings-row__label--warning { color: var(--color-warning); }
 
 .file-input-hidden { display: none; }
 
