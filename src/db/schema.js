@@ -114,3 +114,16 @@ db.version(11).stores({
     }
   })
 })
+
+// v12: force clean re-open of all tables to recover from any broken index state
+// caused by out-of-order version declarations in v11. No data changes.
+db.version(12).stores({
+  routines:         'id, createdAt, updatedAt',
+  routineExercises: 'id, routineId, exerciseLibraryId, [routineId+position]',
+  workoutSessions:  'id, routineId, startedAt, status, planId, planEntryId',
+  workoutSets:      'id, sessionId, exerciseName, exerciseLibraryId, isPR, startedAt, [exerciseName+startedAt], [exerciseName+isPR], [sessionId+exercisePosition+setIndex]',
+  exerciseLibrary:  'id, name, type',
+  plans:            'id, status, order',
+  planEntries:      'id, planId, routineId, dayOfWeek, [planId+order]',
+  config:           'key',
+})
