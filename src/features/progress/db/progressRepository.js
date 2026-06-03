@@ -22,7 +22,20 @@ export const progressRepository = {
       .toArray()
   },
 
-  // Volume per week for the range, returns [{week, volume}] sorted asc
+  // Volume per session, returns [{label, volume}] sorted asc
+  async getSessionVolume(days) {
+    const sessions = await this.getSessions(days)
+    if (!sessions.length) return []
+
+    return sessions
+      .sort((a, b) => a.startedAt - b.startedAt)
+      .map(s => ({
+        week: new Date(s.startedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        volume: Math.round(s.totalVolumeKg || 0),
+      }))
+  },
+
+  // Volume per week for the range (kept for volume change calculation)
   async getWeeklyVolume(days) {
     const sessions = await this.getSessions(days)
     if (!sessions.length) return []

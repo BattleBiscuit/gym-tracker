@@ -151,7 +151,7 @@ const data = ref({
 
 const chartSlides = [
   { title: 'Muscle balance' },
-  { title: 'Weekly volume' },
+  { title: 'Volume per workout' },
 ]
 
 const isLoading = ref(false)
@@ -166,7 +166,7 @@ async function load() {
       progressRepository.getRecentPRs(days),
       progressRepository.getPlanAdherence(days),
       progressRepository.getMuscleFrequency(days, muscleMode.value),
-      progressRepository.getWeeklyVolume(days),
+      progressRepository.getSessionVolume(days),
     ])
 
     // Best streak across all active plans
