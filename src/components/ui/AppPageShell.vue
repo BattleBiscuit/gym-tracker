@@ -16,6 +16,14 @@
       <slot name="header" />
 
     </header>
+    <!-- Workout in progress banner -->
+    <div v-if="showWorkoutBanner" class="workout-banner" @click="router.push({ name: 'session-active' })">
+      <span class="workout-banner__dot" />
+      <span class="workout-banner__label">Workout in progress</span>
+      <span class="workout-banner__name">{{ sessionStore.activeSession?.routineName }}</span>
+      <span class="workout-banner__arrow">→</span>
+    </div>
+
     <main class="page-shell__content scroll" @scroll="onScroll">
       <slot />
     </main>
@@ -23,10 +31,20 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { onScroll } from '@/composables/useScrollDirection.js'
-defineProps({
-  scrollable: { type: Boolean, default: true },
-})
+import { useSessionStore } from '@/features/session/stores/useSessionStore.js'
+
+defineProps({ scrollable: { type: Boolean, default: true } })
+
+const route        = useRoute()
+const router       = useRouter()
+const sessionStore = useSessionStore()
+
+const showWorkoutBanner = computed(() =>
+  sessionStore.activeSessionId && route.name !== 'session-active'
+)
 </script>
 
 <style scoped>
@@ -72,6 +90,47 @@ defineProps({
   flex-shrink: 0;
 }
 
+
+.workout-banner {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: rgba(232, 255, 71, 0.08);
+  border-bottom: 1px solid rgba(232, 255, 71, 0.2);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.workout-banner:active { background: rgba(232, 255, 71, 0.14); }
+
+.workout-banner__dot {
+  width: 7px; height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  flex-shrink: 0;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.workout-banner__label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.workout-banner__name {
+  font-size: var(--text-xs);
+  color: var(--color-text-2);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workout-banner__arrow { font-size: var(--text-sm); color: var(--color-accent); flex-shrink: 0; }
 
 .page-shell__content {
   flex: 1;

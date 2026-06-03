@@ -10,6 +10,7 @@
         @update:bw="v => $emit('update:bw', v)"
         @select="$emit('select', { exIdx: exerciseIndex, setIdx })"
         @confirm="$emit('confirm')"
+        @uncheck="$emit('uncheck', { exIdx: exerciseIndex, setIdx })"
       />
     </div>
   </div>
@@ -24,7 +25,7 @@ defineProps({
   isCurrentExercise: { type: Boolean, default: false },
   currentSetIndex:   { type: Number, default: 0 },
 })
-defineEmits(['update:primary', 'update:secondary', 'update:bw', 'select', 'confirm'])
+defineEmits(['update:primary', 'update:secondary', 'update:bw', 'select', 'confirm', 'uncheck'])
 </script>
 
 <style scoped>

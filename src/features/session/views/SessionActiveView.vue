@@ -24,10 +24,9 @@
         <div class="exercise-block__name-row">
           <span class="exercise-block__name">{{ exercise.name }}</span>
           <button
-            v-if="exercise.notes?.trim()"
             class="exercise-block__info-btn"
-            @click.stop="notesModal = exercise.notes"
-            aria-label="Show notes"
+            @click.stop="notesModal = exercise.notes || ''; notesExIdx = exIdx; showNotesModal = true"
+            aria-label="Edit notes"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </button>
@@ -42,6 +41,7 @@
           @update:bw="v => localBW = v"
           @select="({ exIdx, setIdx }) => selectSet(exIdx, setIdx)"
           @confirm="onComplete"
+          @uncheck="({ exIdx, setIdx }) => uncheckSet(exIdx, setIdx)"
         />
       </div>
 
@@ -120,7 +120,16 @@
 
     <!-- Exercise notes -->
     <AppModal v-model="showNotesModal" title="Notes">
-      <p style="color: var(--color-text-2); white-space: pre-wrap; line-height: 1.6;">{{ notesModal }}</p>
+      <textarea
+        v-model="notesModal"
+        class="notes-editor"
+        placeholder="Add notes for this exercise…"
+        rows="5"
+      />
+      <template #actions>
+        <AppButton variant="accent" full @click="saveNotes">Save</AppButton>
+        <AppButton variant="ghost" full @click="showNotesModal = false">Cancel</AppButton>
+      </template>
     </AppModal>
 
     <!-- Abandon confirmation -->
@@ -138,9 +147,10 @@
 
 <script setup>
 import { ref, computed, onUnmounted } from 'vue'
-import { useRouter, onBeforeRouteLeave } from 'vue-router'
+import { useRouter } from 'vue-router'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppButton from '@/components/ui/AppButton.vue'
+import { routinesRepository } from '@/features/routines/db/routinesRepository.js'
 import SessionProgressBar from '../components/SessionProgressBar.vue'
 import SessionHeader from '../components/SessionHeader.vue'
 import SessionFlexLayout from '../components/SessionFlexLayout.vue'
@@ -195,8 +205,20 @@ function showInsult() {
 }
 const finishModal  = ref(false)
 const abandonModal = ref(false)
-const notesModal   = ref('')
-const showNotesModal = computed({ get: () => !!notesModal.value, set: v => { if (!v) notesModal.value = '' } })
+const notesModal      = ref('')
+const notesExIdx      = ref(-1)
+const showNotesModal  = ref(false)
+
+async function saveNotes() {
+  if (notesExIdx.value >= 0) {
+    const ex = store.exercises[notesExIdx.value]
+    if (ex?.id) {
+      await routinesRepository.updateExercise(ex.id, { notes: notesModal.value })
+      store.exercises[notesExIdx.value] = { ...ex, notes: notesModal.value }
+    }
+  }
+  showNotesModal.value = false
+}
 const showAddExercise = ref(false)
 const exEditor = useExerciseEditor()
 
@@ -214,24 +236,28 @@ function selectSet(exIdx, setIdx) {
   store.jumpToExercise(exIdx, setIdx)
 }
 
+function uncheckSet(exIdx, setIdx) {
+  // Re-open a completed set for editing by clearing its completion state
+  store.cancelRestTimer()
+  const s = store.sets[exIdx]?.[setIdx]
+  if (!s) return
+  const setData = { ...s, completedAt: null, skipped: false, actualReps: null, actualWeight: null, isPR: false }
+  store.sets[exIdx].splice(setIdx, 1, setData)
+  store.jumpToExercise(exIdx, setIdx)
+}
+
 
 // Guard: warn if navigating away during active session
-onBeforeRouteLeave((to, from, next) => {
-  if (store.activeSessionId && to.name !== 'session-active') {
-    abandonModal.value = true
-    next(false)
-  } else {
-    next()
-  }
-})
 
 async function onComplete() {
   const isLast = store.isLastSet
   const restSeconds = store.currentSet?.restSeconds || 0
   const isCardio = store.currentSet?.type === 'cardio'
   const s = store.currentSet
-  const primary   = localPrimary.value   !== '' ? Number(localPrimary.value)   : (isCardio ? s?.plannedDuration : s?.plannedReps)    ?? 0
-  const secondary = localSecondary.value !== '' ? Number(localSecondary.value) : (isCardio ? s?.plannedLevel    : s?.plannedWeight)  ?? 0
+  const primary   = (localPrimary.value   !== '' && localPrimary.value   !== null)
+    ? parseFloat(localPrimary.value)   : (isCardio ? s?.plannedDuration : s?.plannedReps)    ?? 0
+  const secondary = (localSecondary.value !== '' && localSecondary.value !== null)
+    ? parseFloat(localSecondary.value) : (isCardio ? s?.plannedLevel    : s?.plannedWeight)  ?? 0
 
   // Capture indices before advancing — we need the set we just completed
   const completedExIdx  = store.currentExerciseIndex
@@ -257,9 +283,10 @@ async function onComplete() {
 
   store.advanceToNextSet()
 
-  localPrimary.value   = ''
-  localSecondary.value = ''
-  localBW.value        = store.currentSet?.isBodyweight ?? false
+  const next = store.currentSet
+  localPrimary.value   = isCardio ? (next?.plannedDuration ?? '') : (next?.plannedReps ?? '')
+  localSecondary.value = isCardio ? (next?.plannedLevel    ?? '') : (next?.plannedWeight ?? '')
+  localBW.value        = next?.isBodyweight ?? false
 
   if (restSeconds > 0) {
     store.startRestTimer(restSeconds)
@@ -477,4 +504,19 @@ async function doAbandon() {
 .insult-enter-active, .insult-leave-active { transition: opacity 300ms, transform 300ms; }
 .insult-enter-from { opacity: 0; transform: translateY(8px); }
 .insult-leave-to   { opacity: 0; transform: translateY(-8px); }
+
+.notes-editor {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-1);
+  font-size: var(--text-base);
+  resize: vertical;
+  min-height: 100px;
+  user-select: text;
+  -webkit-user-select: text;
+}
+.notes-editor:focus { border-color: var(--color-border-focus); outline: none; }
 </style>
