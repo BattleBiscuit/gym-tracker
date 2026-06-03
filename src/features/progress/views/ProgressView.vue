@@ -52,6 +52,9 @@
             <span class="pr-value">{{ pr.rm }}kg</span>
             <span class="pr-date">{{ formatDate(pr.date) }}</span>
           </div>
+          <RouterLink :to="{ name: 'all-prs' }" class="history-all">
+            View all PRs →
+          </RouterLink>
         </div>
       </section>
 

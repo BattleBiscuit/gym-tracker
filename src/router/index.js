@@ -32,6 +32,11 @@ const routes = [
   },
 
   {
+    path: '/progress/prs',
+    name: 'all-prs',
+    component: () => import('@/features/progress/views/AllPRsView.vue'),
+  },
+  {
     path: '/progress',
     name: 'progress',
     component: () => import('@/features/progress/views/ProgressView.vue'),

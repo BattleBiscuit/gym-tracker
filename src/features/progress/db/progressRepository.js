@@ -63,6 +63,11 @@ export const progressRepository = {
   // Recent PRs in range
   async getRecentPRs(days) {
     const from = cutoff(days)
+    return this.getAllPRs(from)
+  },
+
+  // All PRs ever, optionally filtered from a timestamp
+  async getAllPRs(from = 0) {
     const prSets = await db.workoutSets
       .where('startedAt').aboveOrEqual(from)
       .filter(s => s.isPR === true && s.completedAt && !s.skipped)
