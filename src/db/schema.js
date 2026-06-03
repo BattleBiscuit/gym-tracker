@@ -54,6 +54,20 @@ db.version(8).stores({
   workoutSets:      'id, sessionId, exerciseName, isPR, [sessionId+exercisePosition+setIndex]',
 })
 
+db.version(11).stores({
+  workoutSets: 'id, sessionId, exerciseName, exerciseLibraryId, isPR, startedAt, [exerciseName+startedAt], [exerciseName+isPR], [sessionId+exercisePosition+setIndex]',
+}).upgrade(async tx => {
+  // Backfill exerciseLibraryId by matching exerciseName to exerciseLibrary
+  const library = await tx.table('exerciseLibrary').toArray()
+  const idByName = Object.fromEntries(library.map(e => [e.name.toLowerCase(), e.id]))
+
+  await tx.table('workoutSets').toCollection().modify(set => {
+    if (!set.exerciseLibraryId && set.exerciseName) {
+      set.exerciseLibraryId = idByName[set.exerciseName.toLowerCase()] ?? null
+    }
+  })
+})
+
 db.version(9).stores({
   // Add startedAt for direct range scans without joining sessions
   // Add compound indexes for analytics queries

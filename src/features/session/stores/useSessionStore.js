@@ -55,9 +55,10 @@ export const useSessionStore = defineStore('session', () => {
 
     const session = await sessionRepository.createSession(routineId, routine.name, planId, planEntryId)
 
-    // Build exerciseName → muscleGroups map from library for snapshot
+    // Build lookup maps from library for snapshots
     const libraryEntries = await db.exerciseLibrary.toArray()
-    const musclesByName = Object.fromEntries(libraryEntries.map(e => [e.name, e.primaryMuscles || []]))
+    const musclesByName  = Object.fromEntries(libraryEntries.map(e => [e.name, e.primaryMuscles || []]))
+    const idByName       = Object.fromEntries(libraryEntries.map(e => [e.name, e.id]))
 
     exercises.value = sortedExercises
     sets.value = sortedExercises.map(ex =>
@@ -65,7 +66,8 @@ export const useSessionStore = defineStore('session', () => {
         id: null,
         sessionId: session.id,
         exercisePosition: ex.position,
-        exerciseName: ex.name,
+        exerciseName:      ex.name,
+        exerciseLibraryId: ex.exerciseLibraryId ?? idByName[ex.name] ?? null,
         setIndex: setIdx,
         type: s.type || 'strength',
         plannedReps:     s.reps        ?? null,
@@ -114,7 +116,8 @@ export const useSessionStore = defineStore('session', () => {
           id: null,
           sessionId: session.id,
           exercisePosition: ex.position,
-          exerciseName: ex.name,
+          exerciseName:      ex.name,
+          exerciseLibraryId: ex.exerciseLibraryId ?? null,
           setIndex: setIdx,
           type: s.type || 'strength',
           plannedReps:     s.reps        ?? null,
@@ -268,8 +271,9 @@ export const useSessionStore = defineStore('session', () => {
       data.sets.map((s, setIdx) => ({
         id: null,
         sessionId: activeSessionId.value,
-        exercisePosition: position,
-        exerciseName: data.name,
+        exercisePosition:  position,
+        exerciseName:      data.name,
+        exerciseLibraryId: data.exerciseLibraryId ?? null,
         setIndex: setIdx,
         type: s.type || 'strength',
         plannedReps:     s.reps        ?? null,
