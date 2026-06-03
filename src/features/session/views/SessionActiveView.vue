@@ -236,13 +236,15 @@ function selectSet(exIdx, setIdx) {
   store.jumpToExercise(exIdx, setIdx)
 }
 
-function uncheckSet(exIdx, setIdx) {
-  // Re-open a completed set for editing by clearing its completion state
+async function uncheckSet(exIdx, setIdx) {
   store.cancelRestTimer()
   const s = store.sets[exIdx]?.[setIdx]
   if (!s) return
-  const setData = { ...s, completedAt: null, skipped: false, actualReps: null, actualWeight: null, isPR: false }
+  // Reset in-memory state
+  const setData = { ...s, completedAt: null, skipped: false, actualReps: null, actualWeight: null, effectiveWeight: null, isPR: false }
   store.sets[exIdx].splice(setIdx, 1, setData)
+  // Delete from DB so next saveSet creates it fresh without conflicts
+  await store.deleteSetFromDb(setData)
   store.jumpToExercise(exIdx, setIdx)
 }
 

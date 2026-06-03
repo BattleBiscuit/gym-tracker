@@ -305,6 +305,14 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
+  async function deleteSetFromDb(setData) {
+    const existing = await db.workoutSets
+      .where('[sessionId+exercisePosition+setIndex]')
+      .equals([setData.sessionId, setData.exercisePosition, setData.setIndex])
+      .first()
+    if (existing) await db.workoutSets.delete(existing.id)
+  }
+
   function jumpToExercise(exIdx, setIdx) {
     currentExerciseIndex.value = exIdx
     currentSetIndex.value = setIdx
@@ -396,6 +404,7 @@ export const useSessionStore = defineStore('session', () => {
     tickElapsed,
     addExerciseToSession,
     skipAllRemaining,
+    deleteSetFromDb,
     jumpToExercise,
     finishSession,
     abandonSession,
