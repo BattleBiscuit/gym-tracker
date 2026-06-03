@@ -40,17 +40,24 @@
         </div>
       </div>
 
-      <!-- Muscle group radar -->
-      <section class="progress-section">
-        <div class="section-header">
-          <h2 class="section-title">Muscle balance</h2>
+      <!-- Chart slider -->
+      <ChartSlider :slides="chartSlides">
+        <!-- Slide 0: Muscle balance -->
+        <template #controls-0>
           <div class="mode-toggle">
             <button :class="['mode-btn', { 'mode-btn--active': muscleMode === 'exercise' }]" @click="muscleMode = 'exercise'">Exercise</button>
             <button :class="['mode-btn', { 'mode-btn--active': muscleMode === 'session' }]" @click="muscleMode = 'session'">Session</button>
           </div>
-        </div>
-        <RadarChart :data="data.muscleFrequency" />
-      </section>
+        </template>
+        <template #slide-0>
+          <RadarChart :data="data.muscleFrequency" />
+        </template>
+
+        <!-- Slide 1: Weekly volume -->
+        <template #slide-1>
+          <VolumeChart :data="data.weeklyVolume" />
+        </template>
+      </ChartSlider>
 
       <!-- Recent PRs -->
       <section class="progress-section">
@@ -113,6 +120,8 @@ import { formatWeight } from '@/utils/formatWeight.js'
 import { plansRepository } from '@/features/plans/db/plansRepository.js'
 import { db } from '@/db/index.js'
 import RadarChart from '../components/RadarChart.vue'
+import VolumeChart from '../components/VolumeChart.vue'
+import ChartSlider from '../components/ChartSlider.vue'
 
 const router = useRouter()
 
@@ -136,8 +145,14 @@ const data = ref({
   bestStreak:      0,
   prs:             [],
   muscleFrequency: [],
+  weeklyVolume:    [],
   recentSessions:  [],
 })
+
+const chartSlides = [
+  { title: 'Muscle balance' },
+  { title: 'Weekly volume' },
+]
 
 const isLoading = ref(false)
 
@@ -145,12 +160,13 @@ async function load() {
   isLoading.value = true
   try {
     const days = rangeDays.value || 3650
-    const [sessions, volumeChange, prs, adherence, muscleFrequency] = await Promise.all([
+    const [sessions, volumeChange, prs, adherence, muscleFrequency, weeklyVolume] = await Promise.all([
       progressRepository.getSessions(days),
       progressRepository.getVolumeChange(days),
       progressRepository.getRecentPRs(days),
       progressRepository.getPlanAdherence(days),
       progressRepository.getMuscleFrequency(days, muscleMode.value),
+      progressRepository.getWeeklyVolume(days),
     ])
 
     // Best streak across all active plans
@@ -170,6 +186,7 @@ async function load() {
       bestStreak,
       prs,
       muscleFrequency,
+      weeklyVolume,
       recentSessions: sessions
         .sort((a, b) => b.startedAt - a.startedAt)
         .slice(0, 5),
