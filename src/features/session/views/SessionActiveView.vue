@@ -278,12 +278,16 @@ async function onComplete() {
     }
   }
 
+  // Always advance and clear inputs so the completed set renders as locked
+  store.advanceToNextSet()
+  localPrimary.value   = ''
+  localSecondary.value = ''
+  localBW.value        = store.currentSet?.isBodyweight ?? false
+
   if (isLast) {
     finishModal.value = true
     return
   }
-
-  store.advanceToNextSet()
 
   const next = store.currentSet
   localPrimary.value   = isCardio ? (next?.plannedDuration ?? '') : (next?.plannedReps ?? '')
