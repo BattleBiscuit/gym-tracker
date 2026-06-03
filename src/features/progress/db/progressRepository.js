@@ -95,15 +95,29 @@ export const progressRepository = {
 
     if (!entries.length) return null
 
-    // Count weeks since each plan was created (capped by range)
+    const now = new Date()
+    const todayDow = (now.getDay() || 7) - 1  // 0=Mon … 6=Sun
+
+    // For each plan, count only past occurrences (completed weeks + past days in current week)
     let totalRequired = 0
     for (const plan of activePlans) {
       const planFrom = Math.max(from, plan.createdAt)
-      const msInRange = Date.now() - planFrom
-      const weeksInRange = Math.max(1, Math.ceil(msInRange / (7 * 24 * 60 * 60 * 1000)))
-      const planEntryCount = entries.filter(e => e.planId === plan.id).length
-      totalRequired += planEntryCount * weeksInRange
+      const planEntries = entries.filter(e => e.planId === plan.id)
+
+      // Full completed weeks since plan start
+      const msElapsed = Date.now() - planFrom
+      const fullWeeks = Math.floor(msElapsed / (7 * 24 * 60 * 60 * 1000))
+      totalRequired += planEntries.length * fullWeeks
+
+      // Partial current week: only count entries whose dayOfWeek < today
+      for (const entry of planEntries) {
+        if (entry.dayOfWeek !== null && entry.dayOfWeek < todayDow) {
+          totalRequired += 1
+        }
+      }
     }
+
+    if (totalRequired === 0) return null
 
     const sessions = await db.workoutSessions
       .where('startedAt').aboveOrEqual(from)
