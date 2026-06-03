@@ -35,7 +35,7 @@
       </div>
 
       <!-- Muscle group radar -->
-      <section v-if="data.muscleFrequency.length >= 3" class="progress-section">
+      <section class="progress-section">
         <h2 class="section-title">Muscle balance</h2>
         <RadarChart :data="data.muscleFrequency" />
       </section>

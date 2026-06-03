@@ -13,6 +13,8 @@ import {
 
 Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Filler, Tooltip)
 
+const ALL_MUSCLES = ['Chest', 'Shoulders', 'Arms', 'Back', 'Core', 'Legs', 'Glutes']
+
 const props = defineProps({
   data: { type: Array, default: () => [] }, // [{ muscle, count }]
 })
@@ -23,14 +25,14 @@ let chart = null
 function buildChart() {
   if (!canvasRef.value) return
   if (chart) { chart.destroy(); chart = null }
-  if (!props.data.length) return
+  const countByMuscle = Object.fromEntries(props.data.map(d => [d.muscle, d.count]))
 
   chart = new Chart(canvasRef.value, {
     type: 'radar',
     data: {
-      labels: props.data.map(d => d.muscle),
+      labels: ALL_MUSCLES,
       datasets: [{
-        data: props.data.map(d => d.count),
+        data: ALL_MUSCLES.map(m => countByMuscle[m] ?? 0),
         backgroundColor: 'rgba(232, 255, 71, 0.12)',
         borderColor: '#e8ff47',
         borderWidth: 2,
