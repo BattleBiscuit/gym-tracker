@@ -40,17 +40,6 @@
         </div>
       </div>
 
-      <!-- Best lifts -->
-      <section v-if="data.bestLifts.length" class="progress-section">
-        <h2 class="section-title">Best lifts (all time)</h2>
-        <div class="lifts-list">
-          <div v-for="lift in data.bestLifts" :key="lift.exerciseName" class="lift-row">
-            <span class="lift-name">{{ lift.exerciseName }}</span>
-            <span class="lift-value">{{ lift.rm }}kg</span>
-          </div>
-        </div>
-      </section>
-
       <!-- Muscle group radar -->
       <section class="progress-section">
         <div class="section-header">
@@ -77,9 +66,15 @@
         <div v-else class="pr-list">
           <div v-for="pr in visiblePRs" :key="pr.exerciseName" class="pr-row">
             <span class="pr-trophy">🏆</span>
-            <span class="pr-name">{{ pr.exerciseName }}</span>
-            <span class="pr-value">{{ pr.rm }}kg</span>
-            <span class="pr-date">{{ formatDate(pr.date) }}</span>
+            <div class="pr-body">
+              <span class="pr-name">{{ pr.exerciseName }}</span>
+              <span class="pr-lift">{{ pr.actualReps }}×{{ formatWeight(pr.actualWeight, pr.isBodyweight) }}</span>
+            </div>
+            <div class="pr-right">
+              <span class="pr-value">{{ pr.rm }}kg</span>
+              <span class="pr-sublabel">est. 1RM</span>
+              <span class="pr-date">{{ formatDate(pr.date) }}</span>
+            </div>
           </div>
           <RouterLink :to="{ name: 'all-prs' }" class="history-all">
             View all PRs →
@@ -115,6 +110,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import { progressRepository } from '../db/progressRepository.js'
+import { formatWeight } from '@/utils/formatWeight.js'
 import { plansRepository } from '@/features/plans/db/plansRepository.js'
 import { db } from '@/db/index.js'
 import RadarChart from '../components/RadarChart.vue'
@@ -139,7 +135,6 @@ const data = ref({
   volumeChange:    null,
   adherence:       null,
   bestStreak:      0,
-  bestLifts:       [],
   prs:             [],
   muscleFrequency: [],
   recentSessions:  [],
@@ -151,13 +146,12 @@ async function load() {
   isLoading.value = true
   try {
     const days = rangeDays.value || 3650
-    const [sessions, volumeChange, prs, adherence, muscleFrequency, bestLifts] = await Promise.all([
+    const [sessions, volumeChange, prs, adherence, muscleFrequency] = await Promise.all([
       progressRepository.getSessions(days),
       progressRepository.getVolumeChange(days),
       progressRepository.getRecentPRs(days),
       progressRepository.getPlanAdherence(days),
       progressRepository.getMuscleFrequency(days, muscleMode.value),
-      progressRepository.getBestLifts(5),
     ])
 
     // Best streak across all active plans
@@ -175,7 +169,6 @@ async function load() {
       volumeChange,
       adherence,
       bestStreak,
-      bestLifts,
       prs,
       muscleFrequency,
       recentSessions: sessions
@@ -276,17 +269,6 @@ function formatVol(kg) {
 
 .section-empty { font-size: var(--text-sm); color: var(--color-text-3); padding: var(--space-4); text-align: center; background: var(--color-surface-1); border-radius: var(--radius-lg); border: 1px dashed var(--color-border); }
 
-/* Best lifts */
-.lifts-list { display: flex; flex-direction: column; gap: var(--space-2); }
-.lift-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-surface-1); border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-}
-.lift-name  { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-1); }
-.lift-value { font-size: var(--text-base); font-weight: var(--font-bold); color: var(--color-accent); }
-
 /* PR list */
 .pr-list { display: flex; flex-direction: column; gap: var(--space-2); }
 .pr-row {
@@ -295,9 +277,13 @@ function formatVol(kg) {
   background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg);
 }
 .pr-trophy { font-size: 16px; flex-shrink: 0; }
-.pr-name   { flex: 1; font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-1); }
-.pr-value  { font-size: var(--text-sm); font-weight: var(--font-bold); color: var(--color-accent); flex-shrink: 0; }
-.pr-date   { font-size: var(--text-xs); color: var(--color-text-3); flex-shrink: 0; }
+.pr-body   { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pr-name   { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-1); }
+.pr-lift   { font-size: var(--text-xs); color: var(--color-text-3); }
+.pr-right  { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+.pr-value  { font-size: var(--text-base); font-weight: var(--font-bold); color: var(--color-accent); }
+.pr-sublabel { font-size: 9px; color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.06em; }
+.pr-date   { font-size: var(--text-xs); color: var(--color-text-3); }
 
 /* History preview */
 .history-preview { display: flex; flex-direction: column; gap: var(--space-2); }

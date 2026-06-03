@@ -80,7 +80,14 @@ export const progressRepository = {
         ? s.effectiveWeight
         : Math.round((s.effectiveWeight ?? 0) * (1 + (s.actualReps || 1) / 30))
       if (!best[s.exerciseName] || rm > best[s.exerciseName].rm) {
-        best[s.exerciseName] = { exerciseName: s.exerciseName, rm, date: s.startedAt }
+        best[s.exerciseName] = {
+          exerciseName: s.exerciseName,
+          rm,
+          actualReps:   s.actualReps,
+          actualWeight: s.actualWeight,
+          isBodyweight: s.isBodyweight,
+          date:         s.startedAt,
+        }
       }
     }
 
@@ -147,7 +154,14 @@ export const progressRepository = {
         ? s.effectiveWeight
         : Math.round((s.effectiveWeight ?? 0) * (1 + (s.actualReps || 1) / 30))
       if (!best[s.exerciseName] || rm > best[s.exerciseName].rm) {
-        best[s.exerciseName] = { exerciseName: s.exerciseName, rm, date: s.startedAt }
+        best[s.exerciseName] = {
+          exerciseName: s.exerciseName,
+          rm,
+          actualReps:   s.actualReps,
+          actualWeight: s.actualWeight,
+          isBodyweight: s.isBodyweight,
+          date:         s.startedAt,
+        }
       }
     }
 

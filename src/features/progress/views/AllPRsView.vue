@@ -20,9 +20,13 @@
           <span class="pr-trophy">🏆</span>
           <div class="pr-body">
             <span class="pr-name">{{ pr.exerciseName }}</span>
+            <span class="pr-lift">{{ pr.actualReps }}×{{ formatWeight(pr.actualWeight, pr.isBodyweight) }}</span>
             <span class="pr-date">{{ formatDate(pr.date) }}</span>
           </div>
-          <span class="pr-value">{{ pr.rm }}kg</span>
+          <div class="pr-right">
+            <span class="pr-value">{{ pr.rm }}kg</span>
+            <span class="pr-sublabel">est. 1RM</span>
+          </div>
         </div>
       </div>
     </div>
@@ -34,6 +38,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import { progressRepository } from '../db/progressRepository.js'
+import { formatWeight } from '@/utils/formatWeight.js'
 
 const router   = useRouter()
 const prs      = ref([])
@@ -84,9 +89,12 @@ function formatDate(ts) {
 
 .pr-trophy { font-size: 18px; flex-shrink: 0; }
 
-.pr-body { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.pr-name { font-size: var(--text-base); font-weight: var(--font-semibold); color: var(--color-text-1); }
-.pr-date { font-size: var(--text-xs); color: var(--color-text-3); }
+.pr-body  { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pr-name  { font-size: var(--text-base); font-weight: var(--font-semibold); color: var(--color-text-1); }
+.pr-lift  { font-size: var(--text-xs); color: var(--color-text-3); }
+.pr-date  { font-size: var(--text-xs); color: var(--color-text-3); }
 
-.pr-value { font-size: var(--text-lg); font-weight: var(--font-bold); color: var(--color-accent); flex-shrink: 0; }
+.pr-right    { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+.pr-value    { font-size: var(--text-lg); font-weight: var(--font-bold); color: var(--color-accent); }
+.pr-sublabel { font-size: 9px; color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.06em; }
 </style>
