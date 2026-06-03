@@ -99,22 +99,39 @@ export const progressRepository = {
       .filter(s => s.completedAt && !s.skipped && s.type !== 'cardio')
       .toArray()
 
-    // Build exerciseName → muscles fallback from library for older sets
+    // Build exerciseName → primary + secondary muscles from library
     const library = await db.exerciseLibrary.toArray()
-    const musclesByName = Object.fromEntries(library.map(e => [e.name, e.primaryMuscles || []]))
+    const libByName = Object.fromEntries(library.map(e => [e.name, e]))
 
-    const trackingByMuscle = {}
+    // Use a weighted map: muscle → weighted count (primary=1, secondary=0.5)
+    const weightByMuscle = {}
+    const seenKeys = {}  // muscle → Set of keys already counted this weight
+
     for (const set of sets) {
-      const muscles = (set.muscleGroups?.length ? set.muscleGroups : musclesByName[set.exerciseName]) || []
+      const lib = libByName[set.exerciseName]
+      const primary   = (set.muscleGroups?.length ? set.muscleGroups : lib?.primaryMuscles)   || []
+      const secondary = lib?.secondaryMuscles || []
       const key = mode === 'exercise' ? set.exerciseName : set.sessionId
-      for (const muscle of muscles) {
-        if (!trackingByMuscle[muscle]) trackingByMuscle[muscle] = new Set()
-        trackingByMuscle[muscle].add(key)
+
+      for (const muscle of primary) {
+        if (!seenKeys[muscle]) seenKeys[muscle] = new Set()
+        if (!seenKeys[muscle].has(key)) {
+          seenKeys[muscle].add(key)
+          weightByMuscle[muscle] = (weightByMuscle[muscle] || 0) + 1
+        }
+      }
+      for (const muscle of secondary) {
+        const halfKey = `${key}__secondary`
+        if (!seenKeys[muscle]) seenKeys[muscle] = new Set()
+        if (!seenKeys[muscle].has(halfKey)) {
+          seenKeys[muscle].add(halfKey)
+          weightByMuscle[muscle] = (weightByMuscle[muscle] || 0) + 0.5
+        }
       }
     }
 
-    return Object.entries(trackingByMuscle)
-      .map(([muscle, items]) => ({ muscle, count: items.size }))
+    return Object.entries(weightByMuscle)
+      .map(([muscle, count]) => ({ muscle, count: Math.round(count * 10) / 10 }))
       .sort((a, b) => b.count - a.count)
   },
 
