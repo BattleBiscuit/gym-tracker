@@ -32,6 +32,12 @@ const routes = [
   },
 
   {
+    path: '/progress',
+    name: 'progress',
+    component: () => import('@/features/progress/views/ProgressView.vue'),
+  },
+
+  {
     path: '/history',
     name: 'history',
     component: () => import('@/features/history/views/HistoryView.vue'),
