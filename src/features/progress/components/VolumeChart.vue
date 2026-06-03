@@ -45,9 +45,13 @@ function buildChart() {
         legend: { display: false },
         tooltip: {
           callbacks: {
+            title: ctx => {
+              const d = props.data[ctx[0].dataIndex]
+              return d?.routineName ? `${d.routineName}  ·  ${d.week}` : d?.week
+            },
             label: ctx => {
               const v = ctx.parsed.y
-              return v >= 1000 ? `${(v/1000).toFixed(1)}t` : `${Math.round(v)}kg`
+              return `  ${v >= 1000 ? `${(v/1000).toFixed(1)}t` : `${Math.round(v)}kg`}`
             },
           },
           backgroundColor: '#1a1a1a',

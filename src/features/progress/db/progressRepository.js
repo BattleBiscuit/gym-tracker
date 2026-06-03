@@ -30,8 +30,9 @@ export const progressRepository = {
     return sessions
       .sort((a, b) => a.startedAt - b.startedAt)
       .map(s => ({
-        week: new Date(s.startedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        volume: Math.round(s.totalVolumeKg || 0),
+        week:        new Date(s.startedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        volume:      Math.round(s.totalVolumeKg || 0),
+        routineName: s.routineName || '',
       }))
   },
 
