@@ -26,7 +26,7 @@
                 {{ set.actualDuration }}min · lvl{{ set.actualLevel }}
               </template>
               <template v-else-if="set.actualReps != null">
-                {{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}
+                <span v-if="set.isPR" class="pr-inline">🏆</span>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}
               </template>
               <template v-else>—</template>
             </template>
@@ -64,7 +64,6 @@
             <template v-if="!editing">
               <AppBadge v-if="set.skipped" variant="default">Skip</AppBadge>
               <template v-else>
-                <span v-if="set.isPR">🏆</span>
                 <AppBadge variant="success">✓</AppBadge>
               </template>
             </template>
@@ -158,6 +157,7 @@ defineExpose({ getChanges, resetEdits })
 th { padding: var(--space-2) var(--space-4); font-size: var(--text-xs); color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; background: var(--color-surface-2); }
 td { padding: var(--space-3) var(--space-4); font-size: var(--text-sm); color: var(--color-text-1); border-top: 1px solid var(--color-border); }
 .row--skipped td { opacity: 0.45; }
+.pr-inline { font-size: 11px; margin-right: 3px; }
 
 /* Edit inputs */
 .edit-inputs { display: flex; align-items: center; gap: 4px; }
