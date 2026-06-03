@@ -618,7 +618,7 @@ async function doImport() {
   pointer-events: none;
 }
 .toast--success { background: var(--color-surface-2); color: var(--color-text-1); border: 1px solid var(--color-border); }
-.toast--error   { background: rgba(244,67,54,0.15); color: var(--color-danger); border: 1px solid var(--color-danger); max-width: 90vw; white-space: normal; text-align: center; }
+.toast--error   { background: #2a0a0a; color: #ff6b6b; border: 1px solid var(--color-danger); max-width: 90vw; white-space: normal; text-align: center; }
 
 .toast-enter-active, .toast-leave-active { transition: opacity 200ms, transform 200ms; }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(-50%) translateY(8px); }
