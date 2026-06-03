@@ -1,11 +1,12 @@
 <template>
   <div
     :class="['set-row', {
-      'set-row--locked': set.completedAt && !isActive,
-      'set-row--active': isActive,
-      'set-row--skipped': set.skipped && !isActive,
+      'set-row--locked':   isLocked,
+      'set-row--active':   isActive,
+      'set-row--skipped':  set.skipped && !isActive,
+      'set-row--upcoming': isUpcoming,
     }]"
-    @click="!isActive && $emit('select')"
+    @click="isUpcoming && $emit('select')"
   >
     <span class="set-row__num">{{ setNumber }}</span>
 
@@ -94,7 +95,9 @@ const props = defineProps({
 
 const emit = defineEmits(['update:primary', 'update:secondary', 'update:bw', 'select', 'confirm', 'uncheck'])
 
-const isCardio = computed(() => props.set.type === 'cardio')
+const isCardio   = computed(() => props.set.type === 'cardio')
+const isLocked   = computed(() => (props.set.completedAt || props.set.skipped) && !props.isActive)
+const isUpcoming = computed(() => !props.isActive && !isLocked.value)
 
 // Inputs pre-filled with routine planned values
 const localPrimary   = ref(isCardio.value ? (props.set.plannedDuration ?? '') : (props.set.plannedReps ?? ''))
@@ -151,9 +154,11 @@ const deltaLabel = computed(() => {
   transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
-.set-row--active  { border-color: var(--color-accent); background: rgba(232,255,71,0.04); }
-.set-row--locked  { opacity: 0.65; }
-.set-row--skipped { opacity: 0.35; }
+.set-row--active   { border-color: var(--color-accent); background: rgba(232,255,71,0.04); }
+.set-row--locked   { opacity: 0.65; }
+.set-row--skipped  { opacity: 0.35; }
+.set-row--upcoming { cursor: pointer; }
+.set-row--upcoming:active { background: var(--color-surface-2); }
 
 .set-row__num {
   width: 18px; font-size: var(--text-xs); font-weight: var(--font-bold);
