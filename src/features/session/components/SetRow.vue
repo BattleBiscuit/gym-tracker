@@ -16,7 +16,7 @@
         <template v-if="isCardio">{{ set.actualDuration }}min · lvl{{ set.actualLevel }}</template>
         <template v-else>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}</template>
       </span>
-      <span v-if="set.isPR" class="set-row__pr">🏆</span>
+      <svg v-if="set.isPR" class="set-row__pr" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
       <span :class="['set-row__delta', `set-row__delta--${deltaDir}`]">{{ deltaLabel }}</span>
       <label class="set-row__check" @click.stop>
         <input type="checkbox" checked @change="$emit('uncheck')" />
@@ -177,7 +177,7 @@ const deltaLabel = computed(() => {
 .set-row__actual { flex: 1; font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--color-success); }
 .set-row__planned { flex: 1; font-size: var(--text-sm); color: var(--color-text-2); }
 .set-row__planned--future { color: var(--color-text-3); }
-.set-row__pr { font-size: 11px; flex-shrink: 0; }
+.set-row__pr { color: var(--color-accent); flex-shrink: 0; vertical-align: middle; }
 
 .set-row__delta { font-size: 10px; font-weight: var(--font-bold); flex-shrink: 0; }
 .set-row__delta--up    { color: var(--color-success); }

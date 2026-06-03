@@ -12,7 +12,7 @@
         <div class="settings-card">
           <div class="settings-row settings-row--static">
             <div class="settings-row__body">
-              <span class="settings-row__label">Violent mode 🔥</span>
+              <span class="settings-row__label">Violent mode</span>
               <span class="settings-row__sub">Get insulted when you perform worse than last time</span>
             </div>
             <label class="toggle">

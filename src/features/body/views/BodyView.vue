@@ -13,7 +13,7 @@
           class="metric-card"
           @click="openLog(metric)"
         >
-          <span class="metric-icon">{{ metric.icon }}</span>
+          <span class="metric-icon" v-html="metric.icon" />
           <div class="metric-body">
             <span class="metric-label">{{ metric.label }}</span>
             <span class="metric-value" v-if="store.latest[metric.key]">

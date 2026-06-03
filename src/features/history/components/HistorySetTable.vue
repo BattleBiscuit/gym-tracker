@@ -26,7 +26,7 @@
                 {{ set.actualDuration }}min · lvl{{ set.actualLevel }}
               </template>
               <template v-else-if="set.actualReps != null">
-                <span v-if="set.isPR" class="pr-inline">🏆</span>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}
+                <svg v-if="set.isPR" class="pr-inline" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>{{ set.actualReps }}×{{ formatWeight(set.actualWeight, set.isBodyweight) }}
               </template>
               <template v-else>—</template>
             </template>
@@ -173,7 +173,7 @@ defineExpose({ getChanges, resetEdits })
 th { padding: var(--space-2) var(--space-4); font-size: var(--text-xs); color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.08em; text-align: left; background: var(--color-surface-2); }
 td { padding: var(--space-3) var(--space-4); font-size: var(--text-sm); color: var(--color-text-1); border-top: 1px solid var(--color-border); }
 .row--skipped td { opacity: 0.45; }
-.pr-inline { font-size: 11px; margin-right: 3px; }
+.pr-inline { color: var(--color-accent); margin-right: 3px; vertical-align: middle; }
 
 /* Edit inputs */
 .edit-inputs { display: flex; align-items: center; gap: 4px; }
