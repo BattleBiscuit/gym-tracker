@@ -19,12 +19,17 @@ async function notify() {
   if (!('Notification' in window) || Notification.permission !== 'granted') return
   try {
     const reg = await navigator.serviceWorker?.getRegistration()
-    if (reg?.active) {
-      // Post to SW — it calls showNotification from its own context, works when backgrounded
-      reg.active.postMessage({ type: 'REST_DONE' })
+    if (reg) {
+      // reg.showNotification() works even when the page is backgrounded or screen is locked
+      // because it runs through the SW's notification system, not the page context
+      await reg.showNotification('Rest done — time to lift! 💪', {
+        icon: '/icon-192.png',
+        silent: true,
+        tag: 'rest-timer',
+        renotify: true,
+      })
     } else {
-      // Fallback: page context notification (only works in foreground)
-      new Notification('Rest done — time to lift! 💪', { icon: '/icon-192.png', silent: true, tag: 'rest-timer' })
+      new Notification('Rest done — time to lift! 💪', { icon: '/icon-192.png', silent: true })
     }
   } catch {
     // Silently ignore
