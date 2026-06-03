@@ -72,6 +72,11 @@ const routes = [
   },
 
   {
+    path: '/recovery',
+    name: 'recovery',
+    component: () => import('@/features/settings/views/RecoveryView.vue'),
+  },
+  {
     path: '/settings',
     name: 'settings',
     component: () => import('@/features/settings/views/SettingsView.vue'),

@@ -62,6 +62,20 @@
         </div>
       </section>
 
+      <!-- Recovery -->
+      <section class="settings-section">
+        <h2 class="section-title">Recovery</h2>
+        <div class="settings-card">
+          <div class="settings-row" @click="router.push({ name: 'recovery' })">
+            <div class="settings-row__body">
+              <span class="settings-row__label" style="color:var(--color-warning)">Database recovery</span>
+              <span class="settings-row__sub">Scan and export data if something went wrong</span>
+            </div>
+            <svg class="settings-row__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+        </div>
+      </section>
+
       <!-- Data section -->
       <section class="settings-section">
         <h2 class="section-title">Data</h2>
@@ -196,6 +210,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
@@ -203,6 +218,7 @@ import AppModal from '@/components/ui/AppModal.vue'
 import { db } from '@/db/index.js'
 import { bodyweight, setBodyweight, violentMode, setViolentMode } from '@/composables/useConfig.js'
 
+const router  = useRouter()
 const bwValue = bodyweight  // reactive ref from config
 
 async function onBwChange(e) {
