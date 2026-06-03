@@ -87,6 +87,36 @@ export const progressRepository = {
     return Object.values(best).sort((a, b) => b.date - a.date)
   },
 
+  // Muscle group frequency: sessions per muscle in range
+  async getMuscleFrequency(days) {
+    const from = cutoff(days)
+    const sessions = await this.getSessions(days)
+    if (!sessions.length) return []
+
+    const sessionIds = sessions.map(s => s.id)
+    const sessionMap = Object.fromEntries(sessions.map(s => [s.id, s]))
+
+    const sets = await db.workoutSets
+      .where('sessionId').anyOf(sessionIds)
+      .filter(s => s.completedAt && !s.skipped && s.type !== 'cardio')
+      .toArray()
+
+    // Count unique sessions per muscle group
+    const sessionsByMuscle = {}
+    for (const set of sets) {
+      const muscles = set.muscleGroups || []
+      const sessionId = set.sessionId
+      for (const muscle of muscles) {
+        if (!sessionsByMuscle[muscle]) sessionsByMuscle[muscle] = new Set()
+        sessionsByMuscle[muscle].add(sessionId)
+      }
+    }
+
+    return Object.entries(sessionsByMuscle)
+      .map(([muscle, sessions]) => ({ muscle, count: sessions.size }))
+      .sort((a, b) => b.count - a.count)
+  },
+
   // Plan adherence: % of required entries done this range
   async getPlanAdherence(days) {
     const from = cutoff(days)

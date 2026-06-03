@@ -34,6 +34,12 @@
         </div>
       </div>
 
+      <!-- Muscle group radar -->
+      <section v-if="data.muscleFrequency.length >= 3" class="progress-section">
+        <h2 class="section-title">Muscle balance</h2>
+        <RadarChart :data="data.muscleFrequency" />
+      </section>
+
       <!-- Recent PRs -->
       <section class="progress-section">
         <div class="section-header">
@@ -86,6 +92,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import { progressRepository } from '../db/progressRepository.js'
+import RadarChart from '../components/RadarChart.vue'
 
 const router = useRouter()
 
@@ -102,11 +109,12 @@ const visiblePRs = computed(() =>
 )
 
 const data = ref({
-  sessionCount: 0,
-  volumeChange: null,
-  adherence:    null,
-  prs:          [],
-  recentSessions: [],
+  sessionCount:    0,
+  volumeChange:    null,
+  adherence:       null,
+  prs:             [],
+  muscleFrequency: [],
+  recentSessions:  [],
 })
 
 const isLoading = ref(false)
@@ -115,17 +123,19 @@ async function load() {
   isLoading.value = true
   try {
     const days = rangeDays.value || 3650
-    const [sessions, volumeChange, prs, adherence] = await Promise.all([
+    const [sessions, volumeChange, prs, adherence, muscleFrequency] = await Promise.all([
       progressRepository.getSessions(days),
       progressRepository.getVolumeChange(days),
       progressRepository.getRecentPRs(days),
       progressRepository.getPlanAdherence(days),
+      progressRepository.getMuscleFrequency(days),
     ])
     data.value = {
       sessionCount: sessions.length,
       volumeChange,
       adherence,
       prs,
+      muscleFrequency,
       recentSessions: sessions
         .sort((a, b) => b.startedAt - a.startedAt)
         .slice(0, 5),
