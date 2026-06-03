@@ -29,9 +29,8 @@
       </div>
 
       <!-- History per metric -->
+      <template v-for="metric in METRIC_TYPES" :key="metric.key + '-history'">
       <section
-        v-for="metric in METRIC_TYPES"
-        :key="metric.key + '-history'"
         v-if="store.history[metric.key]?.length"
         class="history-section"
       >
@@ -59,6 +58,7 @@
           </button>
         </div>
       </section>
+      </template>
     </div>
 
     <!-- Log entry bottom sheet -->
