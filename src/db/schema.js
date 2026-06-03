@@ -127,10 +127,6 @@ db.version(12).stores({
   config:           'key',
 })
 
-db.version(14).stores({
-  bodyMetrics: 'id, type, loggedAt, [type+loggedAt]',
-})
-
 // v13: re-run exerciseLibraryId backfill with null-safe exerciseName handling
 db.version(13).stores({
   workoutSets: 'id, sessionId, exerciseName, exerciseLibraryId, isPR, startedAt, [exerciseName+startedAt], [exerciseName+isPR], [sessionId+exercisePosition+setIndex]',
@@ -146,4 +142,8 @@ db.version(13).stores({
       set.exerciseLibraryId = idByName[set.exerciseName.toLowerCase()] ?? null
     }
   })
+})
+
+db.version(14).stores({
+  bodyMetrics: 'id, type, loggedAt, [type+loggedAt]',
 })
