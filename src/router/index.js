@@ -37,6 +37,12 @@ const routes = [
     component: () => import('@/features/progress/views/AllPRsView.vue'),
   },
   {
+    path: '/body',
+    name: 'body',
+    component: () => import('@/features/body/views/BodyView.vue'),
+  },
+
+  {
     path: '/progress',
     name: 'progress',
     component: () => import('@/features/progress/views/ProgressView.vue'),
