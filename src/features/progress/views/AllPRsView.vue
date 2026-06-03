@@ -12,7 +12,7 @@
 
       <div v-else-if="!prs.length" class="pr-empty">
         <p>No personal records yet.</p>
-        <p class="pr-empty__sub">PRs are set when you beat your previous best estimated 1RM.</p>
+        <p class="pr-empty__sub">PRs are set when you lift more weight than ever before on an exercise.</p>
       </div>
 
       <div v-else class="pr-list">

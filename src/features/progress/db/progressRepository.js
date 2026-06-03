@@ -90,9 +90,10 @@ export const progressRepository = {
     // Deduplicate: keep best per exercise
     const best = {}
     for (const s of prSets) {
+      const weight = s.effectiveWeight || 0
       const rm = s.actualReps === 1
-        ? s.effectiveWeight
-        : Math.round((s.effectiveWeight ?? 0) * (1 + (s.actualReps || 1) / 30))
+        ? weight
+        : Math.round(weight * (1 + (s.actualReps || 1) / 30))
       if (!best[s.exerciseName] || rm > best[s.exerciseName].rm) {
         best[s.exerciseName] = {
           exerciseName: s.exerciseName,
@@ -164,9 +165,10 @@ export const progressRepository = {
 
     const best = {}
     for (const s of prSets) {
+      const weight = s.effectiveWeight || 0
       const rm = s.actualReps === 1
-        ? s.effectiveWeight
-        : Math.round((s.effectiveWeight ?? 0) * (1 + (s.actualReps || 1) / 30))
+        ? weight
+        : Math.round(weight * (1 + (s.actualReps || 1) / 30))
       if (!best[s.exerciseName] || rm > best[s.exerciseName].rm) {
         best[s.exerciseName] = {
           exerciseName: s.exerciseName,

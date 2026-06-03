@@ -77,6 +77,7 @@ export const sessionRepository = {
   },
 
   async getBest1RM(exerciseName, excludeSessionId) {
+    // Returns highest single weight lifted (effectiveWeight), not Epley estimate
     const sets = await db.workoutSets
       .where('exerciseName').equals(exerciseName)
       .filter(s =>
@@ -88,11 +89,7 @@ export const sessionRepository = {
       )
       .toArray()
     if (!sets.length) return 0
-    return Math.max(...sets.map(s => {
-      const w = s.effectiveWeight || 0
-      const r = s.actualReps || 1
-      return r === 1 ? w : Math.round(w * (1 + r / 30))
-    }))
+    return Math.max(...sets.map(s => s.effectiveWeight || 0))
   },
 
   async deleteSession(id) {

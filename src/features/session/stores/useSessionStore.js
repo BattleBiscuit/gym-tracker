@@ -177,22 +177,19 @@ export const useSessionStore = defineStore('session', () => {
       ? null
       : resolveWeight(actualWeight, isBodyweight, bodyweight.value || 0)
 
-    // Check for 1RM PR (strength sets only)
-    // Flag if this set beats both the all-time best AND the best set so far this session
+    // PR = highest single weight ever lifted for this exercise
     let isPR = false
     if (!isCardio && effectiveWeight > 0 && actualReps > 0) {
-      const new1RM = actualReps === 1 ? effectiveWeight : Math.round(effectiveWeight * (1 + actualReps / 30))
       const allTimeBest = await sessionRepository.getBest1RM(current.exerciseName, activeSessionId.value)
 
-      // Best 1RM already achieved this session for this exercise (from previously completed sets)
+      // Best weight already lifted this session for this exercise
       const sessionBest = sets.value.flat().reduce((best, s) => {
         if (s.exerciseName !== current.exerciseName || !s.completedAt || s.skipped || !s.effectiveWeight) return best
-        const rm = s.actualReps === 1 ? s.effectiveWeight : Math.round(s.effectiveWeight * (1 + s.actualReps / 30))
-        return Math.max(best, rm)
+        return Math.max(best, s.effectiveWeight)
       }, 0)
 
       const threshold = Math.max(allTimeBest, sessionBest)
-      isPR = new1RM > threshold
+      isPR = effectiveWeight > threshold
     }
 
     const setData = {
