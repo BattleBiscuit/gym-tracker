@@ -95,9 +95,15 @@ export const progressRepository = {
 
     if (!entries.length) return null
 
-    // Count how many weeks are in range
-    const weeksInRange = Math.max(1, Math.ceil(days / 7))
-    const totalRequired = entries.length * weeksInRange
+    // Count weeks since each plan was created (capped by range)
+    let totalRequired = 0
+    for (const plan of activePlans) {
+      const planFrom = Math.max(from, plan.createdAt)
+      const msInRange = Date.now() - planFrom
+      const weeksInRange = Math.max(1, Math.ceil(msInRange / (7 * 24 * 60 * 60 * 1000)))
+      const planEntryCount = entries.filter(e => e.planId === plan.id).length
+      totalRequired += planEntryCount * weeksInRange
+    }
 
     const sessions = await db.workoutSessions
       .where('startedAt').aboveOrEqual(from)
