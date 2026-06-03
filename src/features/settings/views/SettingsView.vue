@@ -281,7 +281,7 @@ onMounted(async () => {
 
 function showToast(message, type = 'success') {
   toast.value = { show: true, message, type }
-  setTimeout(() => { toast.value.show = false }, 3000)
+  setTimeout(() => { toast.value.show = false }, type === 'error' ? 8000 : 3000)
 }
 
 // ── Update ───────────────────────────────────────────────────────────────────
@@ -428,20 +428,23 @@ async function doImport() {
       async () => {
         if (selected.exercises) {
           await db.exerciseLibrary.clear()
-          if (d.exerciseLibrary?.length) await db.exerciseLibrary.bulkAdd(d.exerciseLibrary)
+          if (d.exerciseLibrary?.length) await db.exerciseLibrary.bulkPut(d.exerciseLibrary)
         }
         if (selected.routines) {
           await db.routineExercises.clear()
           await db.routines.clear()
-          if (d.routines?.length)         await db.routines.bulkAdd(d.routines)
-          if (d.routineExercises?.length) await db.routineExercises.bulkAdd(d.routineExercises)
+          if (d.routines?.length)         await db.routines.bulkPut(d.routines)
+          if (d.routineExercises?.length) await db.routineExercises.bulkPut(d.routineExercises)
         }
         if (selected.history) {
           await db.workoutSets.clear()
           await db.workoutSessions.clear()
-          if (d.workoutSessions?.length) await db.workoutSessions.bulkAdd(d.workoutSessions)
-          if (d.workoutSets?.length)     await db.workoutSets.bulkAdd(d.workoutSets)
+          if (d.workoutSessions?.length) await db.workoutSessions.bulkPut(d.workoutSessions)
+          if (d.workoutSets?.length)     await db.workoutSets.bulkPut(d.workoutSets)
         }
+        // Also restore plans/planEntries if present in backup
+        if (d.plans?.length)       await db.plans.bulkPut(d.plans).catch(() => {})
+        if (d.planEntries?.length) await db.planEntries.bulkPut(d.planEntries).catch(() => {})
       }
     )
     importModal.value = false
@@ -604,7 +607,7 @@ async function doImport() {
   pointer-events: none;
 }
 .toast--success { background: var(--color-surface-2); color: var(--color-text-1); border: 1px solid var(--color-border); }
-.toast--error   { background: rgba(244,67,54,0.15); color: var(--color-danger); border: 1px solid var(--color-danger); }
+.toast--error   { background: rgba(244,67,54,0.15); color: var(--color-danger); border: 1px solid var(--color-danger); max-width: 90vw; white-space: normal; text-align: center; }
 
 .toast-enter-active, .toast-leave-active { transition: opacity 200ms, transform 200ms; }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translateX(-50%) translateY(8px); }
