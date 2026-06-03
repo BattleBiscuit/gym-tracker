@@ -6,31 +6,6 @@
 
     <div class="settings-content">
 
-      <!-- Profile section -->
-      <section class="settings-section">
-        <h2 class="section-title">Profile</h2>
-        <div class="settings-card">
-          <div class="settings-row settings-row--static">
-            <div class="settings-row__body">
-              <span class="settings-row__label">Bodyweight</span>
-              <span class="settings-row__sub">Used for BW exercises and analytics</span>
-            </div>
-            <div class="bw-input-wrap">
-              <input
-                class="bw-input"
-                type="number"
-                inputmode="decimal"
-                :value="bwValue"
-                min="1"
-                step="0.5"
-                @change="onBwChange"
-              />
-              <span class="bw-unit">kg</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Behaviour section -->
       <section class="settings-section">
         <h2 class="section-title">Behaviour</h2>
@@ -216,16 +191,9 @@ import AppButton from '@/components/ui/AppButton.vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import { db } from '@/db/index.js'
-import { bodyweight, setBodyweight, violentMode, setViolentMode } from '@/composables/useConfig.js'
+import { violentMode, setViolentMode } from '@/composables/useConfig.js'
 
 const router  = useRouter()
-const bwValue = bodyweight  // reactive ref from config
-
-async function onBwChange(e) {
-  const val = parseFloat(e.target.value)
-  if (!val || val <= 0) return
-  await setBodyweight(val)
-}
 
 const fileInputRef  = ref(null)
 const exportModal   = ref(false)
@@ -540,22 +508,6 @@ async function doImport() {
 .toggle input:checked + .toggle__track { background: var(--color-accent); }
 .toggle input:checked + .toggle__track::after { transform: translateX(20px); background: #0f0f0f; }
 
-.bw-input-wrap { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
-
-.bw-input {
-  width: 72px; height: 40px;
-  text-align: center;
-  font-size: var(--text-base); font-weight: var(--font-semibold);
-  color: var(--color-text-1);
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 0 var(--space-2);
-  user-select: text; -webkit-user-select: text;
-}
-.bw-input:focus { border-color: var(--color-border-focus); outline: none; }
-
-.bw-unit { font-size: var(--text-sm); color: var(--color-text-3); }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .icon-spin { animation: spin 1s linear infinite; }
