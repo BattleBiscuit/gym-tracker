@@ -64,8 +64,8 @@ export const progressRepository = {
   async getRecentPRs(days) {
     const from = cutoff(days)
     const prSets = await db.workoutSets
-      .where('isPR').equals(1)
-      .filter(s => s.startedAt >= from && s.completedAt && !s.skipped)
+      .where('startedAt').aboveOrEqual(from)
+      .filter(s => s.isPR === true && s.completedAt && !s.skipped)
       .toArray()
 
     // Deduplicate: keep best per exercise
