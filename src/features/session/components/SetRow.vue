@@ -98,8 +98,7 @@ const primaryInputRef   = ref(null)
 const secondaryInputRef = ref(null)
 
 function confirmAndBlur() {
-  primaryInputRef.value?.blur()
-  secondaryInputRef.value?.blur()
+  document.activeElement?.blur()
   emit('confirm')
 }
 
