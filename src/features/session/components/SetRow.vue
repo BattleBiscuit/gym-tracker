@@ -34,31 +34,30 @@
 
       <div class="set-row__inputs">
         <template v-if="isCardio">
-          <input class="set-row__input" type="text" inputmode="numeric"
+          <input ref="primaryInputRef" class="set-row__input" type="text" inputmode="numeric"
             v-model="localPrimary" :placeholder="set.plannedDuration" />
           <span class="set-row__sep">min</span>
-          <input class="set-row__input" type="text" inputmode="numeric"
+          <input ref="secondaryInputRef" class="set-row__input" type="text" inputmode="numeric"
             v-model="localSecondary" :placeholder="set.plannedLevel"
-            @keydown.enter="$emit('confirm')" />
+            @keydown.enter="confirmAndBlur" />
           <span class="set-row__unit">lvl</span>
         </template>
         <template v-else>
-          <input class="set-row__input" type="text" inputmode="numeric"
+          <input ref="primaryInputRef" class="set-row__input" type="text" inputmode="numeric"
             v-model="localPrimary" :placeholder="set.plannedReps" />
           <span class="set-row__sep">×</span>
-          <!-- BW toggle -->
           <button :class="['set-row__bw-btn', { 'set-row__bw-btn--active': localBW }]"
             @click="localBW = !localBW" type="button">BW</button>
-          <input class="set-row__input" type="text" inputmode="decimal"
+          <input ref="secondaryInputRef" class="set-row__input" type="text" inputmode="decimal"
             v-model="localSecondary"
             :placeholder="localBW ? (set.plannedWeight || '±kg') : set.plannedWeight"
-            @keydown.enter="$emit('confirm')" />
+            @keydown.enter="confirmAndBlur" />
           <span class="set-row__unit">kg</span>
         </template>
       </div>
 
       <!-- Unchecked checkbox — tap to confirm/lock -->
-      <label class="set-row__check" @click.stop="$emit('confirm')">
+      <label class="set-row__check" @click.stop="confirmAndBlur">
         <span class="set-row__check-box" />
       </label>
     </template>
@@ -94,6 +93,15 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:primary', 'update:secondary', 'update:bw', 'select', 'confirm', 'uncheck'])
+
+const primaryInputRef   = ref(null)
+const secondaryInputRef = ref(null)
+
+function confirmAndBlur() {
+  primaryInputRef.value?.blur()
+  secondaryInputRef.value?.blur()
+  emit('confirm')
+}
 
 const isCardio   = computed(() => props.set.type === 'cardio')
 const isLocked   = computed(() => (props.set.completedAt || props.set.skipped) && !props.isActive)
