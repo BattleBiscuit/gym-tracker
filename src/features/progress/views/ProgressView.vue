@@ -78,7 +78,7 @@
               <span class="pr-date">{{ formatDate(pr.date) }}</span>
             </div>
             <div class="pr-right">
-              <span class="pr-value" v-if="pr.actualReps">{{ pr.actualReps }}×{{ formatWeight(pr.actualWeight, pr.isBodyweight) }}</span>
+              <span class="pr-value" v-if="pr.actualWeight != null">{{ formatWeight(pr.actualWeight, pr.isBodyweight) }}</span>
               <span class="pr-sublabel">est. 1RM: {{ pr.rm }}kg</span>
             </div>
           </div>
