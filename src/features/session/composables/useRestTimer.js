@@ -2,54 +2,50 @@ import { watch, onUnmounted } from 'vue'
 import { useSessionStore } from '../stores/useSessionStore.js'
 import { triggerTimerAlert } from '@/composables/useTimerAlert.js'
 
+// rAF-based timer — pauses when tab is backgrounded, no drift
 export function useRestTimer() {
   const store = useSessionStore()
-  let intervalId = null
-  let endTime    = null
+  let rafId = null
+  let lastTimestamp = null
 
-  function start() {
-    if (intervalId) clearInterval(intervalId)
-    endTime = Date.now() + store.restTimerRemaining * 1000
+  function tick(timestamp) {
+    if (lastTimestamp === null) lastTimestamp = timestamp
+    const delta = (timestamp - lastTimestamp) / 1000
+    lastTimestamp = timestamp
 
-    // Tell the SW to schedule a notification at the exact end time
-    scheduleSwNotification(store.restTimerRemaining)
+    const wasActive = store.restTimerActive
+    store.tickRestTimer(delta)
 
-    intervalId = setInterval(() => {
-      const remaining = (endTime - Date.now()) / 1000
-      if (remaining <= 0) {
-        store.setRestTimerRemaining(0)
-        stop()
-        triggerTimerAlert()
-      } else {
-        store.setRestTimerRemaining(remaining)
-      }
-    }, 250)
-  }
+    if (wasActive && !store.restTimerActive) {
+      triggerTimerAlert()
+      rafId = null
+      lastTimestamp = null
+      return
+    }
 
-  function stop() {
-    if (intervalId) { clearInterval(intervalId); intervalId = null }
-    endTime = null
-    cancelSwNotification()
-  }
-
-  async function scheduleSwNotification(seconds) {
-    cancelSwNotification()
-    try {
-      const reg = await navigator.serviceWorker?.getRegistration()
-      reg?.active?.postMessage({ type: 'SCHEDULE_NOTIFICATION', delayMs: Math.round(seconds * 1000) })
-    } catch {}
-  }
-
-  function cancelSwNotification() {
-    navigator.serviceWorker?.getRegistration().then(reg => {
-      reg?.active?.postMessage({ type: 'CANCEL_NOTIFICATION' })
-    }).catch(() => {})
+    if (store.restTimerActive) {
+      rafId = requestAnimationFrame(tick)
+    } else {
+      rafId = null
+      lastTimestamp = null
+    }
   }
 
   watch(() => store.restTimerActive, active => {
-    if (active) start()
-    else stop()
+    if (active && rafId === null) {
+      lastTimestamp = null
+      rafId = requestAnimationFrame(tick)
+    } else if (!active && rafId !== null) {
+      cancelAnimationFrame(rafId)
+      rafId = null
+      lastTimestamp = null
+    }
   })
 
-  onUnmounted(() => stop())
+  onUnmounted(() => {
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId)
+      rafId = null
+    }
+  })
 }
