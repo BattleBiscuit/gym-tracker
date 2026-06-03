@@ -245,6 +245,11 @@ export const useSessionStore = defineStore('session', () => {
     restTimerRemaining.value = 0
   }
 
+  function setRestTimerRemaining(seconds) {
+    restTimerRemaining.value = Math.max(0, seconds)
+    if (restTimerRemaining.value === 0) restTimerActive.value = false
+  }
+
   function tickRestTimer(delta) {
     if (!restTimerActive.value) return
     restTimerRemaining.value = Math.max(0, restTimerRemaining.value - delta)
@@ -401,6 +406,7 @@ export const useSessionStore = defineStore('session', () => {
     startRestTimer,
     cancelRestTimer,
     tickRestTimer,
+    setRestTimerRemaining,
     tickElapsed,
     addExerciseToSession,
     skipAllRemaining,

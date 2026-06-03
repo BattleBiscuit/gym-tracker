@@ -15,25 +15,13 @@ export async function requestNotificationPermission() {
   }
 }
 
-async function notify() {
-  if (!('Notification' in window) || Notification.permission !== 'granted') return
-  try {
-    const reg = await navigator.serviceWorker?.getRegistration()
-    if (reg) {
-      // reg.showNotification() works even when the page is backgrounded or screen is locked
-      // because it runs through the SW's notification system, not the page context
-      await reg.showNotification('Rest done — time to lift! 💪', {
-        icon: '/icon-192.png',
-        silent: true,
-        tag: 'rest-timer',
-        renotify: true,
-      })
-    } else {
-      new Notification('Rest done — time to lift! 💪', { icon: '/icon-192.png', silent: true })
-    }
-  } catch {
-    // Silently ignore
-  }
+function notify() {
+  // Background notification is handled by the SW via SCHEDULE_NOTIFICATION message.
+  // This fallback fires when the app is in the foreground (SW may have already shown it).
+  // We cancel the SW notification to avoid duplicates since we're in foreground.
+  navigator.serviceWorker?.getRegistration().then(reg => {
+    reg?.active?.postMessage({ type: 'CANCEL_NOTIFICATION' })
+  }).catch(() => {})
 }
 
 function vibrate() {

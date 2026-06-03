@@ -2,52 +2,54 @@ import { watch, onUnmounted } from 'vue'
 import { useSessionStore } from '../stores/useSessionStore.js'
 import { triggerTimerAlert } from '@/composables/useTimerAlert.js'
 
-// rAF-based timer — pauses when tab is backgrounded, no drift
 export function useRestTimer() {
   const store = useSessionStore()
-  let rafId = null
-  let lastTimestamp = null
+  let intervalId = null
+  let endTime    = null
 
-  function tick(timestamp) {
-    if (lastTimestamp === null) lastTimestamp = timestamp
-    const delta = (timestamp - lastTimestamp) / 1000
-    lastTimestamp = timestamp
+  function start() {
+    if (intervalId) clearInterval(intervalId)
+    endTime = Date.now() + store.restTimerRemaining * 1000
 
-    const wasActive = store.restTimerActive
-    store.tickRestTimer(delta)
+    // Tell the SW to schedule a notification at the exact end time
+    scheduleSwNotification(store.restTimerRemaining)
 
-    if (wasActive && !store.restTimerActive) {
-      // Timer reached zero naturally — alert
-      triggerTimerAlert()
-      rafId = null
-      lastTimestamp = null
-      return
-    }
+    intervalId = setInterval(() => {
+      const remaining = (endTime - Date.now()) / 1000
+      if (remaining <= 0) {
+        store.setRestTimerRemaining(0)
+        stop()
+        triggerTimerAlert()
+      } else {
+        store.setRestTimerRemaining(remaining)
+      }
+    }, 250)
+  }
 
-    if (store.restTimerActive) {
-      rafId = requestAnimationFrame(tick)
-    } else {
-      rafId = null
-      lastTimestamp = null
-    }
+  function stop() {
+    if (intervalId) { clearInterval(intervalId); intervalId = null }
+    endTime = null
+    cancelSwNotification()
+  }
+
+  async function scheduleSwNotification(seconds) {
+    cancelSwNotification()
+    try {
+      const reg = await navigator.serviceWorker?.getRegistration()
+      reg?.active?.postMessage({ type: 'SCHEDULE_NOTIFICATION', delayMs: Math.round(seconds * 1000) })
+    } catch {}
+  }
+
+  function cancelSwNotification() {
+    navigator.serviceWorker?.getRegistration().then(reg => {
+      reg?.active?.postMessage({ type: 'CANCEL_NOTIFICATION' })
+    }).catch(() => {})
   }
 
   watch(() => store.restTimerActive, active => {
-    if (active && rafId === null) {
-      lastTimestamp = null
-      rafId = requestAnimationFrame(tick)
-    } else if (!active && rafId !== null) {
-      // Manual skip — cancel without alerting
-      cancelAnimationFrame(rafId)
-      rafId = null
-      lastTimestamp = null
-    }
+    if (active) start()
+    else stop()
   })
 
-  onUnmounted(() => {
-    if (rafId !== null) {
-      cancelAnimationFrame(rafId)
-      rafId = null
-    }
-  })
+  onUnmounted(() => stop())
 }
