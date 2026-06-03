@@ -440,7 +440,18 @@ async function doImport() {
           await db.workoutSets.clear()
           await db.workoutSessions.clear()
           if (d.workoutSessions?.length) await db.workoutSessions.bulkPut(d.workoutSessions)
-          if (d.workoutSets?.length)     await db.workoutSets.bulkPut(d.workoutSets)
+          if (d.workoutSets?.length) {
+            // Ensure exerciseName is always a string — null/undefined breaks the index
+            const cleanSets = d.workoutSets.map(s => ({
+              ...s,
+              exerciseName:      s.exerciseName      || '',
+              exerciseLibraryId: s.exerciseLibraryId || null,
+              isPR:              s.isPR              || false,
+              startedAt:         s.startedAt         || s.completedAt || null,
+              muscleGroups:      Array.isArray(s.muscleGroups) ? s.muscleGroups : [],
+            }))
+            await db.workoutSets.bulkPut(cleanSets)
+          }
         }
         // Also restore plans/planEntries if present in backup
         if (d.plans?.length)       await db.plans.bulkPut(d.plans).catch(() => {})
