@@ -28,11 +28,28 @@
         </div>
 
         <!-- Plan adherence -->
-        <div v-if="data.adherence !== null" class="metric-card metric-card--wide">
+        <div v-if="data.adherence !== null" class="metric-card">
           <span class="metric-value" :class="adherenceClass">{{ data.adherence }}%</span>
           <span class="metric-label">Plan adherence</span>
         </div>
+
+        <!-- Best streak across all active plans -->
+        <div v-if="data.bestStreak > 0" class="metric-card">
+          <span class="metric-value metric-value--streak">🔥 {{ data.bestStreak }}</span>
+          <span class="metric-label">Best streak (weeks)</span>
+        </div>
       </div>
+
+      <!-- Best lifts -->
+      <section v-if="data.bestLifts.length" class="progress-section">
+        <h2 class="section-title">Best lifts (all time)</h2>
+        <div class="lifts-list">
+          <div v-for="lift in data.bestLifts" :key="lift.exerciseName" class="lift-row">
+            <span class="lift-name">{{ lift.exerciseName }}</span>
+            <span class="lift-value">{{ lift.rm }}kg</span>
+          </div>
+        </div>
+      </section>
 
       <!-- Muscle group radar -->
       <section class="progress-section">
@@ -98,6 +115,8 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import { progressRepository } from '../db/progressRepository.js'
+import { plansRepository } from '@/features/plans/db/plansRepository.js'
+import { db } from '@/db/index.js'
 import RadarChart from '../components/RadarChart.vue'
 
 const router = useRouter()
@@ -119,6 +138,8 @@ const data = ref({
   sessionCount:    0,
   volumeChange:    null,
   adherence:       null,
+  bestStreak:      0,
+  bestLifts:       [],
   prs:             [],
   muscleFrequency: [],
   recentSessions:  [],
@@ -130,17 +151,31 @@ async function load() {
   isLoading.value = true
   try {
     const days = rangeDays.value || 3650
-    const [sessions, volumeChange, prs, adherence, muscleFrequency] = await Promise.all([
+    const [sessions, volumeChange, prs, adherence, muscleFrequency, bestLifts] = await Promise.all([
       progressRepository.getSessions(days),
       progressRepository.getVolumeChange(days),
       progressRepository.getRecentPRs(days),
       progressRepository.getPlanAdherence(days),
       progressRepository.getMuscleFrequency(days, muscleMode.value),
+      progressRepository.getBestLifts(5),
     ])
+
+    // Best streak across all active plans
+    const activePlans = await db.plans.where('status').equals('active').toArray()
+    const streaks = await Promise.all(
+      activePlans.map(async p => {
+        const entries = await plansRepository.getEntriesForPlan(p.id)
+        return plansRepository.getStreak(p.id, entries)
+      })
+    )
+    const bestStreak = streaks.length ? Math.max(...streaks) : 0
+
     data.value = {
       sessionCount: sessions.length,
       volumeChange,
       adherence,
+      bestStreak,
+      bestLifts,
       prs,
       muscleFrequency,
       recentSessions: sessions
@@ -221,8 +256,9 @@ function formatVol(kg) {
 .metric-card--wide { grid-column: 1 / -1; }
 
 .metric-value { font-size: var(--text-3xl); font-weight: var(--font-bold); color: var(--color-text-1); line-height: 1; }
-.metric-value--up   { color: var(--color-success); }
-.metric-value--down { color: var(--color-danger); }
+.metric-value--up     { color: var(--color-success); }
+.metric-value--down   { color: var(--color-danger); }
+.metric-value--streak { color: var(--color-warning); }
 
 .metric-label { font-size: 10px; color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.08em; text-align: center; }
 
@@ -239,6 +275,17 @@ function formatVol(kg) {
 .mode-btn--active { background: var(--color-accent); color: #0f0f0f; }
 
 .section-empty { font-size: var(--text-sm); color: var(--color-text-3); padding: var(--space-4); text-align: center; background: var(--color-surface-1); border-radius: var(--radius-lg); border: 1px dashed var(--color-border); }
+
+/* Best lifts */
+.lifts-list { display: flex; flex-direction: column; gap: var(--space-2); }
+.lift-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-1); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.lift-name  { font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-1); }
+.lift-value { font-size: var(--text-base); font-weight: var(--font-bold); color: var(--color-accent); }
 
 /* PR list */
 .pr-list { display: flex; flex-direction: column; gap: var(--space-2); }

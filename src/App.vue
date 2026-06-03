@@ -14,6 +14,7 @@ import { useSessionStore } from '@/features/session/stores/useSessionStore.js'
 import { useRoutinesStore } from '@/features/routines/stores/useRoutinesStore.js'
 import { usePlansStore } from '@/features/plans/stores/usePlansStore.js'
 import { loadConfig } from '@/composables/useConfig.js'
+import { requestNotificationPermission } from '@/composables/useTimerAlert.js'
 
 const router = useRouter()
 const sessionStore  = useSessionStore()
@@ -23,6 +24,7 @@ const plansStore    = usePlansStore()
 onMounted(async () => {
   // Request persistent storage so the OS never auto-evicts our IndexedDB
   if (navigator.storage?.persist) navigator.storage.persist()
+  requestNotificationPermission()
   await loadConfig()
 
   // Always pre-load routines into the store so they're available immediately

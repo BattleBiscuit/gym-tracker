@@ -135,6 +135,27 @@ export const progressRepository = {
       .sort((a, b) => b.count - a.count)
   },
 
+  // Best lifts: all-time highest 1RM per exercise (top N by 1RM)
+  async getBestLifts(limit = 5) {
+    const prSets = await db.workoutSets
+      .filter(s => s.isPR === true && s.completedAt && !s.skipped && s.type !== 'cardio' && s.effectiveWeight > 0)
+      .toArray()
+
+    const best = {}
+    for (const s of prSets) {
+      const rm = s.actualReps === 1
+        ? s.effectiveWeight
+        : Math.round((s.effectiveWeight ?? 0) * (1 + (s.actualReps || 1) / 30))
+      if (!best[s.exerciseName] || rm > best[s.exerciseName].rm) {
+        best[s.exerciseName] = { exerciseName: s.exerciseName, rm, date: s.startedAt }
+      }
+    }
+
+    return Object.values(best)
+      .sort((a, b) => b.rm - a.rm)
+      .slice(0, limit)
+  },
+
   // Plan adherence: % of required entries done this range
   async getPlanAdherence(days) {
     const from = cutoff(days)

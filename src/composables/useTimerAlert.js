@@ -6,6 +6,33 @@
 export function triggerTimerAlert() {
   vibrate()
   beep()
+  notify()
+}
+
+export async function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    await Notification.requestPermission()
+  }
+}
+
+async function notify() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return
+  try {
+    const reg = await navigator.serviceWorker?.getRegistration()
+    if (reg) {
+      // showNotification via SW works even when app is backgrounded
+      reg.showNotification('Rest done — time to lift! 💪', {
+        icon: '/icon-192.png',
+        silent: true,   // beep already played
+        tag: 'rest-timer',
+        renotify: true,
+      })
+    } else {
+      new Notification('Rest done — time to lift! 💪', { icon: '/icon-192.png', silent: true })
+    }
+  } catch {
+    // Silently ignore
+  }
 }
 
 function vibrate() {
