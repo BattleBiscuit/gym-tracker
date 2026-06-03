@@ -106,17 +106,16 @@ db.version(11).stores({
   workoutSets: 'id, sessionId, exerciseName, exerciseLibraryId, isPR, startedAt, [exerciseName+startedAt], [exerciseName+isPR], [sessionId+exercisePosition+setIndex]',
 }).upgrade(async tx => {
   const library = await tx.table('exerciseLibrary').toArray()
-  const idByName = Object.fromEntries(library.map(e => [e.name.toLowerCase(), e.id]))
+  const idByName = Object.fromEntries(library.filter(e => e.name).map(e => [e.name.toLowerCase(), e.id]))
 
   await tx.table('workoutSets').toCollection().modify(set => {
-    if (!set.exerciseLibraryId && set.exerciseName) {
-      set.exerciseLibraryId = idByName[set.exerciseName.toLowerCase()] ?? null
+    const name = typeof set.exerciseName === 'string' ? set.exerciseName.toLowerCase() : null
+    if (!set.exerciseLibraryId && name) {
+      set.exerciseLibraryId = idByName[name] ?? null
     }
   })
 })
 
-// v12: force clean re-open of all tables to recover from any broken index state
-// caused by out-of-order version declarations in v11. No data changes.
 db.version(12).stores({
   routines:         'id, createdAt, updatedAt',
   routineExercises: 'id, routineId, exerciseLibraryId, [routineId+position]',
@@ -126,4 +125,21 @@ db.version(12).stores({
   plans:            'id, status, order',
   planEntries:      'id, planId, routineId, dayOfWeek, [planId+order]',
   config:           'key',
+})
+
+// v13: re-run exerciseLibraryId backfill with null-safe exerciseName handling
+db.version(13).stores({
+  workoutSets: 'id, sessionId, exerciseName, exerciseLibraryId, isPR, startedAt, [exerciseName+startedAt], [exerciseName+isPR], [sessionId+exercisePosition+setIndex]',
+}).upgrade(async tx => {
+  const library = await tx.table('exerciseLibrary').toArray()
+  const idByName = Object.fromEntries(library.filter(e => e.name).map(e => [e.name.toLowerCase(), e.id]))
+
+  await tx.table('workoutSets').toCollection().modify(set => {
+    // Ensure exerciseName is always a string
+    if (typeof set.exerciseName !== 'string') set.exerciseName = ''
+    // Backfill exerciseLibraryId
+    if (!set.exerciseLibraryId && set.exerciseName) {
+      set.exerciseLibraryId = idByName[set.exerciseName.toLowerCase()] ?? null
+    }
+  })
 })
