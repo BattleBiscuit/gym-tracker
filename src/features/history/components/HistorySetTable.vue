@@ -82,10 +82,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import Dexie from 'dexie'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import { formatWeight, resolveWeight } from '@/utils/formatWeight.js'
 import { bodyweight } from '@/composables/useConfig.js'
+import { db } from '@/db/index.js'
 
 const props = defineProps({
   exerciseName: { type: String, required: true },
@@ -94,6 +96,19 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['save'])
+
+// Bodyweight at the time of this session — resolved once on mount
+const sessionBodyweight = ref(null)
+
+onMounted(async () => {
+  const sessionAt = props.sets[0]?.startedAt
+  if (!sessionAt) return
+  const entry = await db.bodyMetrics
+    .where('[type+loggedAt]')
+    .between(['weight', Dexie.minKey], ['weight', sessionAt], false, true)
+    .last()
+  sessionBodyweight.value = entry?.value ?? null
+})
 
 // Local edits map: setId → { reps, weight, isBodyweight, duration, level, skipped }
 const localEdits = ref({})
@@ -118,6 +133,7 @@ function toggleSkip(set) {
 
 // Called by parent to get pending changes
 function getChanges() {
+  const bw = sessionBodyweight.value ?? bodyweight.value ?? 0
   const changes = []
   for (const set of props.sets) {
     const edits = localEdits.value[set.id]
@@ -131,7 +147,7 @@ function getChanges() {
       actualWeight,
       isBodyweight,
       effectiveWeight: set.type !== 'cardio'
-        ? resolveWeight(actualWeight, isBodyweight, bodyweight.value || 0)
+        ? resolveWeight(actualWeight, isBodyweight, bw)
         : null,
       actualDuration: edits.duration ?? set.actualDuration,
       actualLevel:    edits.level    ?? set.actualLevel,
