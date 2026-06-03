@@ -36,12 +36,17 @@
 
       <!-- Recent PRs -->
       <section class="progress-section">
-        <h2 class="section-title">Recent PRs</h2>
+        <div class="section-header">
+          <h2 class="section-title">Recent PRs</h2>
+          <button v-if="data.prs.length > 3" class="section-expand" @click="showAllPRs = !showAllPRs">
+            {{ showAllPRs ? 'Show less' : `Show all ${data.prs.length}` }}
+          </button>
+        </div>
         <div v-if="!data.prs.length" class="section-empty">
           No PRs in this period. Keep pushing!
         </div>
         <div v-else class="pr-list">
-          <div v-for="pr in data.prs" :key="pr.exerciseName" class="pr-row">
+          <div v-for="pr in visiblePRs" :key="pr.exerciseName" class="pr-row">
             <span class="pr-trophy">🏆</span>
             <span class="pr-name">{{ pr.exerciseName }}</span>
             <span class="pr-value">{{ pr.rm }}kg</span>
@@ -86,7 +91,12 @@ const ranges = [
   { label: '8w',  days: 56  },
   { label: 'All', days: null },
 ]
-const rangeDays = ref(28)
+const rangeDays  = ref(28)
+const showAllPRs = ref(false)
+
+const visiblePRs = computed(() =>
+  showAllPRs.value ? data.value.prs : data.value.prs.slice(0, 3)
+)
 
 const data = ref({
   sessionCount: 0,
@@ -124,6 +134,7 @@ async function load() {
 
 function setRange(days) {
   rangeDays.value = days
+  showAllPRs.value = false
 }
 
 watch(rangeDays, load)
@@ -196,7 +207,12 @@ function formatVol(kg) {
 
 /* Sections */
 .progress-section { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.section-header { display: flex; align-items: center; justify-content: space-between; }
 .section-title { font-size: var(--text-xs); font-weight: var(--font-semibold); color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.1em; }
+.section-expand { font-size: var(--text-xs); color: var(--color-accent); font-weight: var(--font-medium); }
+.section-expand:active { opacity: 0.7; }
+
 .section-empty { font-size: var(--text-sm); color: var(--color-text-3); padding: var(--space-4); text-align: center; background: var(--color-surface-1); border-radius: var(--radius-lg); border: 1px dashed var(--color-border); }
 
 /* PR list */
