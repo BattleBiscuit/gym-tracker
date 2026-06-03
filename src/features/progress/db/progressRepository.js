@@ -87,8 +87,8 @@ export const progressRepository = {
     return Object.values(best).sort((a, b) => b.date - a.date)
   },
 
-  // Muscle group frequency: sessions per muscle in range
-  async getMuscleFrequency(days) {
+  // Muscle group frequency: mode = 'exercise' (unique exercises) or 'session' (unique sessions)
+  async getMuscleFrequency(days, mode = 'exercise') {
     const sessions = await this.getSessions(days)
     if (!sessions.length) return []
 
@@ -99,23 +99,22 @@ export const progressRepository = {
       .filter(s => s.completedAt && !s.skipped && s.type !== 'cardio')
       .toArray()
 
-    // Build exerciseName → muscles fallback from library
+    // Build exerciseName → muscles fallback from library for older sets
     const library = await db.exerciseLibrary.toArray()
     const musclesByName = Object.fromEntries(library.map(e => [e.name, e.primaryMuscles || []]))
 
-    // Count unique sessions per muscle group
-    const sessionsByMuscle = {}
+    const trackingByMuscle = {}
     for (const set of sets) {
-      // Use stored snapshot, fall back to library lookup for older sets
       const muscles = (set.muscleGroups?.length ? set.muscleGroups : musclesByName[set.exerciseName]) || []
+      const key = mode === 'exercise' ? set.exerciseName : set.sessionId
       for (const muscle of muscles) {
-        if (!sessionsByMuscle[muscle]) sessionsByMuscle[muscle] = new Set()
-        sessionsByMuscle[muscle].add(set.sessionId)
+        if (!trackingByMuscle[muscle]) trackingByMuscle[muscle] = new Set()
+        trackingByMuscle[muscle].add(key)
       }
     }
 
-    return Object.entries(sessionsByMuscle)
-      .map(([muscle, sessions]) => ({ muscle, count: sessions.size }))
+    return Object.entries(trackingByMuscle)
+      .map(([muscle, items]) => ({ muscle, count: items.size }))
       .sort((a, b) => b.count - a.count)
   },
 

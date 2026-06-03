@@ -36,7 +36,13 @@
 
       <!-- Muscle group radar -->
       <section class="progress-section">
-        <h2 class="section-title">Muscle balance</h2>
+        <div class="section-header">
+          <h2 class="section-title">Muscle balance</h2>
+          <div class="mode-toggle">
+            <button :class="['mode-btn', { 'mode-btn--active': muscleMode === 'exercise' }]" @click="muscleMode = 'exercise'">Exercise</button>
+            <button :class="['mode-btn', { 'mode-btn--active': muscleMode === 'session' }]" @click="muscleMode = 'session'">Session</button>
+          </div>
+        </div>
         <RadarChart :data="data.muscleFrequency" />
       </section>
 
@@ -101,8 +107,9 @@ const ranges = [
   { label: '8w',  days: 56  },
   { label: 'All', days: null },
 ]
-const rangeDays  = ref(28)
-const showAllPRs = ref(false)
+const rangeDays   = ref(28)
+const showAllPRs  = ref(false)
+const muscleMode  = ref('exercise')
 
 const visiblePRs = computed(() =>
   showAllPRs.value ? data.value.prs : data.value.prs.slice(0, 3)
@@ -128,7 +135,7 @@ async function load() {
       progressRepository.getVolumeChange(days),
       progressRepository.getRecentPRs(days),
       progressRepository.getPlanAdherence(days),
-      progressRepository.getMuscleFrequency(days),
+      progressRepository.getMuscleFrequency(days, muscleMode.value),
     ])
     data.value = {
       sessionCount: sessions.length,
@@ -151,6 +158,7 @@ function setRange(days) {
 }
 
 watch(rangeDays, load)
+watch(muscleMode, load)
 onMounted(load)
 
 // Computed display
@@ -225,6 +233,10 @@ function formatVol(kg) {
 .section-title { font-size: var(--text-xs); font-weight: var(--font-semibold); color: var(--color-text-3); text-transform: uppercase; letter-spacing: 0.1em; }
 .section-expand { font-size: var(--text-xs); color: var(--color-accent); font-weight: var(--font-medium); }
 .section-expand:active { opacity: 0.7; }
+
+.mode-toggle { display: flex; border: 1px solid var(--color-border); border-radius: var(--radius-full); overflow: hidden; }
+.mode-btn { padding: 3px var(--space-3); font-size: 10px; font-weight: var(--font-medium); color: var(--color-text-3); background: transparent; transition: all var(--transition-fast); }
+.mode-btn--active { background: var(--color-accent); color: #0f0f0f; }
 
 .section-empty { font-size: var(--text-sm); color: var(--color-text-3); padding: var(--space-4); text-align: center; background: var(--color-surface-1); border-radius: var(--radius-lg); border: 1px dashed var(--color-border); }
 
