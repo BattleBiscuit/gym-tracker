@@ -24,13 +24,17 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
-      strategies: 'injectManifest',
-      srcDir: 'src',
-      filename: 'sw.js',
-      includeAssets: ['favicon.svg', 'icon-*.png'],
+      includeAssets: ['favicon.svg', 'icon-*.png', 'sw-notifications.js'],
 
-      injectManifest: {
+      workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        runtimeCaching: [],
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
+        navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/api/],
+        importScripts: ['sw-notifications.js'],
       },
 
       manifest: {
