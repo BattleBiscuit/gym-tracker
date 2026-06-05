@@ -40,11 +40,10 @@ jobs:
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
       - run: npm ci
       - run: npm run build
-      - run: npx cap sync android
       - uses: actions/upload-artifact@v4
         with:
           name: web-dist
-          path: android/app/src/main/assets/public
+          path: dist
           retention-days: 1
 
   # ── 3. Build & sign APK ────────────────────────────────────────────────────
@@ -56,14 +55,21 @@ jobs:
       version: ${{ needs.build-web.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
+      - run: npm ci
       - uses: actions/download-artifact@v4
         with:
           name: web-dist
-          path: android/app/src/main/assets/public
+          path: dist
+      - name: Sync Capacitor (generates cordova plugin dirs)
+        run: npx cap sync android
       - name: Build release APK
         working-directory: android
         run: ./gradlew assembleRelease --no-daemon
