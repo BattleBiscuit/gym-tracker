@@ -13,8 +13,7 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.js'],
     include: ['src/**/*.test.js'],
   },
-  // Capacitor requires './' as base so assets resolve correctly inside the WebView
-  base: process.env.GITHUB_PAGES ? '/gym-tracker/' : './',
+  base: './',
   preview: {
     allowedHosts: true,
   },
