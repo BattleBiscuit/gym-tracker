@@ -1,8 +1,8 @@
-name: APK Release Pipline (main)
+name: APK Release Pipeline (dev/beta)
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
 
 permissions:
   contents: write
@@ -37,25 +37,36 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - name: Compute next version
+      - name: Compute next beta version
         id: version
         run: |
-          LATEST=$(git tag --list 'v*.*.*' | sort -V | tail -1)
-          if [ -z "$LATEST" ]; then
-            NEXT="1.0.0"
+          # Find highest stable tag (vX.Y.Z) and highest beta tag (vX.Y.Z-betaN)
+          LATEST_STABLE=$(git tag --list 'v*.*.*' | grep -v beta | sort -V | tail -1)
+          LATEST_BETA=$(git tag --list 'v*.*.*-beta*' | sort -V | tail -1)
+
+          if [ -z "$LATEST_STABLE" ]; then
+            BASE="1.0.0"
           else
-            IFS='.' read -r MAJOR MINOR PATCH <<< "${LATEST#v}"
-            NEXT="${MAJOR}.${MINOR}.$((PATCH + 1))"
+            IFS='.' read -r MAJOR MINOR PATCH <<< "${LATEST_STABLE#v}"
+            BASE="${MAJOR}.${MINOR}.$((PATCH + 1))"
           fi
+
+          # Increment beta number if a beta already exists for this base version
+          if [ -n "$LATEST_BETA" ] && [[ "$LATEST_BETA" == "v${BASE}-beta"* ]]; then
+            BETA_N=$(echo "$LATEST_BETA" | sed "s/v${BASE}-beta//")
+            NEXT="${BASE}-beta$((BETA_N + 1))"
+          else
+            NEXT="${BASE}-beta1"
+          fi
+
           echo "version=$NEXT" >> $GITHUB_OUTPUT
-          # Write version into package.json so __APP_VERSION__ in the build is correct
-          npm version $NEXT --no-git-tag-version
-          echo "Next version: $NEXT"
+          npm version $NEXT --no-git-tag-version --allow-same-version 2>/dev/null || true
+          echo "Next beta version: $NEXT"
       - run: npm ci
       - run: npm run build
       - uses: actions/upload-artifact@v4
         with:
-          name: web-dist
+          name: web-dist-beta
           path: dist
           retention-days: 1
 
@@ -79,10 +90,16 @@ jobs:
       - run: npm ci
       - uses: actions/download-artifact@v4
         with:
-          name: web-dist
+          name: web-dist-beta
           path: dist
       - name: Sync Capacitor (generates cordova plugin dirs)
         run: npx cap sync android
+      - name: Patch app name to PRsonal (Beta)
+        run: |
+          sed -i 's|<string name="app_name">PRsonal</string>|<string name="app_name">PRsonal (Beta)</string>|' \
+            android/app/src/main/res/values/strings.xml
+          sed -i 's|<string name="title_activity_main">PRsonal</string>|<string name="title_activity_main">PRsonal (Beta)</string>|' \
+            android/app/src/main/res/values/strings.xml
       - name: Build release APK
         working-directory: android
         run: ./gradlew assembleRelease --no-daemon
@@ -108,28 +125,30 @@ jobs:
              prsonal-${{ needs.build-web.outputs.version }}.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: signed-apk
+          name: signed-apk-beta
           path: prsonal-${{ needs.build-web.outputs.version }}.apk
           retention-days: 1
 
   # ── 4. Release ────────────────────────────────────────────────────────────
   release:
-    name: Release
+    name: Release (beta)
     runs-on: ubuntu-latest
     needs: build-apk
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: signed-apk
-      - name: Publish release
+          name: signed-apk-beta
+      - name: Publish beta release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.build-apk.outputs.version }}
           name: "PRsonal v${{ needs.build-apk.outputs.version }}"
           body: |
+            **Beta build** — from `dev` branch.
+
             v${{ needs.build-apk.outputs.version }} · commit [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
 
-            > Install once, then future updates install without security prompts.
-          prerelease: false
-          make_latest: true
+            > This is a pre-release. Install for testing only.
+          prerelease: true
+          make_latest: false
           files: prsonal-${{ needs.build-apk.outputs.version }}.apk
