@@ -1,11 +1,8 @@
-export function triggerTimerAlert() {
-  vibrate()
-  beep()
-}
+import { hapticSuccess } from '@/composables/useNative.js'
 
-function vibrate() {
-  if (!navigator.vibrate) return
-  navigator.vibrate([200, 100, 200, 100, 200])
+export function triggerTimerAlert() {
+  hapticSuccess() // native haptics on Android, falls back to navigator.vibrate
+  beep()
 }
 
 function beep() {

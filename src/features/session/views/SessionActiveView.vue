@@ -145,7 +145,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppButton from '@/components/ui/AppButton.vue'
@@ -161,6 +161,7 @@ import { useSessionRunner } from '../composables/useSessionRunner.js'
 import { bodyweight, violentMode } from '@/composables/useConfig.js'
 import ExerciseForm from '@/features/routines/components/ExerciseForm.vue'
 import { useExerciseEditor } from '@/features/routines/composables/useExerciseEditor.js'
+import { keepScreenAwake, releaseScreenAwake, hapticTap, hapticPR } from '@/composables/useNative.js'
 
 const store = useSessionStore()
 const router = useRouter()
@@ -168,6 +169,10 @@ const router = useRouter()
 // Start elapsed ticker and rest timer watcher
 useSessionRunner()
 useRestTimer()
+
+// Keep screen on during active workout
+onMounted(() => keepScreenAwake())
+onUnmounted(() => releaseScreenAwake())
 
 // Perimeter of the 296×48 rect: 2*(296+48) = 688
 const TIMER_PERIMETER = 688
@@ -264,6 +269,15 @@ async function onComplete() {
   const completedSetIdx = store.currentSetIndex
 
   await store.markSetComplete(primary, secondary, localBW.value)
+
+  // Haptic feedback — heavier pulse for PRs
+  const justCompleted = store.sets[store.currentExerciseIndex]?.[store.currentSetIndex - 1]
+    ?? store.sets[completedExIdx]?.[completedSetIdx]
+  if (justCompleted?.isPR) {
+    hapticPR()
+  } else {
+    hapticTap()
+  }
 
   if (violentMode.value) {
     const s = store.sets[completedExIdx]?.[completedSetIdx]
