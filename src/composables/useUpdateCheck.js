@@ -3,7 +3,8 @@ import { ref } from 'vue'
 const REPO    = __GITHUB_REPO__
 const CURRENT = __APP_VERSION__
 
-const API_URL = `https://api.github.com/repos/${REPO}/releases/tags/current`
+// Fetch all releases and find the highest semver tag — no hardcoded tag name
+const API_URL = `https://api.github.com/repos/${REPO}/releases?per_page=20`
 
 export const updateAvailable = ref(false)
 export const latestVersion   = ref(null)
@@ -36,28 +37,29 @@ export async function checkForUpdate() {
     })
     if (!res.ok) return
 
-    const release = await res.json()
+    const releases = await res.json()
 
-    // Find the .apk asset
-    const apk = release.assets?.find(a => a.name.endsWith('.apk'))
-    if (!apk) return
+    // Find the highest semver release that has an APK asset
+    const candidate = releases
+      .filter(r => !r.prerelease && /^v\d+\.\d+\.\d+$/.test(r.tag_name))
+      .sort((a, b) => {
+        const av = parseVersion(a.tag_name)
+        const bv = parseVersion(b.tag_name)
+        for (let i = 0; i < 3; i++) {
+          if (bv[i] !== av[i]) return bv[i] - av[i]
+        }
+        return 0
+      })
+      .find(r => r.assets?.some(a => a.name.endsWith('.apk')))
 
-    // Strip leading 'v' from tag if present, use body or tag as version label
-    const remote = release.tag_name === 'latest'
-      ? release.name  // "Latest build" — not semver, skip version comparison
-      : release.tag_name
+    if (!candidate) return
 
-    // For a rolling 'latest' release we always consider it newer if the
-    // release was published after this build date
-    const releaseDate  = new Date(release.published_at)
-    const buildDate    = new Date(__BUILD_DATE__.replace(' ', 'T') + ':00Z')
-    const rollingNewer = release.tag_name === 'latest' && releaseDate > buildDate
+    const apk = candidate.assets.find(a => a.name.endsWith('.apk'))
+    const remoteVersion = candidate.tag_name.replace(/^v/, '')
 
-    if (rollingNewer || isNewer(remote, CURRENT)) {
+    if (isNewer(remoteVersion, CURRENT)) {
       updateAvailable.value = true
-      latestVersion.value   = release.tag_name === 'latest'
-        ? release.body?.match(/commit \[`([a-f0-9]{7})`/)?.[1] ?? 'latest'
-        : remote
+      latestVersion.value   = remoteVersion
       downloadUrl.value     = apk.browser_download_url
     }
   } catch {
