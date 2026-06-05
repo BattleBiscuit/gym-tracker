@@ -73,7 +73,7 @@
           <div class="settings-row settings-row--static">
             <div class="settings-row__body">
               <span class="settings-row__label">PRsonal</span>
-              <span class="settings-row__sub">v{{ currentVersion }} · Built {{ buildDate }}</span>
+              <span class="settings-row__sub">v{{ currentVersion }} · Built {{ buildDate }} 🏋️</span>
             </div>
           </div>
           <div class="settings-divider" />
