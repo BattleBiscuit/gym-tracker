@@ -52,16 +52,6 @@
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
           </div>
-          <div v-if="!isNative" class="settings-divider" />
-          <div v-if="!isNative" class="settings-row settings-row--static">
-            <div class="settings-row__body">
-              <span class="settings-row__label">Persistent storage</span>
-              <span class="settings-row__sub">Prevents OS from auto-clearing data</span>
-            </div>
-            <AppBadge :variant="isPersistent ? 'success' : 'warning'">
-              {{ isPersistent ? 'Active' : 'Not granted' }}
-            </AppBadge>
-          </div>
           <input ref="fileInputRef" type="file" accept=".json" class="file-input-hidden" @change="onFileSelected" />
         </div>
       </section>
@@ -186,7 +176,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import AppPageShell from '@/components/ui/AppPageShell.vue'
 import AppButton from '@/components/ui/AppButton.vue'
@@ -202,9 +192,6 @@ import {
   currentVersion,
   lastCheckResult,
 } from '@/composables/useUpdateCheck.js'
-import { Capacitor } from '@capacitor/core'
-
-const isNative = Capacitor.isNativePlatform()
 
 const router  = useRouter()
 
@@ -215,7 +202,6 @@ const importModal   = ref(false)
 const importOptions = ref([])
 const isImporting   = ref(false)
 const importPreview = ref(null)
-const isPersistent  = ref(false)
 const buildDate     = __BUILD_DATE__
 let pendingImportData = null
 
@@ -255,11 +241,6 @@ async function openExportModal() {
 
 const toast = ref({ show: false, message: '', type: 'success' })
 
-onMounted(async () => {
-  if (navigator.storage?.persisted) {
-    isPersistent.value = await navigator.storage.persisted()
-  }
-})
 
 function showToast(message, type = 'success') {
   toast.value = { show: true, message, type }
