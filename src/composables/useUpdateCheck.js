@@ -3,7 +3,7 @@ import { ref } from 'vue'
 const REPO    = __GITHUB_REPO__
 const CURRENT = __APP_VERSION__
 
-const API_URL = `https://api.github.com/repos/${REPO}/releases/tags/latest`
+const API_URL = `https://api.github.com/repos/${REPO}/releases/tags/nightly`
 
 export const updateAvailable = ref(false)
 export const latestVersion   = ref(null)
