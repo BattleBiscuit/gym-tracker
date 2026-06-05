@@ -223,8 +223,9 @@ async function loadTestData() {
     pendingImportData = data
     importOptions.value = [
       { key: 'exercises', label: 'Exercise library', count: data.exerciseLibrary?.length || 0, available: true, selected: true },
-      { key: 'routines',  label: 'Routines',         count: data.routines?.length || 0,         available: true, selected: true },
-      { key: 'history',   label: 'Workout history',  count: data.workoutSessions?.length || 0,  available: true, selected: true },
+      { key: 'routines',  label: 'Routines',         count: data.routines?.length || 0,        available: true, selected: true },
+      { key: 'plans',     label: 'Training plans',   count: data.plans?.length || 0,            available: !!data.plans?.length, selected: !!data.plans?.length },
+      { key: 'history',   label: 'Workout history',  count: data.workoutSessions?.length || 0, available: true, selected: true },
     ]
     importModal.value = true
   } catch (e) {
@@ -233,14 +234,16 @@ async function loadTestData() {
 }
 
 async function openExportModal() {
-  const [exerciseCount, routineCount, sessionCount] = await Promise.all([
+  const [exerciseCount, routineCount, sessionCount, planCount] = await Promise.all([
     db.exerciseLibrary.count(),
     db.routines.count(),
     db.workoutSessions.where('status').equals('completed').count(),
+    db.plans.count(),
   ])
   exportOptions.value = [
     { key: 'exercises', label: 'Exercise library', count: exerciseCount, selected: true },
     { key: 'routines',  label: 'Routines',         count: routineCount,  selected: true },
+    { key: 'plans',     label: 'Training plans',   count: planCount,     selected: true },
     { key: 'history',   label: 'Workout history',  count: sessionCount,  selected: true },
   ]
   exportModal.value = true
@@ -284,6 +287,10 @@ async function doExport() {
     if (selected.routines) {
       backup.routines         = await db.routines.toArray()
       backup.routineExercises = await db.routineExercises.toArray()
+    }
+    if (selected.plans) {
+      backup.plans       = await db.plans.toArray()
+      backup.planEntries = await db.planEntries.toArray()
     }
     if (selected.history) {
       backup.workoutSessions = await db.workoutSessions.toArray()
@@ -342,6 +349,13 @@ function onFileSelected(e) {
           selected: !!data.routines?.length,
         },
         {
+          key: 'plans',
+          label: 'Training plans',
+          count: data.plans?.length || 0,
+          available: !!data.plans?.length,
+          selected: !!data.plans?.length,
+        },
+        {
           key: 'history',
           label: 'Workout history',
           count: data.workoutSessions?.length || 0,
@@ -365,6 +379,7 @@ async function doImport() {
   try {
     await db.transaction('rw',
       db.exerciseLibrary, db.routines, db.routineExercises,
+      db.plans, db.planEntries,
       db.workoutSessions, db.workoutSets,
       async () => {
         if (selected.exercises) {
@@ -376,6 +391,12 @@ async function doImport() {
           await db.routines.clear()
           if (d.routines?.length)         await db.routines.bulkPut(d.routines)
           if (d.routineExercises?.length) await db.routineExercises.bulkPut(d.routineExercises)
+        }
+        if (selected.plans) {
+          await db.planEntries.clear()
+          await db.plans.clear()
+          if (d.plans?.length)       await db.plans.bulkPut(d.plans)
+          if (d.planEntries?.length) await db.planEntries.bulkPut(d.planEntries)
         }
         if (selected.history) {
           await db.workoutSets.clear()
@@ -394,9 +415,6 @@ async function doImport() {
             await db.workoutSets.bulkPut(cleanSets)
           }
         }
-        // Also restore plans/planEntries if present in backup
-        if (d.plans?.length)       await db.plans.bulkPut(d.plans).catch(() => {})
-        if (d.planEntries?.length) await db.planEntries.bulkPut(d.planEntries).catch(() => {})
       }
     )
     importModal.value = false
