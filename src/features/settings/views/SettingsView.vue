@@ -73,14 +73,30 @@
           <div class="settings-row settings-row--static">
             <div class="settings-row__body">
               <span class="settings-row__label">PRsonal</span>
-              <span class="settings-row__sub">Your personal gym tracker · PWA · Built {{ buildDate }}</span>
+              <span class="settings-row__sub">v{{ currentVersion }} · Built {{ buildDate }}</span>
             </div>
           </div>
           <div class="settings-divider" />
+          <!-- Update available → download row -->
+          <template v-if="updateAvailable">
+            <div class="settings-row settings-row--update" @click="openDownload">
+              <div class="settings-row__body">
+                <span class="settings-row__label settings-row__label--accent">Update available</span>
+                <span class="settings-row__sub">Tap to download the latest APK</span>
+              </div>
+              <svg class="settings-row__icon settings-row__icon--accent" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </div>
+            <div class="settings-divider" />
+          </template>
+          <!-- Check button -->
           <div class="settings-row" @click="checkForUpdate">
             <div class="settings-row__body">
-              <span class="settings-row__label">{{ updateStatus }}</span>
-              <span class="settings-row__sub">Tap to check for a newer version</span>
+              <span class="settings-row__label">{{ isChecking ? 'Checking…' : 'Check for update' }}</span>
+              <span class="settings-row__sub">Tap to check GitHub for a newer version</span>
             </div>
             <svg class="settings-row__icon" :class="{ 'icon-spin': isChecking }" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
           </div>
@@ -178,6 +194,13 @@ import AppBadge from '@/components/ui/AppBadge.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import { db } from '@/db/index.js'
 import { violentMode, setViolentMode } from '@/composables/useConfig.js'
+import {
+  checkForUpdate as checkGitHubUpdate,
+  openDownload,
+  updateAvailable,
+  isChecking,
+  currentVersion,
+} from '@/composables/useUpdateCheck.js'
 
 const router  = useRouter()
 
@@ -189,8 +212,6 @@ const importOptions = ref([])
 const isImporting   = ref(false)
 const importPreview = ref(null)
 const isPersistent  = ref(false)
-const isChecking    = ref(false)
-const updateStatus  = ref('Check for update')
 const buildDate     = __BUILD_DATE__
 let pendingImportData = null
 
@@ -241,43 +262,9 @@ function showToast(message, type = 'success') {
 // ── Update ───────────────────────────────────────────────────────────────────
 
 async function checkForUpdate() {
-  if (isChecking.value) return
-  isChecking.value = true
-  updateStatus.value = 'Checking…'
-
-  try {
-    const reg = await navigator.serviceWorker?.getRegistration()
-    if (!reg) {
-      updateStatus.value = 'No service worker found'
-      return
-    }
-
-    await reg.update()
-
-    if (reg.waiting) {
-      // New SW already waiting — activate it and reload
-      updateStatus.value = 'Update found — reloading…'
-      reg.waiting.postMessage({ type: 'SKIP_WAITING' })
-      setTimeout(() => window.location.reload(), 500)
-    } else if (reg.installing) {
-      // SW is downloading — wait for it
-      updateStatus.value = 'Downloading update…'
-      reg.installing.addEventListener('statechange', e => {
-        if (e.target.state === 'installed') {
-          updateStatus.value = 'Update ready — reloading…'
-          e.target.postMessage({ type: 'SKIP_WAITING' })
-          setTimeout(() => window.location.reload(), 500)
-        }
-      })
-    } else {
-      updateStatus.value = 'Already up to date'
-      setTimeout(() => { updateStatus.value = 'Check for update' }, 3000)
-    }
-  } catch (e) {
-    updateStatus.value = 'Check failed: ' + e.message
-    setTimeout(() => { updateStatus.value = 'Check for update' }, 4000)
-  } finally {
-    isChecking.value = false
+  await checkGitHubUpdate()
+  if (!updateAvailable.value) {
+    showToast('Already up to date')
   }
 }
 
@@ -474,6 +461,10 @@ async function doImport() {
 .settings-section--dev { opacity: 0.75; }
 .settings-section--dev .section-title { color: var(--color-text-3); }
 .settings-row__label--warning { color: var(--color-warning); }
+.settings-row__label--accent  { color: var(--color-accent); font-weight: var(--font-semibold); }
+.settings-row__icon--accent   { color: var(--color-accent); }
+.settings-row--update         { background: rgba(232,255,71,0.04); }
+.settings-row--update:active  { background: rgba(232,255,71,0.1); }
 
 .file-input-hidden { display: none; }
 

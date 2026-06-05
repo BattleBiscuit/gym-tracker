@@ -40,9 +40,17 @@ jobs:
         working-directory: android
         run: ./gradlew assembleRelease --no-daemon
 
+      - name: Find build-tools version
+        id: bt
+        run: |
+          BT=$(ls $ANDROID_SDK_ROOT/build-tools/ | sort -V | tail -1)
+          echo "version=$BT" >> $GITHUB_OUTPUT
+
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign
+        env:
+          BUILD_TOOLS_VERSION: ${{ steps.bt.outputs.version }}
         with:
           releaseDirectory: android/app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}

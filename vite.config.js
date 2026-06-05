@@ -63,7 +63,9 @@ export default defineConfig({
   ],
 
   define: {
-    __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 16).replace('T', ' ')),
+    __BUILD_DATE__:  JSON.stringify(new Date().toISOString().slice(0, 16).replace('T', ' ')),
+    __APP_VERSION__: JSON.stringify(pkg.version),
+    __GITHUB_REPO__: JSON.stringify('BattleBiscuit/gym-tracker'),
   },
 
   resolve: {
