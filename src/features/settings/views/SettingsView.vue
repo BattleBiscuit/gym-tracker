@@ -52,8 +52,8 @@
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
           </div>
-          <div class="settings-divider" />
-          <div class="settings-row settings-row--static">
+          <div v-if="!isNative" class="settings-divider" />
+          <div v-if="!isNative" class="settings-row settings-row--static">
             <div class="settings-row__body">
               <span class="settings-row__label">Persistent storage</span>
               <span class="settings-row__sub">Prevents OS from auto-clearing data</span>
@@ -202,6 +202,9 @@ import {
   currentVersion,
   lastCheckResult,
 } from '@/composables/useUpdateCheck.js'
+import { Capacitor } from '@capacitor/core'
+
+const isNative = Capacitor.isNativePlatform()
 
 const router  = useRouter()
 
