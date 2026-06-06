@@ -1,0 +1,43 @@
+name: Play Store Upload
+
+on:
+  # Runs automatically after the main release pipeline completes
+  workflow_run:
+    workflows: ["Release Pipeline (main)"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  upload:
+    name: Upload AAB to internal track
+    runs-on: ubuntu-latest
+    # Only run if the triggering workflow succeeded and the secret is configured
+    if: ${{ github.event.workflow_run.conclusion == 'success' && secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON != '' }}
+    steps:
+      - name: Download AAB artifact
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          workflow: android.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: signed-aab
+          path: .
+
+      - name: Get version from artifact filename
+        id: ver
+        run: |
+          AAB=$(ls prsonal-*.aab | head -1)
+          echo "file=$AAB" >> $GITHUB_OUTPUT
+
+      - name: Upload to Play Store (internal track)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_STORE_SERVICE_ACCOUNT_JSON }}
+          packageName: prsonal.biscuit
+          releaseFiles: ${{ steps.ver.outputs.file }}
+          track: internal
+          status: completed
+          whatsNewDirectory: fastlane/metadata/android/en-US/changelogs

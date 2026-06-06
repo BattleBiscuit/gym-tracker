@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">PRsonal</string>
     <string name="title_activity_main">PRsonal</string>
-    <string name="package_name">life.seidel.prsonal</string>
-    <string name="custom_url_scheme">life.seidel.prsonal</string>
+    <string name="package_name">prsonal.biscuit</string>
+    <string name="custom_url_scheme">prsonal.biscuit</string>
 </resources>

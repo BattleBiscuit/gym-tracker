@@ -1,4 +1,4 @@
-package life.seidel.prsonal;
+package prsonal.biscuit;
 
 import com.getcapacitor.BridgeActivity;
 

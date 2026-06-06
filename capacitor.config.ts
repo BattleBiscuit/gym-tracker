@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'life.seidel.prsonal',
+  appId: 'prsonal.biscuit',
   appName: 'PRsonal',
   webDir: 'dist',
   android: {

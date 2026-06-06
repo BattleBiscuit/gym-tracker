@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "life.seidel.prsonal"
+    namespace = "prsonal.biscuit"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "life.seidel.prsonal"
+        applicationId "prsonal.biscuit"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode project.hasProperty('VERSION_CODE') ? VERSION_CODE.toInteger() : 1
